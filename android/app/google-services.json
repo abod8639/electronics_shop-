@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "708261184819",
+    "project_id": "electronics-shop-fcaaf",
+    "storage_bucket": "electronics-shop-fcaaf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708261184819:android:6ec90266c4aca74d942a46",
+        "android_client_info": {
+          "package_name": "com.example.electronics_shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-oxmgD6Xxhjky9thbOOI9glmqesoMhSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

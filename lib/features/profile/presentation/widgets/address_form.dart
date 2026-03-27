@@ -1,0 +1,202 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:electronics_shop/features/profile/data/models/address_model.dart';
+import 'package:electronics_shop/features/profile/presentation/controllers/address_controller.dart';
+import 'package:electronics_shop/l10n/generated/app_localizations.dart';
+
+class AddressForm extends ConsumerStatefulWidget {
+  final AddressModel? address;
+  const AddressForm({super.key, this.address});
+
+  @override
+  ConsumerState<AddressForm> createState() => _AddressFormState();
+}
+
+class _AddressFormState extends ConsumerState<AddressForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(addressControllerProvider.notifier).fillForm(widget.address);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final controller = ref.watch(addressControllerProvider.notifier);
+    final isLoading = ref.watch(addressControllerProvider.notifier).isLoading;
+    final selectedLabel = ref
+        .watch(addressControllerProvider.notifier)
+        .selectedLabel;
+    final intl10n = AppLocalizations.of(context)!;
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Text(
+              widget.address == null ? intl10n.addNewAddress : intl10n.editAddress,
+              style: theme.textTheme.headlineSmall,
+            ),
+            const SizedBox(height: 20),
+            // button to get current location
+            OutlinedButton.icon(
+              onPressed: isLoading
+                  ? null
+                  : () async {
+                      setState(() {}); // Start loading
+                      await controller.getCurrentLocation();
+                      if (context.mounted) {
+                        setState(() {}); // End loading
+                        ScaffoldMessenger.of(context).showSnackBar(
+                           SnackBar(
+                            content: Text(intl10n.addressUpdatedSuccessfully),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      }
+                    },
+              icon: isLoading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.blue,
+                      ),
+                    )
+                  : const Icon(Icons.my_location),
+              label:  Text(intl10n.useCurrentLocation),
+            ),
+            const SizedBox(height: 24),
+            _buildField(controller.fullNameController, intl10n.fullName),
+            const SizedBox(height: 16),
+            _buildField(
+              controller.phoneController,
+              intl10n.phoneNumber,
+              keyboardType: TextInputType.phone,
+            ),
+            const SizedBox(height: 16),
+            _buildField(controller.streetController, intl10n.streetAddress),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildField(controller.cityController, intl10n.city),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: _buildField(controller.stateController,  intl10n.state),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildField(
+                    controller.postalCodeController,
+                    intl10n.postalCode,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: _buildField(controller.countryController, intl10n.country ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            _buildLabelSelector(controller, selectedLabel, context),
+            const SizedBox(height: 32),
+            _buildSubmitButton(controller, isLoading),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildField(
+    TextEditingController controller,
+    String label, {
+    TextInputType? keyboardType,
+  }) {
+    return Builder(
+      builder: (context) {
+        final intl10n = AppLocalizations.of(context)!;
+        return TextFormField(
+          controller: controller,
+          keyboardType: keyboardType,
+          decoration: InputDecoration(
+            labelText: label,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+          validator: (v) => v!.isEmpty ? intl10n.thisFieldIsRequired : null,
+        );
+      }
+    );
+  }
+
+  Widget _buildLabelSelector(
+    AddressController controller,
+    String selectedLabel,
+    BuildContext context,
+  ) {
+    final intl10n = AppLocalizations.of(context)!;
+    return Row(
+      children: [intl10n.home, intl10n.work, intl10n.other]
+          .map(
+            (label) => Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: ChoiceChip(
+                label: Text(label),
+                selected: selectedLabel == label,
+                onSelected: (val) {
+                  if (val) {
+                    setState(() {
+                      controller.selectedLabel = label;
+                    });
+                  }
+                },
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  Widget _buildSubmitButton(AddressController controller, bool isLoading) {
+    final intl10n = AppLocalizations.of(context)!;
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: isLoading
+            ? null
+            : () async {
+                if (_formKey.currentState!.validate()) {
+                  setState(() {}); // Trigger loading state
+                  await controller.saveAddress(widget.address?.id);
+                  if (mounted) {
+                    setState(() {}); // Clear loading state if not popped
+                    Navigator.of(context).pop();
+                  }
+                }
+              },
+        child: isLoading
+            ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.white,
+                ),
+              )
+            : Text(widget.address == null ? intl10n.save : intl10n.update),
+      ),
+    );
+  }
+}

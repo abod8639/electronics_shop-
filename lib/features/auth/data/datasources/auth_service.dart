@@ -1,0 +1,206 @@
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:electronics_shop/features/profile/data/models/user_model.dart';
+import 'package:electronics_shop/features/profile/data/models/user_stats_model.dart';
+import '../../../../core/config/api_config.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../../core/services/api_service.dart';
+import '../../../../core/services/storage_service.dart';
+
+part 'auth_service.g.dart';
+
+@Riverpod(keepAlive: true)
+AuthService authService(AuthServiceRef ref) {
+  return AuthService(ref.watch(apiServiceProvider));
+}
+
+class AuthService {
+  final ApiService _apiService;
+
+  AuthService(this._apiService);
+
+  Future<UserModel> register({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
+    try {
+      final response = await _apiService.post(
+        ApiConfig.register,
+        data: {'email': email, 'password': password, 'name': name},
+      );
+
+      final data = response.data;
+      final Map<String, dynamic> userMap = Map<String, dynamic>.from(
+        data['user'] ?? data['data'] ?? data,
+      );
+
+      final String? token = data['token']?.toString();
+      if (token != null) {
+        userMap['token'] = token;
+        await StorageService.saveToken(token);
+      }
+
+      return UserModel.fromJson(userMap);
+    } on Failure catch (e) {
+      throw e.message;
+    } catch (e) {
+      throw 'حدث خطأ غير متوقع أثناء إنشاء الحساب';
+    }
+  }
+
+  Future<UserModel> login({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await _apiService.post(
+        ApiConfig.login,
+        data: {'email': email, 'password': password},
+      );
+
+      final data = response.data;
+
+      if (data['status'] == 'error') {
+        throw Failure(
+          message: data['message'] ?? 'فشل تسجيل الدخول',
+          type: FailureType.auth,
+        );
+      }
+
+      final Map<String, dynamic> userMap = Map<String, dynamic>.from(
+        data['user'] ?? data['data'] ?? data,
+      );
+
+      final String? token = data['token']?.toString();
+      if (token != null) {
+        userMap['token'] = token;
+        await StorageService.saveToken(token);
+      }
+
+      return UserModel.fromJson(userMap);
+    } on Failure catch (e) {
+      throw e.message;
+    } catch (e) {
+      throw 'حدث خطأ أثناء محاولة تسجيل الدخول';
+    }
+  }
+
+  Future<UserModel?> getCurrentUser() async {
+    try {
+      final token = StorageService.getToken();
+      if (token == null) return null;
+
+      final response = await _apiService.get(ApiConfig.customerProfile);
+      final data = response.data;
+
+      final Map<String, dynamic> userMap = Map<String, dynamic>.from(
+        data['user'] ?? data['data'] ?? data,
+      );
+
+      if (userMap['token'] == null) {
+        userMap['token'] = token;
+      }
+
+      return UserModel.fromJson(userMap);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<UserModel> updateProfile({
+    String? name,
+    String? email,
+    String? phone,
+    String? photoUrl,
+    String? preferredLanguage,
+    bool? notificationsEnabled,
+  }) async {
+    try {
+      final response = await _apiService.post(
+        ApiConfig.updateProfileRoute,
+        data: {
+          'name': name,
+          'email': email,
+          'phone': phone,
+          'photoUrl': photoUrl,
+          'preferredLanguage': preferredLanguage,
+          'notificationsEnabled': notificationsEnabled,
+        },
+      );
+
+      final data = response.data;
+      final Map<String, dynamic> userMap = Map<String, dynamic>.from(
+        data['user'] ?? data['data'] ?? data,
+      );
+
+      final token = StorageService.getToken();
+      if (token != null && userMap['token'] == null) {
+        userMap['token'] = token;
+      }
+
+      return UserModel.fromJson(userMap);
+    } on Failure catch (e) {
+      throw e.message;
+    } catch (e) {
+      throw 'حدث خطأ أثناء تحديث البيانات';
+    }
+  }
+
+  Future<UserModel> googleSignIn({
+    required String email,
+    required String name,
+    String? photoUrl,
+  }) async {
+    try {
+      final response = await _apiService.post(
+        ApiConfig.googleSignIn,
+        data: {'email': email, 'name': name, 'photo_url': photoUrl},
+      );
+
+      final data = response.data;
+      final Map<String, dynamic> userMap = Map<String, dynamic>.from(
+        data['user'] ?? data['data'] ?? data,
+      );
+
+      final String? token = (data['token'] ?? data['access_token'])?.toString();
+      if (token != null) {
+        userMap['token'] = token;
+        await StorageService.saveToken(token);
+      }
+
+      return UserModel.fromJson(userMap);
+    } on Failure catch (e) {
+      throw e.message;
+    } catch (e) {
+      throw 'حدث خطأ أثناء تسجيل الدخول عبر جوجل';
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await _apiService.post(ApiConfig.logout);
+    } catch (e) {
+      // ignore error
+    } finally {
+      await StorageService.deleteToken();
+    }
+  }
+
+  Future<UsersStatsResponse> getUsersStats() async {
+    try {
+      final response = await _apiService.get(ApiConfig.usersStats);
+      return UsersStatsResponse.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteUser() async {
+    try {
+      await _apiService.delete(ApiConfig.customerProfile);
+      await StorageService.deleteToken();
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
