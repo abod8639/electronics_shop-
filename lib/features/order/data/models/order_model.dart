@@ -1,7 +1,7 @@
+import 'package:electronics_shop/features/profile/data/models/address_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:electronics_shop/features/profile/data/models/address_model.dart';
 
 part 'order_model.freezed.dart';
 part 'order_model.g.dart';

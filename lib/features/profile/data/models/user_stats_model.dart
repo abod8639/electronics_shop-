@@ -1,5 +1,5 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:electronics_shop/features/order/data/models/order_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_stats_model.freezed.dart';
 part 'user_stats_model.g.dart';

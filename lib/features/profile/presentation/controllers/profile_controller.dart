@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:electronics_shop/features/order/data/models/order_model.dart';
 import 'package:electronics_shop/features/profile/data/models/address_model.dart';
@@ -14,9 +15,12 @@ class ProfileController extends _$ProfileController {
   @override
   void build() {
     // Listen for auth changes to clear data on logout
+    // Using fireImmediately: false to avoid executing during the initial build
     ref.listen(authControllerProvider, (previous, next) {
-      if (next.value == null && !next.isLoading) {
-        _clearData();
+      if (next.value == null && !next.isLoading && previous?.value != null) {
+        // Use a microtask or similar to ensure we are outside the build cycle
+        // and using ref safely.
+        Future.microtask(() => _clearData());
       }
     });
   }
@@ -25,9 +29,9 @@ class ProfileController extends _$ProfileController {
   bool get isLoading => ref.watch(authControllerProvider).isLoading;
 
   List<OrderModel> get orders =>
-      ref.watch(ordersControllerProvider).value ?? [];
+      ref.watch(ordersControllerProvider).valueOrNull ?? [];
   List<AddressModel> get addresses =>
-      ref.watch(addressControllerProvider).value ?? [];
+      ref.watch(addressControllerProvider).valueOrNull ?? [];
 
   int get wishlistCount {
     try {
@@ -38,9 +42,16 @@ class ProfileController extends _$ProfileController {
     return 0;
   }
 
+
   void _clearData() {
-    ref.read(ordersControllerProvider.notifier).clearData();
-    ref.read(addressControllerProvider.notifier).clearForm();
+    // We use try-catch and check if we can still use ref
+    try {
+      ref.read(ordersControllerProvider.notifier).clearData();
+      ref.read(addressControllerProvider.notifier).clearForm();
+    } catch (e) {
+      // If ref is still not usable, we log and defer or ignore
+      debugPrint("Could not clear data: $e");
+    }
   }
 
   Future<void> loadUserData() async {

@@ -1,3 +1,4 @@
+import 'package:electronics_shop/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:electronics_shop/core/services/api_service.dart';
 import 'package:electronics_shop/features/order/data/repositories/order_repository.dart';
@@ -14,7 +15,12 @@ OrderRepository orderRepository(OrderRepositoryRef ref) {
 class OrdersController extends _$OrdersController {
   @override
   FutureOr<List<OrderModel>> build() async {
-    // Initial fetch
+    // Re-fetch or clear when auth state changes
+    final authState = ref.watch(authControllerProvider);
+    
+    // Only fetch if we have a user and aren't loading/erroring
+    if (authState.value == null) return [];
+
     return await _fetchOrders(limit: 3);
   }
 

@@ -1,6 +1,8 @@
+// ignore_for_file: invalid_annotation_target
+
+import 'package:electronics_shop/features/profile/data/models/localized_string_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
-import 'package:electronics_shop/features/profile/data/models/localized_string_model.dart';
 
 part 'product_category_model.freezed.dart';
 part 'product_category_model.g.dart';

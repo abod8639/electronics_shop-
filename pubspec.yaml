@@ -61,8 +61,11 @@ flutter:
   generate: true
   uses-material-design: true
 
+  assets:
+    - .env
+
 icons_launcher:
-  image_path: "assets/icon/ChatGPT2.png"
+  image_path: "assets/icon/icon.png"
   platforms:
     android:
       enable: true

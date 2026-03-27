@@ -1,3 +1,4 @@
+import 'package:electronics_shop/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:electronics_shop/features/profile/domain/repositories/address_repository.dart';
 import 'package:electronics_shop/features/profile/data/datasources/address_service.dart';
@@ -32,6 +33,10 @@ class AddressController extends _$AddressController {
 
   @override
   FutureOr<List<AddressModel>> build() async {
+    // Clear and re-fetch when auth state changes
+    final authState = ref.watch(authControllerProvider);
+    if (authState.value == null) return [];
+
     ref.onDispose(() {
       fullNameController.dispose();
       phoneController.dispose();

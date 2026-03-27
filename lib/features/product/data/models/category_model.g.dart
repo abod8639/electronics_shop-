@@ -81,14 +81,14 @@ _$CategoryModelImpl _$$CategoryModelImplFromJson(Map<String, dynamic> json) =>
           ? null
           : LocalizedString.fromJson(
               json['description'] as Map<String, dynamic>),
-      imageUrl: json['image_url'] as String?,
-      sortOrder: (json['sort_order'] as num?)?.toInt() ?? 0,
-      isActive: json['is_active'] as bool? ?? true,
-      createdAt: json['created_at'] == null
+      imageUrl: json['imageUrl'] as String?,
+      sortOrder: (json['sortOrder'] as num?)?.toInt() ?? 0,
+      isActive: json['isActive'] as bool? ?? true,
+      createdAt: json['createdAt'] == null
           ? null
-          : DateTime.parse(json['created_at'] as String),
+          : DateTime.parse(json['createdAt'] as String),
       icon: json['icon'] as String?,
-      parentId: json['parent_id'] as String?,
+      parentId: json['parentId'] as String?,
       children: (json['children'] as List<dynamic>?)
               ?.map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -100,11 +100,11 @@ Map<String, dynamic> _$$CategoryModelImplToJson(_$CategoryModelImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
-      'image_url': instance.imageUrl,
-      'sort_order': instance.sortOrder,
-      'is_active': instance.isActive,
-      'created_at': instance.createdAt?.toIso8601String(),
+      'imageUrl': instance.imageUrl,
+      'sortOrder': instance.sortOrder,
+      'isActive': instance.isActive,
+      'createdAt': instance.createdAt?.toIso8601String(),
       'icon': instance.icon,
-      'parent_id': instance.parentId,
+      'parentId': instance.parentId,
       'children': instance.children,
     };
