@@ -12,6 +12,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:electronics_shop/features/profile/presentation/controllers/language_controller.dart';
 import 'package:electronics_shop/features/profile/presentation/controllers/theme_controller.dart';
+import 'package:electronics_shop/core/utils/components/grid_background.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,7 +56,7 @@ class MyApp extends ConsumerWidget {
       locale: locale,
       builder: (context, child) => Stack(
         children: [
-          child!,
+          if (child != null) GridBackground(child: child),
           const Positioned(
             bottom: 80,
             left: 0,
