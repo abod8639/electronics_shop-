@@ -5,7 +5,6 @@ import 'package:electronics_shop/features/product_details/presentation/widgets/h
 import 'package:electronics_shop/features/product_details/presentation/widgets/stars_record.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
-/// A beautiful expandable description card with animations
 class ExpandableDescriptionCard extends StatefulWidget {
   final String description;
   final double? stars;
@@ -21,11 +20,10 @@ class ExpandableDescriptionCard extends StatefulWidget {
   });
 
   @override
-  State<ExpandableDescriptionCard> createState() =>
-      ExpandableDescriptionCardState();
+  State<ExpandableDescriptionCard> createState() => _ExpandableDescriptionCardState();
 }
 
-class ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
+class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
     with SingleTickerProviderStateMixin {
   bool _isExpanded = false;
   late AnimationController _animationController;
@@ -33,6 +31,7 @@ class ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
 
   static const int _collapsedMaxLines = 4;
   static const Duration _animationDuration = Duration(milliseconds: 250);
+
   @override
   void initState() {
     super.initState();
@@ -54,134 +53,32 @@ class ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
   void _toggleExpanded() {
     setState(() {
       _isExpanded = !_isExpanded;
-      if (_isExpanded) {
-        _animationController.forward();
-      } else {
-        _animationController.reverse();
-      }
+      _isExpanded ? _animationController.forward() : _animationController.reverse();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final intl10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-              ? [
-                  theme.colorScheme.surface,
-                  theme.colorScheme.surface..withValues(alpha: .8),
-                ]
-              : [
-                  theme.colorScheme.surface,
-                  theme.colorScheme.primaryContainer..withValues(alpha: .1),
-                ],
-        ),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.primary..withValues(alpha: .2),
-          width: 1.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary..withValues(alpha: .08),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-
+      decoration: _buildCardDecoration(theme),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header with icon and title
-            HeaderWithIconandTitle(),
-
-            // Description content
+            const HeaderWithIconandTitle(),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AnimatedCrossFade(
-                    firstChild: Text(
-                      widget.description,
-                      maxLines: _collapsedMaxLines,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                        height: 1.6,
-                        letterSpacing: 0.2,
-                      ),
-                    ),
-                    secondChild: Text(
-                      widget.description,
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                        height: 1.6,
-                        letterSpacing: 0.2,
-                      ),
-                    ),
-                    crossFadeState: _isExpanded
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
-                    duration: _animationDuration,
-                  ),
-
-                  // Show "Read more/less" only if text is long enough
-                  if (shouldShowExpandButton())
-                    Padding(
-                      padding: const EdgeInsets.only(top: 12),
-                      child: InkWell(
-                        onTap: _toggleExpanded,
-                        borderRadius: BorderRadius.circular(8),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: AppColors.primary.withValues(alpha: 0.3),
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                _isExpanded ? intl10n.readLess : intl10n.readMore,
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(width: 4),
-                              RotationTransition(
-                                turns: _iconRotation,
-                                child: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: AppColors.primary,
-                                  size: 20,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                  // Stars record
+                  _buildDescriptionText(theme),
+                  if (_shouldShowExpandButton(context, theme))
+                    _buildToggleButton(theme, l10n),
+                  const SizedBox(height: 16),
                   StarsRecord(reviews: widget.reviews),
                 ],
               ),
@@ -192,19 +89,100 @@ class ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
     );
   }
 
-  bool shouldShowExpandButton() {
-    final theme = Theme.of(context);
+  // --- Widgets ---
+
+  Widget _buildDescriptionText(ThemeData theme) {
+    final textStyle = theme.textTheme.bodyLarge?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+      height: 1.6,
+      letterSpacing: 0.2,
+    );
+
+    return AnimatedCrossFade(
+      firstChild: Text(
+        widget.description,
+        maxLines: _collapsedMaxLines,
+        overflow: TextOverflow.ellipsis,
+        style: textStyle,
+      ),
+      secondChild: Text(
+        widget.description,
+        style: textStyle,
+      ),
+      crossFadeState: _isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+      duration: _animationDuration,
+    );
+  }
+
+  Widget _buildToggleButton(ThemeData theme, AppLocalizations l10n) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: InkWell(
+        onTap: _toggleExpanded,
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                _isExpanded ? l10n.readLess : l10n.readMore,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(width: 4),
+              RotationTransition(
+                turns: _iconRotation,
+                child: const Icon(Icons.keyboard_arrow_down, color: AppColors.primary, size: 20),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ---(Helper Methods) ---
+
+  BoxDecoration _buildCardDecoration(ThemeData theme) {
+    final isDark = theme.brightness == Brightness.dark;
+    return BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: isDark
+            ? [theme.colorScheme.surface, theme.colorScheme.surface.withValues(alpha: .8)]
+            : [theme.colorScheme.surface, theme.colorScheme.primaryContainer.withValues(alpha: .1)],
+      ),
+      borderRadius: BorderRadius.circular(16),
+      border: Border.all(color: AppColors.primary.withValues(alpha: .2), width: 1.5),
+      boxShadow: [
+        BoxShadow(
+          color: AppColors.primary.withValues(alpha: .08),
+          blurRadius: 12,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    );
+  }
+
+  bool _shouldShowExpandButton(BuildContext context, ThemeData theme) {
     final textPainter = TextPainter(
       text: TextSpan(
         text: widget.description,
-        style: theme.textTheme.bodyLarge?.copyWith(
-          height: 1.6,
-          letterSpacing: 0.2,
-        ),
+        style: theme.textTheme.bodyLarge?.copyWith(height: 1.6, letterSpacing: 0.2),
       ),
       maxLines: _collapsedMaxLines,
-      textDirection: TextDirection.ltr,
-    )..layout(maxWidth: MediaQuery.of(context).size.width - 64);
+      textDirection: Directionality.of(context),
+    )..layout(maxWidth: MediaQuery.sizeOf(context).width - 64);
+    
     return textPainter.didExceedMaxLines;
   }
 }
