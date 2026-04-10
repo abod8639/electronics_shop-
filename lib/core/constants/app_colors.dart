@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primary = Color(0xFFD32F2F);
-  static const Color primaryDark = Color(0xFFB71C1C);
-  static const Color primaryLight = Color(0xFFFFCDD2);
-  static const Color accent = Color(0xFFFF4081);
-  static const Color purple = Color(0xFFBF00FF);
+  static const Color primary = Color(0xFF95AAFF);
+  static const Color primaryDark = Color(0xFF3766FF);
+  static const Color primaryLight = Color(0xFFE0E7FF);
+  static const Color accent = Color(0xFF9193FF);
+  static const Color purple = Color(0xFF3838A0);
   
   static const Color white = Colors.white;
   static const Color black = Colors.black;
   static const Color transparent = Colors.transparent;
 
   // Greys
-  static const Color grey = Colors.grey;
+  static const Color grey = Color(0xFFADAAAA);
   static const Color greyLight = Color(0xFFF5F5F5);
   static const Color greyMedium = Color(0xFFE0E0E0);
-  static const Color greyDark = Color(0xFF616161);
+  static const Color greyDark = Color(0xFF484847);
 
   // Functional Colors
   static const Color success = Color(0xFF4CAF50);
   static const Color warning = Color(0xFFFFC107);
-  static const Color error = Color(0xFFD32F2F);
+  static const Color error = Color(0xFFFF6E84);
   static const Color info = Color(0xFF2196F3);
 
   // Backgrounds
   static const Color backgroundLight = Color(0xFFFAFAFA);
-  static const Color backgroundDark = Color(0xFF121212);
+  static const Color backgroundDark = Color(0xFF0E0E0E);
   static const Color surfaceLight = Colors.white;
-  static const Color surfaceDark = Color(0xFF1E1E1E);
-}
+  static const Color surfaceDark = Color(0xFF131313);
+  static const Color surfaceContainerHighest = Color(0xFF262626);
+} 

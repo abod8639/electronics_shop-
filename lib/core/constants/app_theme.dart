@@ -41,7 +41,8 @@ class AppTheme {
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
         textStyle: AppTextStyles.button,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        elevation: 0,
       ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -56,13 +57,14 @@ class AppTheme {
     primaryColor: AppColors.primaryDark,
     scaffoldBackgroundColor: Colors.transparent,
     colorScheme: const ColorScheme.dark(
-      primary: AppColors.primaryDark,
+      primary: AppColors.primary,
       secondary: AppColors.accent,
       surface: AppColors.surfaceDark,
       error: AppColors.error,
       onPrimary: AppColors.white,
       onSecondary: AppColors.white,
       onSurface: AppColors.white,
+      onSurfaceVariant: AppColors.grey,
       onError: AppColors.white,
     ),
     appBarTheme: const AppBarTheme(
@@ -86,10 +88,11 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primaryDark,
+        backgroundColor: AppColors.primary, // Use bright blue as main action
         foregroundColor: AppColors.white,
         textStyle: AppTextStyles.button,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        elevation: 0,
       ),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
