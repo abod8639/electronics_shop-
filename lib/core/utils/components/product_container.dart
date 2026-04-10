@@ -38,7 +38,7 @@ class _ProductContainerState extends State<ProductContainer>
 
     return Container(
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
+        color: const Color.fromARGB(133, 30, 30, 30),
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
           BoxShadow(

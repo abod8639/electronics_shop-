@@ -43,7 +43,8 @@ class _ImageSectionState extends State<ImageSection> {
             width: double.maxFinite,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceContainerLowest,
+              color:const Color.fromARGB(133, 30, 30, 30),
+              //  theme.colorScheme.surfaceContainerLowest,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(16.0),
               ),

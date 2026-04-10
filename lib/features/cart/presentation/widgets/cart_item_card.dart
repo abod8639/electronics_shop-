@@ -29,6 +29,7 @@ class CartItemCard extends ConsumerWidget {
         },
       ),
       child: Card(
+        color:  const Color.fromARGB(133, 30, 30, 30) ,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(

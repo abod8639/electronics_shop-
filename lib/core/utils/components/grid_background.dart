@@ -1,3 +1,4 @@
+import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class GridBackground extends StatelessWidget {
@@ -11,7 +12,8 @@ class GridBackground extends StatelessWidget {
         // 1. Dark background base
         Positioned.fill(
           child: Container(
-            color: const Color(0xFF0A0A0A),
+            color: AppColors.backgroundDark,
+            // color: const Color(0xFF0A0A0A),
           ),
         ),
         
@@ -19,8 +21,8 @@ class GridBackground extends StatelessWidget {
         Positioned.fill(
           child: CustomPaint(
             painter: _GridPainter(
-              color: const Color(0xFFBF00FF).withOpacity(0.08),
-              step: 35.0,
+              color: AppColors.primary.withValues(alpha: 0.08),
+              step: 40.0,
             ),
           ),
         ),
@@ -33,7 +35,7 @@ class GridBackground extends StatelessWidget {
                 center: Alignment.center,
                 radius: 1.2,
                 colors: [
-                  const Color(0xFFBF00FF).withOpacity(0.05),
+                  AppColors.primary.withValues(alpha: 0.05),
                   Colors.transparent,
                 ],
               ),

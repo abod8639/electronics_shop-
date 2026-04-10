@@ -34,13 +34,19 @@ class LoginPromptCard extends ConsumerWidget {
       margin: const EdgeInsets.all(_containerMargin),
       padding: const EdgeInsets.all(_containerPadding),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.white,
+        color: isDark ? const Color.fromARGB(132, 30, 30, 30) : AppColors.white,
         borderRadius: BorderRadius.circular(_containerBorderRadius),
         boxShadow: [
           BoxShadow(
             color: AppColors.black.withValues(alpha: .1),
             blurRadius: 20,
             offset: const Offset(0, 10),
+          ),
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: .1),
+            blurRadius: 20,
+            blurStyle: BlurStyle.outer,
+            offset: const Offset(0, 5),
           ),
         ],
       ),

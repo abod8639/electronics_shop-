@@ -6,7 +6,7 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: AppColors.primary,
-    scaffoldBackgroundColor: AppColors.backgroundLight,
+    scaffoldBackgroundColor: Colors.transparent,
     colorScheme: const ColorScheme.light(
       primary: AppColors.primary,
       secondary: AppColors.accent,
@@ -18,7 +18,8 @@ class AppTheme {
       onError: AppColors.white,
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.primary,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
       iconTheme: IconThemeData(color: AppColors.white),
       titleTextStyle: TextStyle(
         color: AppColors.white,
@@ -43,12 +44,17 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.white,
+      selectedItemColor: AppColors.primary,
+      unselectedItemColor: AppColors.grey,
+    ),
   );
 
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: AppColors.primaryDark,
-    scaffoldBackgroundColor: AppColors.backgroundDark,
+    scaffoldBackgroundColor: Colors.transparent,
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primaryDark,
       secondary: AppColors.accent,
@@ -60,7 +66,8 @@ class AppTheme {
       onError: AppColors.white,
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.primaryDark,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
       iconTheme: IconThemeData(color: AppColors.white),
       titleTextStyle: TextStyle(
         color: AppColors.white,
@@ -84,6 +91,12 @@ class AppTheme {
         textStyle: AppTextStyles.button,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: const Color(0xFF0D0D0D).withOpacity(0.9),
+      // selectedItemColor: const Color(0xFFBF00FF),
+      unselectedItemColor: Colors.grey,
+      type: BottomNavigationBarType.fixed,
     ),
   );
 }

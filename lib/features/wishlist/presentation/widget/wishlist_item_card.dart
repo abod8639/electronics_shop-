@@ -20,11 +20,11 @@ class WishlistItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    // final theme = Theme.of(context);
+    // final colorScheme = theme.colorScheme;
 
     return Card(
-      color: colorScheme.surface,
+      color: const Color.fromARGB(133, 30, 30, 30),
       margin: const EdgeInsets.symmetric(
         horizontal: _horizontalPadding,
         vertical: _verticalPadding,

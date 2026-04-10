@@ -32,7 +32,7 @@ class AccountSettingsList extends ConsumerWidget {
         horizontal: _containerMarginHorizontal,
       ),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        color: isDark ? const Color.fromARGB(133, 30, 30, 30) : AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(_containerBorderRadius),
         boxShadow: [
           BoxShadow(
