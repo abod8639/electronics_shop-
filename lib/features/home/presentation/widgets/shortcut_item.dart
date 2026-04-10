@@ -45,7 +45,8 @@ class ShortcutItem extends ConsumerWidget {
                   width: _iconSize,
                   height: _iconSize,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
+                    // shape: BoxShape.circle,
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
                     color: theme.colorScheme.surfaceContainerHighest,
                     boxShadow: [
                       BoxShadow(
