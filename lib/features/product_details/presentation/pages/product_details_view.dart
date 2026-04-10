@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
+import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/core/utils/functions/cache_manager.dart';
@@ -86,8 +87,21 @@ class ProductDetailsView extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
+                  Container(
+                    padding: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: AppColors.surfaceDark .withAlpha(100),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                   buildProductName(product!),
-                  const SizedBox(height: _smallSpacing),
+                  const SizedBox(
+                    width: double.infinity,
+                    height: _smallSpacing),
+
                   buildProductPrice(
                     product!,
                     alternateEffectivePrice: detailsNotifier
@@ -99,6 +113,9 @@ class ProductDetailsView extends ConsumerWidget {
                       product!,
                     ),
                   ),
+                    ],),
+                  ),
+
                   const SizedBox(height: _smallSpacing),
                   buildProductBadges(product!, context, .1),
                   const SizedBox(height: _mediumSpacing),

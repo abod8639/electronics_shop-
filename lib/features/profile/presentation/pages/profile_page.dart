@@ -105,7 +105,7 @@ class ProfilePage extends ConsumerWidget {
     return SliverAppBar(
       expandedHeight: _appBarExpandedHeight,
       pinned: true,
-      backgroundColor: isDark ? AppColors.surfaceDark : AppColors.primary,
+      backgroundColor: isDark ? AppColors.surfaceDark.withAlpha(100) : AppColors.primary,
       flexibleSpace: FlexibleSpaceBar(
         title: Builder(
           builder: (context) {

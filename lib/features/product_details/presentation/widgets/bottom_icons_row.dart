@@ -35,6 +35,7 @@ class BottomIconsRow extends ConsumerWidget {
     return BottomAppBar(
       elevation: 10.0,
       height: 85,
+      color: theme.colorScheme.surface.withAlpha(200),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: _horizontalPadding,
