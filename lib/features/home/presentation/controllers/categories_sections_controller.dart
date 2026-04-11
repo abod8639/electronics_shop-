@@ -55,6 +55,7 @@ class CategoriesSectionsController extends _$CategoriesSectionsController {
           id: cat.id,
           label: cat.getLocalizedName(locale: langCode),
           icon: _getIconForCategory(cat.id),
+          image: cat.imageUrl,
         ),
       ),
     ];

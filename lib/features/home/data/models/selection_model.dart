@@ -4,6 +4,12 @@ class SelectionsModel {
   final String label;
   final IconData icon;
   final String id;
+  final String? image;
 
-  SelectionsModel({required this.label, required this.icon, required this.id});
+  SelectionsModel({
+    required this.label,
+    required this.icon,
+    required this.id,
+    this.image,
+  });
 }

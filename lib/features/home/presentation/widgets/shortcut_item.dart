@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/features/home/presentation/controllers/categories_sections_controller.dart';
@@ -59,23 +60,27 @@ class ShortcutItem extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  child: Icon(
-                    item.icon,
-                    color: isSelected
-                        ? theme.colorScheme.primary
-                        : theme.colorScheme.onSurfaceVariant,
-                    size: _iconInnerSize,
-                    shadows: [
-                      BoxShadow(
-                        color: isSelected
-                            ? theme.scaffoldBackgroundColor
-                            : theme.colorScheme.primary.withValues(alpha: .1),
-                        blurRadius: isSelected ? 6 : 3,
-                        offset: const Offset(2, 3),
-                        blurStyle: BlurStyle.outer,
-                      ),
-                    ],
+                  child: CachedNetworkImage(
+                    imageUrl: item.image,
+                    fit: BoxFit.cover,
                   ),
+                  // Icon(
+                  //   item.icon,
+                  //   color: isSelected
+                  //       ? theme.colorScheme.primary
+                  //       : theme.colorScheme.onSurfaceVariant,
+                  //   size: _iconInnerSize,
+                  //   shadows: [
+                  //     BoxShadow(
+                  //       color: isSelected
+                  //           ? theme.scaffoldBackgroundColor
+                  //           : theme.colorScheme.primary.withValues(alpha: .1),
+                  //       blurRadius: isSelected ? 6 : 3,
+                  //       offset: const Offset(2, 3),
+                  //       blurStyle: BlurStyle.outer,
+                  //     ),
+                  //   ],
+                  // ),
                 ),
                 const SizedBox(height: _labelSpacing),
                 SizedBox(
