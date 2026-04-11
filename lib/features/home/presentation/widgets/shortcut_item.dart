@@ -60,27 +60,37 @@ class ShortcutItem extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  child: CachedNetworkImage(
-                    imageUrl: item.image,
-                    fit: BoxFit.cover,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: (item.image != null && item.image!.isNotEmpty)
+                        ? CachedNetworkImage(
+                            imageUrl: item.image!,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => Center(
+                              child: SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: theme.colorScheme.primary,
+                                ),
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Icon(
+                              item.icon,
+                              color: isSelected
+                                  ? theme.colorScheme.primary
+                                  : theme.colorScheme.onSurfaceVariant,
+                            ),
+                          )
+                        : Icon(
+                            item.icon,
+                            color: isSelected
+                                ? theme.colorScheme.primary
+                                : theme.colorScheme.onSurfaceVariant,
+                            size: _iconInnerSize,
+                          ),
                   ),
-                  // Icon(
-                  //   item.icon,
-                  //   color: isSelected
-                  //       ? theme.colorScheme.primary
-                  //       : theme.colorScheme.onSurfaceVariant,
-                  //   size: _iconInnerSize,
-                  //   shadows: [
-                  //     BoxShadow(
-                  //       color: isSelected
-                  //           ? theme.scaffoldBackgroundColor
-                  //           : theme.colorScheme.primary.withValues(alpha: .1),
-                  //       blurRadius: isSelected ? 6 : 3,
-                  //       offset: const Offset(2, 3),
-                  //       blurStyle: BlurStyle.outer,
-                  //     ),
-                  //   ],
-                  // ),
                 ),
                 const SizedBox(height: _labelSpacing),
                 SizedBox(
