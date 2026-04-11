@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Stronger Muscles'**
+  /// **'Electronics Shop'**
   String get appTitle;
 
   /// No description provided for @welcomeBack.
@@ -452,71 +452,53 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get categoryHome;
 
-  /// No description provided for @categoryProtein.
+  /// No description provided for @categoryPhones.
   ///
   /// In en, this message translates to:
-  /// **'Protein'**
-  String get categoryProtein;
+  /// **'Phones'**
+  String get categoryPhones;
 
-  /// No description provided for @categoryCreatine.
+  /// No description provided for @categoryWatches.
   ///
   /// In en, this message translates to:
-  /// **'Creatine'**
-  String get categoryCreatine;
+  /// **'Smart Watches'**
+  String get categoryWatches;
 
-  /// No description provided for @categoryAmino.
+  /// No description provided for @categoryLaptops.
   ///
   /// In en, this message translates to:
-  /// **'Amino'**
-  String get categoryAmino;
+  /// **'Laptops'**
+  String get categoryLaptops;
 
-  /// No description provided for @categoryBCAA.
+  /// No description provided for @categoryAudio.
   ///
   /// In en, this message translates to:
-  /// **'BCAA'**
-  String get categoryBCAA;
+  /// **'Audio'**
+  String get categoryAudio;
 
-  /// No description provided for @categoryPreWorkout.
+  /// No description provided for @categoryScreens.
   ///
   /// In en, this message translates to:
-  /// **'Pre-workout'**
-  String get categoryPreWorkout;
+  /// **'Screens'**
+  String get categoryScreens;
 
-  /// No description provided for @categoryMassGainer.
+  /// No description provided for @categoryCameras.
   ///
   /// In en, this message translates to:
-  /// **'Mass Gainer'**
-  String get categoryMassGainer;
+  /// **'Cameras'**
+  String get categoryCameras;
 
-  /// No description provided for @categoryVitamins.
+  /// No description provided for @categoryGaming.
   ///
   /// In en, this message translates to:
-  /// **'Vitamins'**
-  String get categoryVitamins;
+  /// **'Gaming'**
+  String get categoryGaming;
 
-  /// No description provided for @categoryRecovery.
+  /// No description provided for @categoryAccessories.
   ///
   /// In en, this message translates to:
-  /// **'Recovery'**
-  String get categoryRecovery;
-
-  /// No description provided for @categoryFatBurner.
-  ///
-  /// In en, this message translates to:
-  /// **'Fat Burner'**
-  String get categoryFatBurner;
-
-  /// No description provided for @categoryHealth.
-  ///
-  /// In en, this message translates to:
-  /// **'Health'**
-  String get categoryHealth;
-
-  /// No description provided for @categoryCarb.
-  ///
-  /// In en, this message translates to:
-  /// **'Carbs'**
-  String get categoryCarb;
+  /// **'Accessories'**
+  String get categoryAccessories;
 
   /// No description provided for @myAccount.
   ///
@@ -764,11 +746,11 @@ abstract class AppLocalizations {
   /// **'Please enter your full name'**
   String get enterName;
 
-  /// No description provided for @selectFlavor.
+  /// No description provided for @selectColor.
   ///
   /// In en, this message translates to:
-  /// **'Select Flavor'**
-  String get selectFlavor;
+  /// **'Select Color'**
+  String get selectColor;
 
   /// No description provided for @customerReviews.
   ///
@@ -782,6 +764,12 @@ abstract class AppLocalizations {
   /// **'Be the first to review this product'**
   String get beTheFirstToReviewThisProduct;
 
+  /// No description provided for @chooseYourColor.
+  ///
+  /// In en, this message translates to:
+  /// **'CHOOSE YOUR COLOR'**
+  String get chooseYourColor;
+
   /// No description provided for @noImagesAvailable.
   ///
   /// In en, this message translates to:
@@ -794,17 +782,17 @@ abstract class AppLocalizations {
   /// **'Product Image'**
   String get productImage;
 
-  /// No description provided for @warnings.
+  /// No description provided for @warrantyInfo.
   ///
   /// In en, this message translates to:
-  /// **'Warnings'**
-  String get warnings;
+  /// **'Warranty Info'**
+  String get warrantyInfo;
 
-  /// No description provided for @usageInstructions.
+  /// No description provided for @technicalSpecifications.
   ///
   /// In en, this message translates to:
-  /// **'Usage Instructions'**
-  String get usageInstructions;
+  /// **'Technical Specifications'**
+  String get technicalSpecifications;
 
   /// No description provided for @productInfo.
   ///
@@ -823,18 +811,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SKU'**
   String get sku;
-
-  /// No description provided for @servingSize.
-  ///
-  /// In en, this message translates to:
-  /// **'Serving Size'**
-  String get servingSize;
-
-  /// No description provided for @servingsPerContainer.
-  ///
-  /// In en, this message translates to:
-  /// **'Servings Per Container'**
-  String get servingsPerContainer;
 
   /// No description provided for @weight.
   ///
@@ -878,12 +854,6 @@ abstract class AppLocalizations {
   /// **'Featured'**
   String get featured;
 
-  /// No description provided for @ingredients.
-  ///
-  /// In en, this message translates to:
-  /// **'Ingredients'**
-  String get ingredients;
-
   /// No description provided for @addedToCart.
   ///
   /// In en, this message translates to:
@@ -902,11 +872,11 @@ abstract class AppLocalizations {
   /// **'Remove from Cart'**
   String get removeFromCart;
 
-  /// No description provided for @flavor.
+  /// No description provided for @color.
   ///
   /// In en, this message translates to:
-  /// **'Flavor'**
-  String get flavor;
+  /// **'Color'**
+  String get color;
 
   /// No description provided for @contactUs.
   ///

@@ -9,7 +9,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appTitle => 'عضلات أقوى';
+  String get appTitle => 'متجر الإلكترونيات';
 
   @override
   String get welcomeBack => 'مرحبًا بعودتك!';
@@ -188,37 +188,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get categoryHome => 'الرئيسية';
 
   @override
-  String get categoryProtein => 'بروتين';
+  String get categoryPhones => 'هواتف';
 
   @override
-  String get categoryCreatine => 'كرياتين';
+  String get categoryWatches => 'ساعات ذكية';
 
   @override
-  String get categoryAmino => 'أمينو';
+  String get categoryLaptops => 'لابتوبات';
 
   @override
-  String get categoryBCAA => 'BCAA';
+  String get categoryAudio => 'صوتيات';
 
   @override
-  String get categoryPreWorkout => 'مكملات الطاقة';
+  String get categoryScreens => 'شاشات';
 
   @override
-  String get categoryMassGainer => 'زيادة الوزن';
+  String get categoryCameras => 'كاميرات';
 
   @override
-  String get categoryVitamins => 'فيتامينات';
+  String get categoryGaming => 'ألعاب';
 
   @override
-  String get categoryRecovery => 'التعافي';
-
-  @override
-  String get categoryFatBurner => 'حرق الدهون';
-
-  @override
-  String get categoryHealth => 'الصحة العامة';
-
-  @override
-  String get categoryCarb => 'كربوهيدرات';
+  String get categoryAccessories => 'إكسسوارات';
 
   @override
   String get myAccount => 'حسابي';
@@ -324,7 +315,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get back => 'رجوع';
 
   @override
-  String get noProductsFound => 'لم يتم العثور على منتجات.';
+  String get noProductsFound => 'لم يتم العور على منتجات.';
 
   @override
   String get addToCart => 'أضف إلى السلة';
@@ -345,7 +336,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterName => 'يرجى إدخال اسمك الكامل';
 
   @override
-  String get selectFlavor => 'اختر النكهة';
+  String get selectColor => 'اختر اللون';
 
   @override
   String get customerReviews => 'تقييم العملاء';
@@ -354,16 +345,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get beTheFirstToReviewThisProduct => 'كن أول من يقيم هذا المنتج';
 
   @override
+  String get chooseYourColor => 'اختر اللون المفضل';
+
+  @override
   String get noImagesAvailable => 'لا توجد صور متاحة';
 
   @override
   String get productImage => 'صورة المنتج';
 
   @override
-  String get warnings => 'تحذيرات';
+  String get warrantyInfo => 'معلومات الضمان';
 
   @override
-  String get usageInstructions => 'طريقة الاستخدام';
+  String get technicalSpecifications => 'المواصفات التقنية';
 
   @override
   String get productInfo => 'معلومات المنتج';
@@ -373,12 +367,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sku => 'رمز المنتج';
-
-  @override
-  String get servingSize => 'حجم الحصة';
-
-  @override
-  String get servingsPerContainer => 'عدد الحصص';
 
   @override
   String get weight => 'الوزن';
@@ -402,9 +390,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featured => 'مميز';
 
   @override
-  String get ingredients => 'المكونات';
-
-  @override
   String get addedToCart => 'تم إضافة المنتج إلى السلة';
 
   @override
@@ -414,7 +399,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get removeFromCart => 'إزالة من السلة';
 
   @override
-  String get flavor => 'النكهة';
+  String get color => 'اللون';
 
   @override
   String get contactUs => 'اتصل بنا';

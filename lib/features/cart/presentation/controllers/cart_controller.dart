@@ -32,7 +32,7 @@ class CartController extends _$CartController {
 
   Future<void> addToCart(
     ProductModel product, {
-    String? selectedFlavor,
+    String? selectedColor,
     String? selectedSize,
   }) async {
     final authController = ref.read(authControllerProvider.notifier);
@@ -42,7 +42,7 @@ class CartController extends _$CartController {
     final existingItemIndex = currentItems.indexWhere(
       (item) =>
           item.product.id == product.id &&
-          item.selectedFlavor == selectedFlavor &&
+          item.selectedColor == selectedColor &&
           item.selectedSize == selectedSize,
     );
 
@@ -55,7 +55,7 @@ class CartController extends _$CartController {
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         userId: userId,
         product: product,
-        selectedFlavor: selectedFlavor,
+        selectedColor: selectedColor,
         selectedSize: selectedSize,
         addedAt: DateTime.now(),
       );
@@ -100,21 +100,21 @@ class CartController extends _$CartController {
 
   bool isInCart(
     ProductModel product, {
-    String? selectedFlavor,
+    String? selectedColor,
     String? selectedSize,
   }) {
     final currentItems = state.value ?? [];
     return currentItems.any(
       (item) =>
           item.product.id == product.id &&
-          item.selectedFlavor == selectedFlavor &&
+          item.selectedColor == selectedColor &&
           item.selectedSize == selectedSize,
     );
   }
 
   CartItemModel? getCartItem(
     ProductModel product, {
-    String? selectedFlavor,
+    String? selectedColor,
     String? selectedSize,
   }) {
     final currentItems = state.value ?? [];
@@ -122,7 +122,7 @@ class CartController extends _$CartController {
       return currentItems.firstWhere(
         (item) =>
             item.product.id == product.id &&
-            item.selectedFlavor == selectedFlavor &&
+            item.selectedColor == selectedColor &&
             item.selectedSize == selectedSize,
       );
     } catch (_) {

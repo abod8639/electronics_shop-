@@ -16,7 +16,7 @@ class CartItemModel with _$CartItemModel {
     @HiveField(2) required ProductModel product,
     @HiveField(3) @Default(1) int quantity,
     @HiveField(4) @JsonKey(name: 'added_at') DateTime? addedAt,
-    @HiveField(5) @JsonKey(name: 'selected_flavor') String? selectedFlavor,
+    @HiveField(5) @JsonKey(name: 'selected_color') String? selectedColor,
     @HiveField(6) @JsonKey(name: 'selected_size') String? selectedSize,
   }) = _CartItemModel;
 

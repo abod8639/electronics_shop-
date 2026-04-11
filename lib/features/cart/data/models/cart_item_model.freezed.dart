@@ -33,8 +33,8 @@ mixin _$CartItemModel {
   @JsonKey(name: 'added_at')
   DateTime? get addedAt => throw _privateConstructorUsedError;
   @HiveField(5)
-  @JsonKey(name: 'selected_flavor')
-  String? get selectedFlavor => throw _privateConstructorUsedError;
+  @JsonKey(name: 'selected_color')
+  String? get selectedColor => throw _privateConstructorUsedError;
   @HiveField(6)
   @JsonKey(name: 'selected_size')
   String? get selectedSize => throw _privateConstructorUsedError;
@@ -57,7 +57,7 @@ abstract class $CartItemModelCopyWith<$Res> {
       @HiveField(2) ProductModel product,
       @HiveField(3) int quantity,
       @HiveField(4) @JsonKey(name: 'added_at') DateTime? addedAt,
-      @HiveField(5) @JsonKey(name: 'selected_flavor') String? selectedFlavor,
+      @HiveField(5) @JsonKey(name: 'selected_color') String? selectedColor,
       @HiveField(6) @JsonKey(name: 'selected_size') String? selectedSize});
 
   $ProductModelCopyWith<$Res> get product;
@@ -81,7 +81,7 @@ class _$CartItemModelCopyWithImpl<$Res, $Val extends CartItemModel>
     Object? product = null,
     Object? quantity = null,
     Object? addedAt = freezed,
-    Object? selectedFlavor = freezed,
+    Object? selectedColor = freezed,
     Object? selectedSize = freezed,
   }) {
     return _then(_value.copyWith(
@@ -105,9 +105,9 @@ class _$CartItemModelCopyWithImpl<$Res, $Val extends CartItemModel>
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      selectedFlavor: freezed == selectedFlavor
-          ? _value.selectedFlavor
-          : selectedFlavor // ignore: cast_nullable_to_non_nullable
+      selectedColor: freezed == selectedColor
+          ? _value.selectedColor
+          : selectedColor // ignore: cast_nullable_to_non_nullable
               as String?,
       selectedSize: freezed == selectedSize
           ? _value.selectedSize
@@ -139,7 +139,7 @@ abstract class _$$CartItemModelImplCopyWith<$Res>
       @HiveField(2) ProductModel product,
       @HiveField(3) int quantity,
       @HiveField(4) @JsonKey(name: 'added_at') DateTime? addedAt,
-      @HiveField(5) @JsonKey(name: 'selected_flavor') String? selectedFlavor,
+      @HiveField(5) @JsonKey(name: 'selected_color') String? selectedColor,
       @HiveField(6) @JsonKey(name: 'selected_size') String? selectedSize});
 
   @override
@@ -162,7 +162,7 @@ class __$$CartItemModelImplCopyWithImpl<$Res>
     Object? product = null,
     Object? quantity = null,
     Object? addedAt = freezed,
-    Object? selectedFlavor = freezed,
+    Object? selectedColor = freezed,
     Object? selectedSize = freezed,
   }) {
     return _then(_$CartItemModelImpl(
@@ -186,9 +186,9 @@ class __$$CartItemModelImplCopyWithImpl<$Res>
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      selectedFlavor: freezed == selectedFlavor
-          ? _value.selectedFlavor
-          : selectedFlavor // ignore: cast_nullable_to_non_nullable
+      selectedColor: freezed == selectedColor
+          ? _value.selectedColor
+          : selectedColor // ignore: cast_nullable_to_non_nullable
               as String?,
       selectedSize: freezed == selectedSize
           ? _value.selectedSize
@@ -208,7 +208,7 @@ class _$CartItemModelImpl extends _CartItemModel {
       @HiveField(2) required this.product,
       @HiveField(3) this.quantity = 1,
       @HiveField(4) @JsonKey(name: 'added_at') this.addedAt,
-      @HiveField(5) @JsonKey(name: 'selected_flavor') this.selectedFlavor,
+      @HiveField(5) @JsonKey(name: 'selected_color') this.selectedColor,
       @HiveField(6) @JsonKey(name: 'selected_size') this.selectedSize})
       : super._();
 
@@ -235,8 +235,8 @@ class _$CartItemModelImpl extends _CartItemModel {
   final DateTime? addedAt;
   @override
   @HiveField(5)
-  @JsonKey(name: 'selected_flavor')
-  final String? selectedFlavor;
+  @JsonKey(name: 'selected_color')
+  final String? selectedColor;
   @override
   @HiveField(6)
   @JsonKey(name: 'selected_size')
@@ -244,7 +244,7 @@ class _$CartItemModelImpl extends _CartItemModel {
 
   @override
   String toString() {
-    return 'CartItemModel(id: $id, userId: $userId, product: $product, quantity: $quantity, addedAt: $addedAt, selectedFlavor: $selectedFlavor, selectedSize: $selectedSize)';
+    return 'CartItemModel(id: $id, userId: $userId, product: $product, quantity: $quantity, addedAt: $addedAt, selectedColor: $selectedColor, selectedSize: $selectedSize)';
   }
 
   @override
@@ -258,8 +258,8 @@ class _$CartItemModelImpl extends _CartItemModel {
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
             (identical(other.addedAt, addedAt) || other.addedAt == addedAt) &&
-            (identical(other.selectedFlavor, selectedFlavor) ||
-                other.selectedFlavor == selectedFlavor) &&
+            (identical(other.selectedColor, selectedColor) ||
+                other.selectedColor == selectedColor) &&
             (identical(other.selectedSize, selectedSize) ||
                 other.selectedSize == selectedSize));
   }
@@ -267,7 +267,7 @@ class _$CartItemModelImpl extends _CartItemModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, userId, product, quantity,
-      addedAt, selectedFlavor, selectedSize);
+      addedAt, selectedColor, selectedSize);
 
   @JsonKey(ignore: true)
   @override
@@ -291,8 +291,8 @@ abstract class _CartItemModel extends CartItemModel {
       @HiveField(3) final int quantity,
       @HiveField(4) @JsonKey(name: 'added_at') final DateTime? addedAt,
       @HiveField(5)
-      @JsonKey(name: 'selected_flavor')
-      final String? selectedFlavor,
+      @JsonKey(name: 'selected_color')
+      final String? selectedColor,
       @HiveField(6)
       @JsonKey(name: 'selected_size')
       final String? selectedSize}) = _$CartItemModelImpl;
@@ -320,8 +320,8 @@ abstract class _CartItemModel extends CartItemModel {
   DateTime? get addedAt;
   @override
   @HiveField(5)
-  @JsonKey(name: 'selected_flavor')
-  String? get selectedFlavor;
+  @JsonKey(name: 'selected_color')
+  String? get selectedColor;
   @override
   @HiveField(6)
   @JsonKey(name: 'selected_size')

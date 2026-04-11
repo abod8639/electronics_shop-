@@ -28,7 +28,7 @@ Widget buildProductInfo(
     context.push(AppRoutes.search , extra: false);
   }
 
-  final dataMap = [
+    final List<Map<String, dynamic>> dataMap = [
     if (product.brand?.isNotEmpty ?? false)
       {'label': l10n.brand, 'value': product.brand!, 'isLink': true},
     if (product.category?.name != null)

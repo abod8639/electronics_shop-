@@ -22,7 +22,7 @@ class CartItemModelAdapter extends TypeAdapter<_$CartItemModelImpl> {
       product: fields[2] as ProductModel,
       quantity: fields[3] as int,
       addedAt: fields[4] as DateTime?,
-      selectedFlavor: fields[5] as String?,
+      selectedColor: fields[5] as String?,
       selectedSize: fields[6] as String?,
     );
   }
@@ -42,7 +42,7 @@ class CartItemModelAdapter extends TypeAdapter<_$CartItemModelImpl> {
       ..writeByte(4)
       ..write(obj.addedAt)
       ..writeByte(5)
-      ..write(obj.selectedFlavor)
+      ..write(obj.selectedColor)
       ..writeByte(6)
       ..write(obj.selectedSize);
   }
@@ -71,7 +71,7 @@ _$CartItemModelImpl _$$CartItemModelImplFromJson(Map<String, dynamic> json) =>
       addedAt: json['added_at'] == null
           ? null
           : DateTime.parse(json['added_at'] as String),
-      selectedFlavor: json['selected_flavor'] as String?,
+      selectedColor: json['selected_color'] as String?,
       selectedSize: json['selected_size'] as String?,
     );
 
@@ -82,6 +82,6 @@ Map<String, dynamic> _$$CartItemModelImplToJson(_$CartItemModelImpl instance) =>
       'product': instance.product,
       'quantity': instance.quantity,
       'added_at': instance.addedAt?.toIso8601String(),
-      'selected_flavor': instance.selectedFlavor,
+      'selected_color': instance.selectedColor,
       'selected_size': instance.selectedSize,
     };

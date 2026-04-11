@@ -97,7 +97,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               extra['product'] is ProductModel) {
             return ProductDetailsView(
               product: extra['product'] as ProductModel,
-              initialFlavor: extra['selectedFlavor'] as String?,
+              initialColor: extra['selectedColor'] as String?,
               initialSize: extra['selectedSize'] as String?,
             );
           }

@@ -1,9 +1,9 @@
+import 'package:electronics_shop/core/utils/components/color_variant_image.dart';
+import 'package:electronics_shop/features/product_details/presentation/widgets/product_color_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/cart/data/models/cart_item_model.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
-import 'package:electronics_shop/core/utils/components/flavor_image.dart';
-import 'package:electronics_shop/features/product_details/presentation/widgets/product_flavor_selector.dart';
 
 const double _titleFontSize = 18.0;
 const double _priceFontSize = 16.0;
@@ -46,24 +46,24 @@ Widget buildProductCartDetails(CartItemModel item) {
           ),
 
           // Selected Flavor
-          if (item.selectedFlavor != null && item.selectedFlavor!.isNotEmpty)
+          if (item.selectedColor != null && item.selectedColor!.isNotEmpty)
             Row(
               children: [
                 selectedValue(
-                  title: AppLocalizations.of(context)!.flavor,
-                  value: item.selectedFlavor!,
+                  title: AppLocalizations.of(context)!.color,
+                  value: item.selectedColor!,
                   item: item,
                 ),
 
                 const Spacer(),
 
-                FlavorImage(
+                ColorVariantImage(
                   shadow: false,
                   width: 90,
                   height: 30,
                   isSelected: false,
                   baseColor: AppColors.primary,
-                  details: getFlavorDetails(item.selectedFlavor!),
+                  details: getColorDetails(item.selectedColor!),
                 ),
               ],
             ),

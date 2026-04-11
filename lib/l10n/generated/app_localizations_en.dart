@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Stronger Muscles';
+  String get appTitle => 'Electronics Shop';
 
   @override
   String get welcomeBack => 'Welcome Back!';
@@ -188,37 +188,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryHome => 'Home';
 
   @override
-  String get categoryProtein => 'Protein';
+  String get categoryPhones => 'Phones';
 
   @override
-  String get categoryCreatine => 'Creatine';
+  String get categoryWatches => 'Smart Watches';
 
   @override
-  String get categoryAmino => 'Amino';
+  String get categoryLaptops => 'Laptops';
 
   @override
-  String get categoryBCAA => 'BCAA';
+  String get categoryAudio => 'Audio';
 
   @override
-  String get categoryPreWorkout => 'Pre-workout';
+  String get categoryScreens => 'Screens';
 
   @override
-  String get categoryMassGainer => 'Mass Gainer';
+  String get categoryCameras => 'Cameras';
 
   @override
-  String get categoryVitamins => 'Vitamins';
+  String get categoryGaming => 'Gaming';
 
   @override
-  String get categoryRecovery => 'Recovery';
-
-  @override
-  String get categoryFatBurner => 'Fat Burner';
-
-  @override
-  String get categoryHealth => 'Health';
-
-  @override
-  String get categoryCarb => 'Carbs';
+  String get categoryAccessories => 'Accessories';
 
   @override
   String get myAccount => 'My Account';
@@ -345,7 +336,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterName => 'Please enter your full name';
 
   @override
-  String get selectFlavor => 'Select Flavor';
+  String get selectColor => 'Select Color';
 
   @override
   String get customerReviews => 'Customer Reviews';
@@ -355,16 +346,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Be the first to review this product';
 
   @override
+  String get chooseYourColor => 'CHOOSE YOUR COLOR';
+
+  @override
   String get noImagesAvailable => 'No images available';
 
   @override
   String get productImage => 'Product Image';
 
   @override
-  String get warnings => 'Warnings';
+  String get warrantyInfo => 'Warranty Info';
 
   @override
-  String get usageInstructions => 'Usage Instructions';
+  String get technicalSpecifications => 'Technical Specifications';
 
   @override
   String get productInfo => 'Product Info';
@@ -374,12 +368,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sku => 'SKU';
-
-  @override
-  String get servingSize => 'Serving Size';
-
-  @override
-  String get servingsPerContainer => 'Servings Per Container';
 
   @override
   String get weight => 'Weight';
@@ -403,9 +391,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featured => 'Featured';
 
   @override
-  String get ingredients => 'Ingredients';
-
-  @override
   String get addedToCart => 'Added to Cart';
 
   @override
@@ -415,7 +400,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get removeFromCart => 'Remove from Cart';
 
   @override
-  String get flavor => 'Flavor';
+  String get color => 'Color';
 
   @override
   String get contactUs => 'Contact Us';

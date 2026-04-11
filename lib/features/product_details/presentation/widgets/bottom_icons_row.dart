@@ -75,7 +75,7 @@ class BottomIconsRow extends ConsumerWidget {
   ) {
     final item = cartNotifier.getCartItem(
       product,
-      selectedFlavor: detailsState.selectedFlavor,
+      selectedColor: detailsState.selectedColor,
       selectedSize: detailsState.selectedSizeObject?.size,
     );
 
@@ -105,7 +105,7 @@ class BottomIconsRow extends ConsumerWidget {
           : () {
               cartNotifier.addToCart(
                 product,
-                selectedFlavor: detailsState.selectedFlavor,
+                selectedColor: detailsState.selectedColor,
                 selectedSize: detailsState.selectedSizeObject?.size,
               );
             },

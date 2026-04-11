@@ -7,7 +7,7 @@ part of 'product_details_controller.dart';
 // **************************************************************************
 
 String _$productDetailsControllerHash() =>
-    r'dd74347558f082924ce804d190871e8a32a7d67b';
+    r'9b815d09cb978e996171832057135e6a707f0daa';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -33,12 +33,12 @@ class _SystemHash {
 abstract class _$ProductDetailsController
     extends BuildlessAutoDisposeNotifier<ProductDetailsState> {
   late final ProductModel product;
-  late final String? initialFlavor;
+  late final String? initialColor;
   late final String? initialSize;
 
   ProductDetailsState build(
     ProductModel product, {
-    String? initialFlavor,
+    String? initialColor,
     String? initialSize,
   });
 }
@@ -55,12 +55,12 @@ class ProductDetailsControllerFamily extends Family<ProductDetailsState> {
   /// See also [ProductDetailsController].
   ProductDetailsControllerProvider call(
     ProductModel product, {
-    String? initialFlavor,
+    String? initialColor,
     String? initialSize,
   }) {
     return ProductDetailsControllerProvider(
       product,
-      initialFlavor: initialFlavor,
+      initialColor: initialColor,
       initialSize: initialSize,
     );
   }
@@ -71,7 +71,7 @@ class ProductDetailsControllerFamily extends Family<ProductDetailsState> {
   ) {
     return call(
       provider.product,
-      initialFlavor: provider.initialFlavor,
+      initialColor: provider.initialColor,
       initialSize: provider.initialSize,
     );
   }
@@ -97,12 +97,12 @@ class ProductDetailsControllerProvider extends AutoDisposeNotifierProviderImpl<
   /// See also [ProductDetailsController].
   ProductDetailsControllerProvider(
     ProductModel product, {
-    String? initialFlavor,
+    String? initialColor,
     String? initialSize,
   }) : this._internal(
           () => ProductDetailsController()
             ..product = product
-            ..initialFlavor = initialFlavor
+            ..initialColor = initialColor
             ..initialSize = initialSize,
           from: productDetailsControllerProvider,
           name: r'productDetailsControllerProvider',
@@ -114,7 +114,7 @@ class ProductDetailsControllerProvider extends AutoDisposeNotifierProviderImpl<
           allTransitiveDependencies:
               ProductDetailsControllerFamily._allTransitiveDependencies,
           product: product,
-          initialFlavor: initialFlavor,
+          initialColor: initialColor,
           initialSize: initialSize,
         );
 
@@ -126,12 +126,12 @@ class ProductDetailsControllerProvider extends AutoDisposeNotifierProviderImpl<
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.product,
-    required this.initialFlavor,
+    required this.initialColor,
     required this.initialSize,
   }) : super.internal();
 
   final ProductModel product;
-  final String? initialFlavor;
+  final String? initialColor;
   final String? initialSize;
 
   @override
@@ -140,7 +140,7 @@ class ProductDetailsControllerProvider extends AutoDisposeNotifierProviderImpl<
   ) {
     return notifier.build(
       product,
-      initialFlavor: initialFlavor,
+      initialColor: initialColor,
       initialSize: initialSize,
     );
   }
@@ -152,7 +152,7 @@ class ProductDetailsControllerProvider extends AutoDisposeNotifierProviderImpl<
       override: ProductDetailsControllerProvider._internal(
         () => create()
           ..product = product
-          ..initialFlavor = initialFlavor
+          ..initialColor = initialColor
           ..initialSize = initialSize,
         from: from,
         name: null,
@@ -160,7 +160,7 @@ class ProductDetailsControllerProvider extends AutoDisposeNotifierProviderImpl<
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         product: product,
-        initialFlavor: initialFlavor,
+        initialColor: initialColor,
         initialSize: initialSize,
       ),
     );
@@ -176,7 +176,7 @@ class ProductDetailsControllerProvider extends AutoDisposeNotifierProviderImpl<
   bool operator ==(Object other) {
     return other is ProductDetailsControllerProvider &&
         other.product == product &&
-        other.initialFlavor == initialFlavor &&
+        other.initialColor == initialColor &&
         other.initialSize == initialSize;
   }
 
@@ -184,7 +184,7 @@ class ProductDetailsControllerProvider extends AutoDisposeNotifierProviderImpl<
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, product.hashCode);
-    hash = _SystemHash.combine(hash, initialFlavor.hashCode);
+    hash = _SystemHash.combine(hash, initialColor.hashCode);
     hash = _SystemHash.combine(hash, initialSize.hashCode);
 
     return _SystemHash.finish(hash);
@@ -196,8 +196,8 @@ mixin ProductDetailsControllerRef
   /// The parameter `product` of this provider.
   ProductModel get product;
 
-  /// The parameter `initialFlavor` of this provider.
-  String? get initialFlavor;
+  /// The parameter `initialColor` of this provider.
+  String? get initialColor;
 
   /// The parameter `initialSize` of this provider.
   String? get initialSize;
@@ -212,8 +212,8 @@ class _ProductDetailsControllerProviderElement
   ProductModel get product =>
       (origin as ProductDetailsControllerProvider).product;
   @override
-  String? get initialFlavor =>
-      (origin as ProductDetailsControllerProvider).initialFlavor;
+  String? get initialColor =>
+      (origin as ProductDetailsControllerProvider).initialColor;
   @override
   String? get initialSize =>
       (origin as ProductDetailsControllerProvider).initialSize;
