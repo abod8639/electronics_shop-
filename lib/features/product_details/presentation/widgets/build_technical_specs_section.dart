@@ -4,8 +4,12 @@ import 'package:electronics_shop/features/product/data/models/product_model.dart
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
 Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
-  final specs = product.technicalSpecifications;
-  if (specs == null || specs.isEmpty) return const SizedBox.shrink();
+  final dynamic technicalSpecs = product.technicalSpecifications;
+  if (technicalSpecs == null || technicalSpecs is! Map || technicalSpecs.isEmpty) {
+    return const SizedBox.shrink();
+  }
+
+  final specs = Map<String, dynamic>.from(technicalSpecs);
 
   return Builder(
     builder: (context) {
@@ -31,7 +35,7 @@ Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
-              children: specs.entries.map((entry) {
+              children: specs.entries.map<Widget>((entry) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Row(

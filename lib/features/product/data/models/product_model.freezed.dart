@@ -52,8 +52,7 @@ mixin _$ProductModel {
   int get reviewCount => throw _privateConstructorUsedError;
   @HiveField(12)
   @JsonKey(name: 'technical_specifications')
-  Map<String, dynamic>? get technicalSpecifications =>
-      throw _privateConstructorUsedError;
+  dynamic get technicalSpecifications => throw _privateConstructorUsedError;
   @HiveField(13)
   @JsonKey(name: 'warranty_info')
   String? get warrantyInfo => throw _privateConstructorUsedError;
@@ -129,7 +128,7 @@ abstract class $ProductModelCopyWith<$Res> {
       @HiveField(11) @JsonKey(name: 'review_count') int reviewCount,
       @HiveField(12)
       @JsonKey(name: 'technical_specifications')
-      Map<String, dynamic>? technicalSpecifications,
+      dynamic technicalSpecifications,
       @HiveField(13) @JsonKey(name: 'warranty_info') String? warrantyInfo,
       @HiveField(15) @JsonKey(name: 'colors') List<String> colors,
       @HiveField(16)
@@ -255,7 +254,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
       technicalSpecifications: freezed == technicalSpecifications
           ? _value.technicalSpecifications
           : technicalSpecifications // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
+              as dynamic,
       warrantyInfo: freezed == warrantyInfo
           ? _value.warrantyInfo
           : warrantyInfo // ignore: cast_nullable_to_non_nullable
@@ -387,7 +386,7 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       @HiveField(11) @JsonKey(name: 'review_count') int reviewCount,
       @HiveField(12)
       @JsonKey(name: 'technical_specifications')
-      Map<String, dynamic>? technicalSpecifications,
+      dynamic technicalSpecifications,
       @HiveField(13) @JsonKey(name: 'warranty_info') String? warrantyInfo,
       @HiveField(15) @JsonKey(name: 'colors') List<String> colors,
       @HiveField(16)
@@ -512,9 +511,9 @@ class __$$ProductModelImplCopyWithImpl<$Res>
           : reviewCount // ignore: cast_nullable_to_non_nullable
               as int,
       technicalSpecifications: freezed == technicalSpecifications
-          ? _value._technicalSpecifications
+          ? _value.technicalSpecifications
           : technicalSpecifications // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
+              as dynamic,
       warrantyInfo: freezed == warrantyInfo
           ? _value.warrantyInfo
           : warrantyInfo // ignore: cast_nullable_to_non_nullable
@@ -607,7 +606,7 @@ class _$ProductModelImpl extends _ProductModel {
       @HiveField(11) @JsonKey(name: 'review_count') this.reviewCount = 0,
       @HiveField(12)
       @JsonKey(name: 'technical_specifications')
-      final Map<String, dynamic>? technicalSpecifications,
+      this.technicalSpecifications,
       @HiveField(13) @JsonKey(name: 'warranty_info') this.warrantyInfo,
       @HiveField(15)
       @JsonKey(name: 'colors')
@@ -632,7 +631,6 @@ class _$ProductModelImpl extends _ProductModel {
       @HiveField(30) this.manufacturer,
       @HiveField(31) @JsonKey(name: 'country_of_origin') this.countryOfOrigin})
       : _imageUrls = imageUrls,
-        _technicalSpecifications = technicalSpecifications,
         _colors = colors,
         _productSizes = productSizes,
         _size = size,
@@ -691,19 +689,10 @@ class _$ProductModelImpl extends _ProductModel {
   @HiveField(11)
   @JsonKey(name: 'review_count')
   final int reviewCount;
-  final Map<String, dynamic>? _technicalSpecifications;
   @override
   @HiveField(12)
   @JsonKey(name: 'technical_specifications')
-  Map<String, dynamic>? get technicalSpecifications {
-    final value = _technicalSpecifications;
-    if (value == null) return null;
-    if (_technicalSpecifications is EqualUnmodifiableMapView)
-      return _technicalSpecifications;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
-
+  final dynamic technicalSpecifications;
   @override
   @HiveField(13)
   @JsonKey(name: 'warranty_info')
@@ -826,7 +815,7 @@ class _$ProductModelImpl extends _ProductModel {
             (identical(other.reviewCount, reviewCount) ||
                 other.reviewCount == reviewCount) &&
             const DeepCollectionEquality().equals(
-                other._technicalSpecifications, _technicalSpecifications) &&
+                other.technicalSpecifications, technicalSpecifications) &&
             (identical(other.warrantyInfo, warrantyInfo) ||
                 other.warrantyInfo == warrantyInfo) &&
             const DeepCollectionEquality().equals(other._colors, _colors) &&
@@ -874,7 +863,7 @@ class _$ProductModelImpl extends _ProductModel {
         stockQuantity,
         averageRating,
         reviewCount,
-        const DeepCollectionEquality().hash(_technicalSpecifications),
+        const DeepCollectionEquality().hash(technicalSpecifications),
         warrantyInfo,
         const DeepCollectionEquality().hash(_colors),
         const DeepCollectionEquality().hash(_productSizes),
@@ -928,7 +917,7 @@ abstract class _ProductModel extends ProductModel {
       @HiveField(11) @JsonKey(name: 'review_count') final int reviewCount,
       @HiveField(12)
       @JsonKey(name: 'technical_specifications')
-      final Map<String, dynamic>? technicalSpecifications,
+      final dynamic technicalSpecifications,
       @HiveField(13) @JsonKey(name: 'warranty_info') final String? warrantyInfo,
       @HiveField(15) @JsonKey(name: 'colors') final List<String> colors,
       @HiveField(16)
@@ -1002,7 +991,7 @@ abstract class _ProductModel extends ProductModel {
   @override
   @HiveField(12)
   @JsonKey(name: 'technical_specifications')
-  Map<String, dynamic>? get technicalSpecifications;
+  dynamic get technicalSpecifications;
   @override
   @HiveField(13)
   @JsonKey(name: 'warranty_info')

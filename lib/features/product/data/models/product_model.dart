@@ -50,7 +50,7 @@ class ProductModel with _$ProductModel {
     @HiveField(11) @JsonKey(name: 'review_count') @Default(0) int reviewCount,
     @HiveField(12)
     @JsonKey(name: 'technical_specifications')
-    Map<String, dynamic>? technicalSpecifications,
+    dynamic technicalSpecifications,
     @HiveField(13)
     @JsonKey(name: 'warranty_info')
     String? warrantyInfo,
@@ -167,10 +167,12 @@ class ProductModel with _$ProductModel {
 
   /// Get the base effective price, fallback to first size if 0
   double get baseEffectivePrice {
+    if (discountPrice != null && discountPrice! > 0) return discountPrice!;
+    if (price > 0) return price;
     if (productSizes.isNotEmpty) return productSizes.first.effectivePrice;
     return 0;
   }
 
   /// Check if the base price has a discount
-  bool get baseHasDiscount => baseEffectivePrice < basePrice && basePrice > 0;
+  bool get baseHasDiscount => discountPrice != null && discountPrice! < price && price > 0;
 }

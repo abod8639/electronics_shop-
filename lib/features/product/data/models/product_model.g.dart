@@ -29,7 +29,7 @@ class ProductModelAdapter extends TypeAdapter<ProductModel> {
       stockQuantity: fields[9] as int,
       averageRating: fields[10] as double,
       reviewCount: fields[11] as int,
-      technicalSpecifications: (fields[12] as Map?)?.cast<String, dynamic>(),
+      technicalSpecifications: fields[12] as dynamic,
       warrantyInfo: fields[13] as String?,
       colors: (fields[15] as List).cast<String>(),
       productSizes: (fields[16] as List).cast<ProductSize>(),
@@ -155,8 +155,7 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       stockQuantity: (json['stock_quantity'] as num?)?.toInt() ?? 0,
       averageRating: (json['average_rating'] as num?)?.toDouble() ?? 0.0,
       reviewCount: (json['review_count'] as num?)?.toInt() ?? 0,
-      technicalSpecifications:
-          json['technical_specifications'] as Map<String, dynamic>?,
+      technicalSpecifications: json['technical_specifications'],
       warrantyInfo: json['warranty_info'] as String?,
       colors: (json['colors'] as List<dynamic>?)
               ?.map((e) => e as String)

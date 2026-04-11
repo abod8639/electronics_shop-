@@ -57,7 +57,7 @@ class _ProductSearchAutocompleteState
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
     final controller = ref.watch(productSearchControllerProvider.notifier);
-    final homeProducts = ref.watch(homeControllerProvider).value ?? [];
+    final homeProducts = ref.watch(homeControllerProvider).asData?.value ?? [];
     final searchHistory = ref.watch(searchHistoryProvider);
     final locale = l10n.localeName;
 

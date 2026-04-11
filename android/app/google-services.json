@@ -12,7 +12,20 @@
           "package_name": "com.example.electronics_shop"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "708261184819-5h0ssi3vfld63cis0euar25bjdh3uegt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.electronics_shop",
+            "certificate_hash": "b59d5cfc10c02480471247c40491196325a66988"
+          }
+        },
+        {
+          "client_id": "708261184819-1r52c4sjsl3nngboq6imk0g3cu554vl7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC-oxmgD6Xxhjky9thbOOI9glmqesoMhSU"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "708261184819-1r52c4sjsl3nngboq6imk0g3cu554vl7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

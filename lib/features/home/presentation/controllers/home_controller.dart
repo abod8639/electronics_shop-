@@ -14,19 +14,15 @@ class HomeController extends _$HomeController {
     final cachedProducts = productRepository.getCachedProducts();
     if (cachedProducts.isNotEmpty) {
       _products = cachedProducts;
-      // لا نحتاج لاستدعاء void هنا كقيمة، بل كعملية جانبية
-      _initFetch();
       return _products;
     }
 
-    await fetchProductsForSection(_selectedSectionIndex);
+    _products = await productRepository.getProducts(
+      categoryId: null,
+    );
     return _products;
   }
 
-  // دالة مساعدة لبدء التحميل في الخلفية دون تعطيل الـ build
-  Future<void> _initFetch() async {
-    await fetchProductsForSection(_selectedSectionIndex);
-  }
 
   List<ProductModel> _products = [];
   int _selectedSectionIndex = 0;
