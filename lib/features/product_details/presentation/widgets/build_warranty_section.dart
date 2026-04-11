@@ -3,102 +3,51 @@ import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
-Widget buildUsageAndWarnings(ProductModel product, bool isDark) {
-  final hasUsage =
-      product.usageInstructions != null &&
-      product.usageInstructions!.isNotEmpty;
-  final hasWarnings = product.warnings.isNotEmpty;
-
-  if (!hasUsage && !hasWarnings) return const SizedBox.shrink();
+Widget buildWarrantySection(ProductModel product, bool isDark) {
+  final warranty = product.warrantyInfo;
+  if (warranty == null || warranty.isEmpty) return const SizedBox.shrink();
 
   return Builder(
     builder: (context) {
+      final l10n = AppLocalizations.of(context)!;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Usage Instructions
-          if (hasUsage) ...[
-            Text(
-              AppLocalizations.of(context)!.usageInstructions,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: isDark ? AppColors.white : AppColors.black,
-              ),
+          Text(
+            l10n.warrantyInfo,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: isDark ? AppColors.white : AppColors.black,
             ),
-            const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.blue.withValues(alpha: .1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.blue.withValues(alpha: .3)),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(Icons.info_outline, color: Colors.blue, size: 20),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      product.usageInstructions!,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: isDark ? AppColors.white : AppColors.black,
-                        height: 1.5,
-                      ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: AppColors.info.withValues(alpha: .1),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.info.withValues(alpha: .3)),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.verified_user_outlined, color: AppColors.info, size: 20),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    warranty,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: isDark ? AppColors.white : AppColors.black,
+                      height: 1.5,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-          ],
-
-          // Warnings
-          if (hasWarnings) ...[
-            Text(
-              AppLocalizations.of(context)!.warnings,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: isDark ? AppColors.white : AppColors.black,
-              ),
-            ),
-            const SizedBox(height: 12),
-            ...product.warnings.map((warning) {
-              return Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.red.withValues(alpha: .1),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.red.withValues(alpha: .3)),
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.warning_amber_rounded,
-                      color: Colors.red,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        warning,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: isDark ? AppColors.white : AppColors.black,
-                          height: 1.5,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
-          ],
+              ],
+            ),
+          ),
         ],
       );
     },

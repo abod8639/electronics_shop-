@@ -35,9 +35,8 @@ Widget buildProductInfo(
       {'label': l10n.category, 'value': product.category!.getLocalizedName(locale: locale)},
     if (product.sku != null) 
       {'label': l10n.sku, 'value': product.sku!},
-    if (product.servingSize != null) 
-      {'label': l10n.servingSize, 'value': product.servingSize!},
-    {'label': l10n.servingsPerContainer, 'value': '${product.servingsPerContainer}'},
+    if (product.warrantyInfo != null) 
+      {'label': l10n.warrantyInfo, 'value': product.warrantyInfo!},
     if (product.weight != null) 
       {'label': l10n.weight, 'value': '${product.weight} كجم'},
     if (product.manufacturer != null) 

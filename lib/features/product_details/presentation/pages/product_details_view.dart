@@ -9,15 +9,15 @@ import 'package:electronics_shop/features/product_details/presentation/controlle
 import 'package:electronics_shop/features/product_details/presentation/widgets/bottom_icons_row.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/build_product_price.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/image_list_view.dart';
-import 'package:electronics_shop/features/product_details/presentation/widgets/product_flavor_selector.dart';
+import 'package:electronics_shop/features/product_details/presentation/widgets/product_color_selector.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/build_description_section.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/build_product_name.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/build_show_reviews_list_section.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/main_image.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/build_product_badges.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/build_product_info.dart';
-import 'package:electronics_shop/features/product_details/presentation/widgets/build_ingredients_section.dart';
-import 'package:electronics_shop/features/product_details/presentation/widgets/build_usage_and_warnings.dart';
+import 'package:electronics_shop/features/product_details/presentation/widgets/build_technical_specs_section.dart';
+import 'package:electronics_shop/features/product_details/presentation/widgets/build_warranty_section.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/product_size_selector.dart';
 
 class ProductDetailsView extends ConsumerWidget {
@@ -28,19 +28,18 @@ class ProductDetailsView extends ConsumerWidget {
   static const double _bottomPadding = 32.0;
 
   final ProductModel? product;
-  final String? initialFlavor;
+  final String? initialColor;
   final String? initialSize;
 
   const ProductDetailsView({
     super.key,
     this.product,
-    this.initialFlavor,
+    this.initialColor,
     this.initialSize,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // If product is null, try to get it from arguments (though extra is preferred)
     if (product == null) {
       return const Scaffold(body: Center(child: Text("Product not found")));
     }
@@ -52,14 +51,14 @@ class ProductDetailsView extends ConsumerWidget {
     final detailsState = ref.watch(
       productDetailsControllerProvider(
         product!,
-        initialFlavor: initialFlavor,
+        initialColor: initialColor,
         initialSize: initialSize,
       ),
     );
     final detailsNotifier = ref.watch(
       productDetailsControllerProvider(
         product!,
-        initialFlavor: initialFlavor,
+        initialColor: initialColor,
         initialSize: initialSize,
       ).notifier,
     );
@@ -87,33 +86,33 @@ class ProductDetailsView extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Container(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: AppColors.surfaceDark .withAlpha(100),
+                      borderRadius: BorderRadius.circular(12),
+                      color: AppColors.surfaceDark.withAlpha(100),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                  buildProductName(product!),
-                  const SizedBox(
-                    width: double.infinity,
-                    height: _smallSpacing),
-
-                  buildProductPrice(
-                    product!,
-                    alternateEffectivePrice: detailsNotifier
-                        .getDisplayEffectivePrice(product!),
-                    alternateOriginalPrice: detailsNotifier.getDisplayPrice(
-                      product!,
+                        buildProductName(product!),
+                        const SizedBox(
+                          width: double.infinity,
+                          height: _smallSpacing,
+                        ),
+                        buildProductPrice(
+                          product!,
+                          alternateEffectivePrice: detailsNotifier
+                              .getDisplayEffectivePrice(product!),
+                          alternateOriginalPrice: detailsNotifier.getDisplayPrice(
+                            product!,
+                          ),
+                          alternateHasDiscount: detailsNotifier.getDisplayHasDiscount(
+                            product!,
+                          ),
+                        ),
+                      ],
                     ),
-                    alternateHasDiscount: detailsNotifier.getDisplayHasDiscount(
-                      product!,
-                    ),
-                  ),
-                    ],),
                   ),
 
                   const SizedBox(height: _smallSpacing),
@@ -121,12 +120,12 @@ class ProductDetailsView extends ConsumerWidget {
                   const SizedBox(height: _mediumSpacing),
                   ImageListView(product: product!),
                   const SizedBox(height: _mediumSpacing),
-                  if (product!.flavors.isNotEmpty) ...[
-                    ProductFlavorSelector(
+                  if (product!.colors.isNotEmpty) ...[
+                    ProductColorSelector(
                       product: product!,
-                      selectedFlavor: detailsState.selectedFlavor,
-                      onFlavorSelected: (selectedFlavor) {
-                        detailsNotifier.updateFlavor(selectedFlavor);
+                      selectedColor: detailsState.selectedColor,
+                      onColorSelected: (selectedColor) {
+                        detailsNotifier.updateColor(selectedColor);
                       },
                     ),
                     const SizedBox(height: _mediumSpacing),
@@ -147,9 +146,9 @@ class ProductDetailsView extends ConsumerWidget {
                   const SizedBox(height: _sectionSpacing),
                   buildProductInfo(product!, isDark, context, ref),
                   const SizedBox(height: _sectionSpacing),
-                  buildIngredientsSection(product!, isDark),
+                  buildTechnicalSpecsSection(product!, isDark),
                   const SizedBox(height: _sectionSpacing),
-                  buildUsageAndWarnings(product!, isDark),
+                  buildWarrantySection(product!, isDark),
                   const SizedBox(height: _sectionSpacing),
                   buildShowReviewsListSection(product!),
                   const SizedBox(height: _bottomPadding),
