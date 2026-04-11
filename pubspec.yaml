@@ -22,8 +22,10 @@ dependencies:
   hive_flutter: ^1.1.0
   google_sign_in: ^7.2.0
   flutter_svg: ^2.2.1
-  icons_launcher: ^3.0.3
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.4
   easy_image_viewer: ^1.5.1
+  get: ^4.6.6
   intl: ^0.20.2
   google_maps_flutter: ^2.14.0  
   flutter_lints: ^6.0.0
@@ -64,12 +66,17 @@ flutter:
   assets:
     - .env
 
-icons_launcher:
-  image_path: "assets/icon/icon.png"
-  platforms:
-    android:
-      enable: true
-    ios:
-      enable: true
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/app_icon.png"
+  min_sdk_android: 21
+
+flutter_native_splash:
+  color: "#0e0e0e"
+  image: assets/icon/app_icon.png
+  android: true
+  ios: true
+  fullscreen: true
 flutter_intl:
   enabled: true

@@ -18,10 +18,12 @@ import 'package:electronics_shop/features/search/presentation/pages/searchs_page
 import 'package:electronics_shop/features/checkout/presentation/pages/checkout_view.dart';
 import 'package:electronics_shop/features/checkout/presentation/pages/order_success_view.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
+import 'package:electronics_shop/features/splash/presentation/pages/splash_view.dart';
 import 'package:electronics_shop/features/auth/presentation/controllers/auth_controller.dart';
 
 class AppRoutes {
-  static const String main = '/';
+  static const String main = '/main';
+  static const String splash = '/';
   static const String auth = '/auth';
   static const String signIn = '/signin';
   static const String signUp = '/signup';
@@ -40,7 +42,7 @@ class AppRoutes {
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: AppRoutes.main,
+    initialLocation: AppRoutes.splash,
     refreshListenable: AuthRefreshListenable(ref),
     redirect: (context, state) {
       final authState = ref.read(authControllerProvider);
@@ -60,6 +62,10 @@ final routerProvider = Provider<GoRouter>((ref) {
     },
 
     routes: [
+      GoRoute(
+        path: AppRoutes.splash,
+        builder: (context, state) => const SplashView(),
+      ),
       GoRoute(
         path: AppRoutes.main,
         builder: (context, state) => const MainPage(),

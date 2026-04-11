@@ -13,9 +13,11 @@ import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:electronics_shop/features/profile/presentation/controllers/language_controller.dart';
 import 'package:electronics_shop/features/profile/presentation/controllers/theme_controller.dart';
 import 'package:electronics_shop/core/utils/components/grid_background.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await dotenv.load(fileName: ".env");
 
   if (Firebase.apps.isEmpty) {
