@@ -24,7 +24,7 @@ class CartItemCard extends ConsumerWidget {
         AppRoutes.productDetails,
         extra: {
           'product': item.product,
-          'selectedFlavor': item.selectedFlavor,
+          'selectedColor': item.selectedColor,
           'selectedSize': item.selectedSize,
         },
       ),
@@ -64,11 +64,11 @@ class CartItemCard extends ConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
-                    if (item.selectedFlavor != null ||
+                    if (item.selectedColor != null ||
                         item.selectedSize != null)
                       Text(
                         '${
-                          locale == "ar" ? item.selectedFlavor ?? "" : item.selectedFlavor ?? ""} ${locale == "ar" ? item.selectedSize ?? "" : item.selectedSize ?? ""}',
+                          locale == "ar" ? item.selectedColor ?? "" : item.selectedColor ?? ""} ${locale == "ar" ? item.selectedSize ?? "" : item.selectedSize ?? ""}',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: Colors.grey,
                         ),

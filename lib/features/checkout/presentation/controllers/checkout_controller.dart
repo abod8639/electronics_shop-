@@ -96,7 +96,7 @@ class CheckoutController extends _$CheckoutController {
           return {
             "product_id": item.product.id,
             "quantity": item.quantity,
-            "selected_flavor": item.selectedFlavor,
+            "selected_color": item.selectedColor,
             "selected_size": item.selectedSize,
           };
         }).toList(),
