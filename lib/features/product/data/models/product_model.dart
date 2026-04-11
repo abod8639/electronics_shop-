@@ -48,15 +48,13 @@ class ProductModel with _$ProductModel {
     @Default(0.0)
     double averageRating,
     @HiveField(11) @JsonKey(name: 'review_count') @Default(0) int reviewCount,
-    @HiveField(12) @JsonKey(name: 'serving_size') String? servingSize,
+    @HiveField(12)
+    @JsonKey(name: 'technical_specifications')
+    Map<String, dynamic>? technicalSpecifications,
     @HiveField(13)
-    @JsonKey(name: 'servings_per_container')
-    @Default(0)
-    int servingsPerContainer,
-    @HiveField(14)
-    @JsonKey(name: 'nutrition_facts')
-    Map<String, dynamic>? nutritionFacts,
-    @HiveField(15) @JsonKey(name: 'flavors') @Default([]) List<String> flavors,
+    @JsonKey(name: 'warranty_info')
+    String? warrantyInfo,
+    @HiveField(15) @JsonKey(name: 'colors') @Default([]) List<String> colors,
     @HiveField(16)
     @JsonKey(name: 'product_sizes')
     @Default([])
@@ -84,13 +82,8 @@ class ProductModel with _$ProductModel {
     @HiveField(28) @JsonKey(name: 'updated_at') DateTime? updatedAt,
 
     // Additional fields for product details
-    @HiveField(29) @Default([]) List<String> ingredients,
     @HiveField(30) String? manufacturer,
     @HiveField(31) @JsonKey(name: 'country_of_origin') String? countryOfOrigin,
-    @HiveField(32)
-    @JsonKey(name: 'usage_instructions')
-    String? usageInstructions,
-    @HiveField(33) @Default([]) List<String> warnings,
   }) = _ProductModel;
 
   const ProductModel._(); // Needed for custom getters
