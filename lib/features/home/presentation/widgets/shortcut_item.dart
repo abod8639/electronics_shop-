@@ -30,7 +30,7 @@ class ShortcutItem extends ConsumerWidget {
         final theme = Theme.of(context);
 
         return Semantics(
-          // label: '${getLocalizedLabel(context, item.label)} category',
+          label: '${getLocalizedLabel(context, item.label)} category',
           selected: isSelected,
           button: true,
           child: GestureDetector(
@@ -93,24 +93,24 @@ class ShortcutItem extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: _labelSpacing),
-                // SizedBox(
-                //   width: _labelWidth,
-                //   child: Text(
-                //     getLocalizedLabel(context, item.label),
-                //     style: TextStyle(
-                //       fontSize: _labelFontSize,
-                //       fontWeight: isSelected
-                //           ? FontWeight.bold
-                //           : FontWeight.normal,
-                //       color: isSelected
-                //           ? theme.colorScheme.primary
-                //           : theme.colorScheme.onSurfaceVariant,
-                //     ),
-                //     textAlign: TextAlign.center,
-                //     overflow: TextOverflow.ellipsis,
-                //     maxLines: 1,
-                //   ),
-                // ),
+                SizedBox(
+                  width: _labelWidth,
+                  child: Text(
+                    getLocalizedLabel(context, item.label),
+                    style: TextStyle(
+                      fontSize: _labelFontSize,
+                      fontWeight: isSelected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                      color: isSelected
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.onSurfaceVariant,
+                    ),
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
               ],
             ),
           ),
@@ -121,31 +121,29 @@ class ShortcutItem extends ConsumerWidget {
     );
   }
 
-  // String getLocalizedLabel(BuildContext context, String key) {
-  //   final localizations = AppLocalizations.of(context)!;
-  //   switch (key) {
-  //     case 'categoryHome':
-  //       return localizations.categoryHome;
-  //     case 'categoryProtein':
-  //       return localizations.categoryProtein;
-  //     case 'categoryAmino':
-  //       return localizations.categoryAmino;
-  //     case 'categoryVitamins':
-  //       return localizations.categoryVitamins;
-  //     case 'categoryPreWorkout':
-  //       return localizations.categoryPreWorkout;
-  //     case 'categoryRecovery':
-  //       return localizations.categoryRecovery;
-  //     case 'categoryFatBurner':
-  //       return localizations.categoryFatBurner;
-  //     case 'categoryHealth':
-  //       return localizations.categoryHealth;
-  //     case 'categoryCarb':
-  //       return localizations.categoryCarb;
-  //     case 'categoryCreatine':
-  //       return localizations.categoryCreatine;
-  //     default:
-  //       return key;
-  //   }
-  // }
+  String getLocalizedLabel(BuildContext context, String key) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'categoryHome':
+        return l10n.categoryHome;
+      case 'phons':
+        return l10n.categoryPhones;
+      case 'Watch':
+        return l10n.categoryWatches;
+      case 'Laptops':
+        return l10n.categoryLaptops;
+      case 'audio':
+        return l10n.categoryAudio;
+      case 'screens':
+        return l10n.categoryScreens;
+      case 'cameras':
+        return l10n.categoryCameras;
+      case 'gaming':
+        return l10n.categoryGaming;
+      case 'accessories':
+        return l10n.categoryAccessories;
+      default:
+        return key;
+    }
+  }
 }

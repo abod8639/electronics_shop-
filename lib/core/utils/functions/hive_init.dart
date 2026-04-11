@@ -27,14 +27,25 @@ Future<void> hiveInit() async {
   Hive.registerAdapter(ProductSizeAdapter());
 
   // Open Boxes
-  await Hive.openBox<CartItemModel>('cart');
-  await Hive.openBox<String>('wishlist');
-  await Hive.openBox<ProductModel>('products');
-  await Hive.openBox<CategoryModel>('categories');
-  await Hive.openBox<AddressModel>('addresses');
-  await Hive.openBox<OrderModel>('orders');
-  await Hive.openBox<UserModel>('users');
-  await Hive.openBox('settings');
-  await Hive.openBox('auth_box');
-  await Hive.openBox<String>('search_history');
+  await _openBoxSafe<CartItemModel>('cart');
+  await _openBoxSafe<String>('wishlist');
+  await _openBoxSafe<ProductModel>('products');
+  await _openBoxSafe<CategoryModel>('categories');
+  await _openBoxSafe<AddressModel>('addresses');
+  await _openBoxSafe<OrderModel>('orders');
+  await _openBoxSafe<UserModel>('users');
+  await _openBoxSafe('settings');
+  await _openBoxSafe('auth_box');
+  await _openBoxSafe<String>('search_history');
+}
+
+/// Opens a Hive box safely, clearing it if data is corrupted or schema has changed
+Future<Box<T>> _openBoxSafe<T>(String name) async {
+  try {
+    return await Hive.openBox<T>(name);
+  } catch (e) {
+    // If opening fails (e.g. TypeError due to schema change), clear the box and try again
+    await Hive.deleteBoxFromDisk(name);
+    return await Hive.openBox<T>(name);
+  }
 }

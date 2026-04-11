@@ -53,7 +53,7 @@ class CategoriesSectionsController extends _$CategoriesSectionsController {
       ...categoryList.map(
         (cat) => SelectionsModel(
           id: cat.id,
-          label: cat.getLocalizedName(locale: langCode),
+          label: cat.id, // Use ID as the label key for local mapping in ShortcutItem
           icon: _getIconForCategory(cat.id),
           image: cat.imageUrl,
         ),
@@ -81,17 +81,15 @@ class CategoriesSectionsController extends _$CategoriesSectionsController {
 
   IconData _getIconForCategory(String id) {
     final icons = {
-      'creatine': Icons.cookie_outlined,
-      'protein': Icons.fitness_center,
-      'amino-acid': Icons.local_drink,
-      'vitamins': Icons.medication,
-      'preworkout': Icons.flash_on,
-      'recovery': Icons.healing,
-      'Fat-Burner': Icons.local_fire_department_outlined,
-      'health': Icons.favorite,
-      'mass-gainers': Icons.man_3_sharp,
-      'carb': Icons.bakery_dining_outlined,
+      'phons': Icons.phone_android_rounded,
+      'Watch': Icons.watch_rounded,
+      'Laptops': Icons.laptop_rounded,
+      'audio': Icons.headphones_rounded,
+      'screens': Icons.tv_rounded,
+      'cameras': Icons.camera_alt_rounded,
+      'gaming': Icons.videogame_asset_rounded,
+      'accessories': Icons.cable_rounded,
     };
-    return icons[id] ?? Icons.category;
+    return icons[id] ?? Icons.category_rounded;
   }
 }
