@@ -7,26 +7,26 @@ part 'product_details_controller.g.dart';
 
 class ProductDetailsState {
   final int selectedImageIndex;
-  final String selectedFlavor;
+  final String selectedColor;
   final ProductSize? selectedSizeObject;
   final bool isInWishlist;
 
   ProductDetailsState({
     this.selectedImageIndex = 0,
-    this.selectedFlavor = "",
+    this.selectedColor = "",
     this.selectedSizeObject,
     this.isInWishlist = false,
   });
 
   ProductDetailsState copyWith({
     int? selectedImageIndex,
-    String? selectedFlavor,
+    String? selectedColor,
     ProductSize? selectedSizeObject,
     bool? isInWishlist,
   }) {
     return ProductDetailsState(
       selectedImageIndex: selectedImageIndex ?? this.selectedImageIndex,
-      selectedFlavor: selectedFlavor ?? this.selectedFlavor,
+      selectedColor: selectedColor ?? this.selectedColor,
       selectedSizeObject: selectedSizeObject ?? this.selectedSizeObject,
       isInWishlist: isInWishlist ?? this.isInWishlist,
     );
@@ -38,14 +38,14 @@ class ProductDetailsController extends _$ProductDetailsController {
   @override
   ProductDetailsState build(
     ProductModel product, {
-    String? initialFlavor,
+    String? initialColor,
     String? initialSize,
   }) {
     final wishlistService = ref.watch(wishlistServiceProvider.notifier);
 
-    final flavor =
-        initialFlavor ??
-        (product.flavors.isNotEmpty ? product.flavors.first : "");
+    final color =
+        initialColor ??
+        (product.colors.isNotEmpty ? product.colors.first : "");
 
     ProductSize? sizeObj;
     if (product.productSizes.isNotEmpty) {
@@ -60,7 +60,7 @@ class ProductDetailsController extends _$ProductDetailsController {
     }
 
     return ProductDetailsState(
-      selectedFlavor: flavor,
+      selectedColor: color,
       selectedSizeObject: sizeObj,
       isInWishlist: wishlistService.isFavorite(product.id),
     );
@@ -78,8 +78,8 @@ class ProductDetailsController extends _$ProductDetailsController {
     );
   }
 
-  void updateFlavor(String flavor) {
-    state = state.copyWith(selectedFlavor: flavor);
+  void updateColor(String color) {
+    state = state.copyWith(selectedColor: color);
   }
 
   void updateSize(ProductModel product, String sizeName) {
