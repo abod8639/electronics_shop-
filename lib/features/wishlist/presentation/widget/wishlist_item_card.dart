@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:electronics_shop/core/utils/components/app_network_image.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/features/wishlist/presentation/widget/build_delete_button.dart';
 import 'package:electronics_shop/features/wishlist/presentation/widget/build_product_details.dart';
-import 'package:electronics_shop/features/wishlist/presentation/widget/build_product_image.dart';
 import 'package:electronics_shop/routes/routes.dart';
 
 class WishlistItemCard extends StatelessWidget {
@@ -20,9 +20,6 @@ class WishlistItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
-    // final colorScheme = theme.colorScheme;
-
     return Card(
       color: const Color.fromARGB(133, 30, 30, 30),
       margin: const EdgeInsets.symmetric(
@@ -41,7 +38,14 @@ class WishlistItemCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              buildProductImage(product),
+              AppNetworkImage(
+                imageUrl: product.imageUrls.isNotEmpty
+                    ? product.imageUrls.first.medium
+                    : null,
+                heroTag: 'wishlist_product_${product.id}',
+                memCacheWidth: 120,
+                memCacheHeight: 120,
+              ),
               const SizedBox(width: _spacing),
               Expanded(child: buildProductDetails(product)),
               DeleteButtonFromWishlist(product: product),
