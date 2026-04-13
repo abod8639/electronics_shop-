@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 /// - `product_details/widgets/build_product_badges.dart` (_buildBadge)
 class AppBadge extends StatelessWidget {
   const AppBadge({
+    
     super.key,
     required this.label,
     required this.color,
