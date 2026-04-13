@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/order/data/models/order_model.dart';
-import 'package:electronics_shop/features/order/presentation/widgets/build_section.dart';
+import 'package:electronics_shop/core/utils/components/app_card_section.dart';
 
 Widget buildStatusTracker(bool isDark, bool isAr, OrderModel order) {
   if (order.status.toLowerCase() == 'cancelled') {
     return Builder(
       builder: (context) {
         final theme = Theme.of(context);
-        return buildSection(
-          isDark,
+        return const AppCardSection(
           child: Row(
             children: [
-              const Icon(Icons.cancel, color: AppColors.error),
-              const SizedBox(width: 12),
-              Text(
-                isAr ? 'تم إلغاء الطلب' : 'Order Cancelled',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: AppColors.error,
-                  fontWeight: FontWeight.bold,
+              Icon(Icons.cancel, color: AppColors.error),
+              SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  'Order Cancelled',
+                  style: TextStyle(
+                    color: AppColors.error,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -53,8 +54,7 @@ Widget buildStatusTracker(bool isDark, bool isAr, OrderModel order) {
     }
   }
 
-  return buildSection(
-    isDark,
+  return AppCardSection(
     child: Builder(
       builder: (context) {
         final theme = Theme.of(context);
