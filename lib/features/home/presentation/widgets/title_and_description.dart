@@ -25,15 +25,21 @@ class TitleAndDescription extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4.0),
-        Text(
-          // show onle 100 char
-          product.getLocalizedDescription(locale: locale),
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
-            height: 1.2,
-          ),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+        Builder(
+          builder: (context) {
+            final description = product.getLocalizedDescription(locale: locale);
+            return Text(
+              description.length > 100
+                  ? '${description.substring(0, 100)}...'
+                  : description,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
+                height: 1.2,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            );
+          },
         ),
       ],
     );

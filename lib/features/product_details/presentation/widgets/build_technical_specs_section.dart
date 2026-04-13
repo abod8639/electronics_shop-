@@ -23,12 +23,12 @@ Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: Row(
               children: [
-                Icon(
-                  Icons.settings_suggest_outlined,
-                  size: 20,
-                  color: isDark ? AppColors.accent : AppColors.primary,
-                ),
-                const SizedBox(width: 8),
+                // Icon(
+                //   Icons.settings_suggest_outlined,
+                //   size: 20,
+                //   color: isDark ? AppColors.accent : AppColors.primary,
+                // ),
+                // const SizedBox(width: 8),
                 Text(
                   l10n.technicalSpecifications,
                   style: theme.textTheme.titleMedium?.copyWith(
@@ -119,28 +119,28 @@ Widget _getSpecIcon(String key, bool isDark) {
 
   if (lowerKey.contains('cpu') || lowerKey.contains('processor') || lowerKey.contains('chip')) {
     iconData = Icons.memory_rounded;
-    iconColor = Colors.blue;
+    iconColor = Colors.blue.withValues(alpha: .5);
   } else if (lowerKey.contains('ram') || lowerKey.contains('memory')) {
     iconData = Icons.speed_rounded;
-    iconColor = Colors.orange;
+    iconColor = Colors.orange.withValues(alpha: .5);
   } else if (lowerKey.contains('storage') || lowerKey.contains('ssd') || lowerKey.contains('hdd')) {
     iconData = Icons.storage_rounded;
-    iconColor = Colors.amber;
+    iconColor = Colors.amber.withValues(alpha: .5);
   } else if (lowerKey.contains('battery')) {
     iconData = Icons.battery_charging_full_rounded;
-    iconColor = Colors.green;
+    iconColor = Colors.green.withValues(alpha: .5);
   } else if (lowerKey.contains('screen') || lowerKey.contains('display')) {
     iconData = Icons.screenshot_rounded;
-    iconColor = Colors.purple;
+    iconColor = Colors.purple.withValues(alpha: .5);
   } else if (lowerKey.contains('camera')) {
     iconData = Icons.camera_alt_rounded;
-    iconColor = Colors.red;
+    iconColor = Colors.red.withValues(alpha: .5);
   } else if (lowerKey.contains('weight')) {
     iconData = Icons.monitor_weight_outlined;
-    iconColor = Colors.teal;
+    iconColor = Colors.teal.withValues(alpha: .5);
   } else if (lowerKey.contains('os') || lowerKey.contains('system')) {
     iconData = Icons.computer_rounded;
-    iconColor = Colors.indigo;
+    iconColor = Colors.indigo.withValues(alpha: .5);
   }
 
   return Container(
