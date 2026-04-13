@@ -43,7 +43,7 @@ class _ImageSectionState extends State<ImageSection> {
             width: double.maxFinite,
             height: double.infinity,
             decoration: BoxDecoration(
-              color:const Color.fromARGB(133, 30, 30, 30),
+              color:Color.fromARGB(47, 30, 30, 30),
               //  theme.colorScheme.surfaceContainerLowest,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(16.0),
@@ -124,12 +124,15 @@ class _ImageSectionState extends State<ImageSection> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: CachedNetworkImage(
-          cacheManager: CustomCacheManager.instance,
-          imageUrl: url,
-          fit: BoxFit.fitHeight,
-          placeholder: (context, url) => buildShimmerEffect(theme),
-          errorWidget: (context, url, error) => buildErrorWidget(theme),
+        child: Hero(
+          tag: 'product_image_${widget.widget.product.id}',
+          child: CachedNetworkImage(
+            cacheManager: CustomCacheManager.instance,
+            imageUrl: url,
+            fit: BoxFit.scaleDown,
+            placeholder: (context, url) => buildShimmerEffect(theme),
+            errorWidget: (context, url, error) => buildErrorWidget(theme),
+          ),
         ),
       ),
     );
