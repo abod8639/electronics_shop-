@@ -26,7 +26,10 @@ class SearchBar extends StatelessWidget {
       titleSpacing: _horizontalPadding,
       title: const Hero(
         tag: 'searchBar',
-        child: Material(color: Colors.transparent, child: SearchInputGroup()),
+        child: Material(color: Colors.transparent, 
+        child: SizedBox.shrink()
+          // SearchInputGroup()
+        ),
       ),
     );
   }

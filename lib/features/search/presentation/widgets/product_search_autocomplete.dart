@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fuzzy/fuzzy.dart';
@@ -10,6 +9,7 @@ import 'package:electronics_shop/features/search/presentation/controllers/search
 import 'package:electronics_shop/features/search/presentation/widgets/highlight_text.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:electronics_shop/routes/routes.dart';
+import 'package:electronics_shop/core/utils/components/app_network_image.dart';
 
 const double _borderRadius = 24.0;
 const double _searchBarHeight = 48.0;
@@ -110,8 +110,9 @@ class _ProductSearchAutocompleteState
     return LayoutBuilder(
       builder: (context, constraints) => RawAutocomplete<Object>(
         displayStringForOption: (option) {
-          if (option is ProductModel)
+          if (option is ProductModel) {
             return option.getLocalizedName(locale: locale);
+          }
           if (option is String) return option;
           return "";
         },
@@ -281,18 +282,11 @@ class _ProductSearchAutocompleteState
             ),
             child: Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: CachedNetworkImage(
-                    imageUrl: product.primaryThumbnailUrl ?? '',
-                    width: 48,
-                    height: 48,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(
-                      color: theme.colorScheme.surfaceContainerHighest,
-                      child: const Icon(Icons.image, size: 20),
-                    ),
-                  ),
+                AppNetworkImage(
+                  imageUrl: product.primaryThumbnailUrl,
+                  width: 48,
+                  height: 48,
+                  borderRadius: 8.0,
                 ),
                 const SizedBox(width: 12),
                 Expanded(

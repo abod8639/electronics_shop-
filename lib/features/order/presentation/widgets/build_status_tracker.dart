@@ -7,7 +7,6 @@ Widget buildStatusTracker(bool isDark, bool isAr, OrderModel order) {
   if (order.status.toLowerCase() == 'cancelled') {
     return Builder(
       builder: (context) {
-        final theme = Theme.of(context);
         return const AppCardSection(
           child: Row(
             children: [

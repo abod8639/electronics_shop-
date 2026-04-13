@@ -54,8 +54,9 @@ class ProductSearchsPage extends ConsumerWidget {
               final displayedProducts = products;
 
               if (searchNotifier.hasSearched && displayedProducts.isEmpty) {
-                return SliverToBoxAdapter(
-                  child: _buildEmptyState(l10n.noResultsFound),
+                return SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: _buildEmptyState(context, l10n.noResultsFound),
                 );
               }
 
@@ -107,15 +108,40 @@ class ProductSearchsPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildEmptyState(String title) {
+  Widget _buildEmptyState(BuildContext context, String title) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.search_off, size: 80, color: Colors.grey[400]),
-          const SizedBox(height: 16),
-          Text(title, style: TextStyle(fontSize: 16, color: Colors.grey)),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Theme.of(
+                  context,
+                ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.search_off_rounded,
+                size: 72,
+                color: Theme.of(
+                  context,
+                ).colorScheme.primary.withValues(alpha: 0.7),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -127,9 +153,10 @@ class ProductSearchsPage extends ConsumerWidget {
     if (query.isEmpty) return const SizedBox.shrink();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      alignment: Alignment.centerRight,
+      alignment: AlignmentDirectional.centerStart,
       child: Chip(
-        label: Text('$lable $query'),
+        label: Text('$lable "$query"'),
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
         onDeleted: () =>
             ref.read(productSearchControllerProvider.notifier).clearSearch(),
       ),

@@ -6,6 +6,7 @@ import 'package:electronics_shop/features/search/data/datasources/search_local_d
 import 'package:electronics_shop/features/search/data/datasources/search_remote_datasource.dart';
 import 'package:fuzzy/fuzzy.dart';
 import 'package:electronics_shop/features/home/presentation/controllers/home_controller.dart';
+import 'package:electronics_shop/features/product/data/repositories/product_repository.dart';
 import 'package:electronics_shop/features/profile/presentation/controllers/language_controller.dart';
 
 part 'product_search_controller.g.dart';
@@ -41,7 +42,29 @@ class ProductSearchController extends _$ProductSearchController {
       _debounceTimer?.cancel();
     });
 
-    // Initialize with home products if they are already loaded
+    // Listen to home products to populate the search screen initially when they load
+    ref.listen(homeControllerProvider, (previous, next) {
+      final homeProducts = next.value;
+      if (homeProducts != null && homeProducts.isNotEmpty) {
+        _localProducts = homeProducts;
+        if (!_hasSearched) {
+          _combinedResults = homeProducts;
+          state = AsyncData(homeProducts);
+        }
+      }
+    });
+
+    // Initialize with cached products immediately if possible
+    final cachedProducts = ref
+        .read(productRepositoryProvider.notifier)
+        .getCachedProducts();
+    if (cachedProducts.isNotEmpty) {
+      _localProducts = List.from(cachedProducts);
+      _combinedResults = List.from(cachedProducts);
+      return cachedProducts;
+    }
+
+    // Fallback to homeProducts if already loaded
     final homeProducts = ref.read(homeControllerProvider).value;
     if (homeProducts != null && homeProducts.isNotEmpty) {
       _localProducts = homeProducts;
@@ -83,6 +106,17 @@ class ProductSearchController extends _$ProductSearchController {
     _searchQuery = "";
     _hasSearched = false;
     textController.clear();
+    final homeProducts = ref.read(homeControllerProvider).value;
+    final cachedProducts = ref
+        .read(productRepositoryProvider.notifier)
+        .getCachedProducts();
+    if (_localProducts.isEmpty) {
+      if (cachedProducts.isNotEmpty) {
+        _localProducts = List.from(cachedProducts);
+      } else if (homeProducts != null && homeProducts.isNotEmpty) {
+        _localProducts = homeProducts;
+      }
+    }
     _combinedResults = _localProducts;
     _updateDataBounds();
     state = AsyncData(_localProducts);
@@ -92,6 +126,17 @@ class ProductSearchController extends _$ProductSearchController {
   void _performLocalSearchOnly(String query) {
     if (query.isEmpty) {
       _hasSearched = false;
+      final homeProducts = ref.read(homeControllerProvider).value;
+      final cachedProducts = ref
+          .read(productRepositoryProvider.notifier)
+          .getCachedProducts();
+      if (_localProducts.isEmpty) {
+        if (cachedProducts.isNotEmpty) {
+          _localProducts = List.from(cachedProducts);
+        } else if (homeProducts != null && homeProducts.isNotEmpty) {
+          _localProducts = homeProducts;
+        }
+      }
       _combinedResults = _localProducts;
       state = AsyncData(_localProducts);
       return;
