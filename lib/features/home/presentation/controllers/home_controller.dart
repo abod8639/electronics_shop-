@@ -17,12 +17,9 @@ class HomeController extends _$HomeController {
       return _products;
     }
 
-    _products = await productRepository.getProducts(
-      categoryId: null,
-    );
+    _products = await productRepository.getProducts(categoryId: null);
     return _products;
   }
-
 
   List<ProductModel> _products = [];
   int _selectedSectionIndex = 0;

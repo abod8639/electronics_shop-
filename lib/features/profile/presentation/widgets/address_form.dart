@@ -40,7 +40,9 @@ class _AddressFormState extends ConsumerState<AddressForm> {
         child: Column(
           children: [
             Text(
-              widget.address == null ? intl10n.addNewAddress : intl10n.editAddress,
+              widget.address == null
+                  ? intl10n.addNewAddress
+                  : intl10n.editAddress,
               style: theme.textTheme.headlineSmall,
             ),
             const SizedBox(height: 20),
@@ -54,7 +56,7 @@ class _AddressFormState extends ConsumerState<AddressForm> {
                       if (context.mounted) {
                         setState(() {}); // End loading
                         ScaffoldMessenger.of(context).showSnackBar(
-                           SnackBar(
+                          SnackBar(
                             content: Text(intl10n.addressUpdatedSuccessfully),
                             backgroundColor: Colors.green,
                           ),
@@ -71,7 +73,7 @@ class _AddressFormState extends ConsumerState<AddressForm> {
                       ),
                     )
                   : const Icon(Icons.my_location),
-              label:  Text(intl10n.useCurrentLocation),
+              label: Text(intl10n.useCurrentLocation),
             ),
             const SizedBox(height: 24),
             _buildField(controller.fullNameController, intl10n.fullName),
@@ -91,7 +93,7 @@ class _AddressFormState extends ConsumerState<AddressForm> {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: _buildField(controller.stateController,  intl10n.state),
+                  child: _buildField(controller.stateController, intl10n.state),
                 ),
               ],
             ),
@@ -106,7 +108,10 @@ class _AddressFormState extends ConsumerState<AddressForm> {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: _buildField(controller.countryController, intl10n.country ),
+                  child: _buildField(
+                    controller.countryController,
+                    intl10n.country,
+                  ),
                 ),
               ],
             ),
@@ -137,7 +142,7 @@ class _AddressFormState extends ConsumerState<AddressForm> {
           ),
           validator: (v) => v!.isEmpty ? intl10n.thisFieldIsRequired : null,
         );
-      }
+      },
     );
   }
 

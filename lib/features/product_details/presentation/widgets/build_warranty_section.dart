@@ -32,7 +32,11 @@ Widget buildWarrantySection(ProductModel product, bool isDark) {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.verified_user_outlined, color: AppColors.info, size: 20),
+                Icon(
+                  Icons.verified_user_outlined,
+                  color: AppColors.info,
+                  size: 20,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(

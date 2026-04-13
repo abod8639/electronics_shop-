@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/features/search/presentation/controllers/product_search_controller.dart';
@@ -6,10 +5,8 @@ import 'package:electronics_shop/features/search/presentation/widgets/product_se
 import 'package:electronics_shop/features/search/presentation/widgets/search_bar.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
-
 const double _searchBarHeight = 48.0;
 const double _spacing = 12.0;
-
 
 class SearchBarInline extends ConsumerWidget {
   final bool isFocused;

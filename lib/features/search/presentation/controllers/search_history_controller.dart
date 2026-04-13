@@ -16,11 +16,13 @@ class SearchHistory extends _$SearchHistory {
 
   void add(String query) {
     if (query.trim().isEmpty) return;
-    
+
     final normalized = query.trim().toLowerCase();
-    
+
     // Remove if already exists to move to top
-    final existingIndex = _box.values.toList().indexWhere((e) => e.toLowerCase() == normalized);
+    final existingIndex = _box.values.toList().indexWhere(
+      (e) => e.toLowerCase() == normalized,
+    );
     if (existingIndex != -1) {
       _box.deleteAt(existingIndex);
     }

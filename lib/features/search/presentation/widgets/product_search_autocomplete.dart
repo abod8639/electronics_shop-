@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,10 +11,8 @@ import 'package:electronics_shop/features/search/presentation/widgets/highlight_
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:electronics_shop/routes/routes.dart';
 
-
 const double _borderRadius = 24.0;
 const double _searchBarHeight = 48.0;
-
 
 class ProductSearchAutocomplete extends ConsumerStatefulWidget {
   final bool autofocus;
@@ -62,44 +59,41 @@ class _ProductSearchAutocompleteState
     final locale = l10n.localeName;
 
     Widget searchContainer(Widget field) => Container(
-          height: _searchBarHeight,
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(_borderRadius),
-            boxShadow: [
-              BoxShadow(
-                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: .03),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
+      height: _searchBarHeight,
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(_borderRadius),
+        boxShadow: [
+          BoxShadow(
+            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: .03),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
-          child: Row(
-            children: [
-              Icon(
-                Icons.search,
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.search, color: theme.colorScheme.onSurfaceVariant),
+          const SizedBox(width: 8.0),
+          Expanded(child: field),
+          if (_textController.text.isNotEmpty && !widget.readOnly)
+            IconButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                _textController.clear();
+                controller.onSearchChanged("");
+                setState(() {});
+              },
+              icon: Icon(
+                Icons.clear,
+                size: 18,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
-              const SizedBox(width: 8.0),
-              Expanded(child: field),
-              if (_textController.text.isNotEmpty && !widget.readOnly)
-                IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    _textController.clear();
-                    controller.onSearchChanged("");
-                    setState(() {});
-                  },
-                  icon: Icon(
-                    Icons.clear,
-                    size: 18,
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-            ],
-          ),
-        );
+            ),
+        ],
+      ),
+    );
 
     if (widget.readOnly) {
       return searchContainer(
@@ -108,9 +102,7 @@ class _ProductSearchAutocompleteState
           autofocus: widget.autofocus,
           textInputAction: TextInputAction.search,
           onTap: widget.onTap,
-          decoration: InputDecoration.collapsed(
-            hintText: l10n.searchProducts,
-          ),
+          decoration: InputDecoration.collapsed(hintText: l10n.searchProducts),
         ),
       );
     }
@@ -118,7 +110,8 @@ class _ProductSearchAutocompleteState
     return LayoutBuilder(
       builder: (context, constraints) => RawAutocomplete<Object>(
         displayStringForOption: (option) {
-          if (option is ProductModel) return option.getLocalizedName(locale: locale);
+          if (option is ProductModel)
+            return option.getLocalizedName(locale: locale);
           if (option is String) return option;
           return "";
         },
@@ -140,13 +133,19 @@ class _ProductSearchAutocompleteState
           for (final product in homeProducts) {
             final name = product.getLocalizedName(locale: locale).toLowerCase();
             final brand = (product.brand ?? "").toLowerCase();
-            final category = (product.category?.getLocalizedName(locale: locale) ?? "").toLowerCase();
+            final category =
+                (product.category?.getLocalizedName(locale: locale) ?? "")
+                    .toLowerCase();
 
             if (name == query || brand == query || category == query) {
               exactMatches.add(product);
-            } else if (name.startsWith(query) || brand.startsWith(query) || category.startsWith(query)) {
+            } else if (name.startsWith(query) ||
+                brand.startsWith(query) ||
+                category.startsWith(query)) {
               prefixMatches.add(product);
-            } else if (name.contains(query) || brand.contains(query) || category.contains(query)) {
+            } else if (name.contains(query) ||
+                brand.contains(query) ||
+                category.contains(query)) {
               containsMatches.add(product);
             }
           }
@@ -196,28 +195,28 @@ class _ProductSearchAutocompleteState
         },
         fieldViewBuilder:
             (context, textEditingController, focusNode, onFieldSubmitted) {
-          return searchContainer(
-            TextField(
-              controller: textEditingController,
-              focusNode: focusNode,
-              onChanged: (val) {
-                controller.onSearchChanged(val);
-                setState(() {}); // For clear button
-              },
-              readOnly: widget.readOnly,
-              autofocus: widget.autofocus,
-              textInputAction: TextInputAction.search,
-              onSubmitted: (val) {
-                ref.read(searchHistoryProvider.notifier).add(val);
-                onFieldSubmitted();
-              },
-              onTap: widget.onTap,
-              decoration: InputDecoration.collapsed(
-                hintText: l10n.searchProducts,
-              ),
-            ),
-          );
-        },
+              return searchContainer(
+                TextField(
+                  controller: textEditingController,
+                  focusNode: focusNode,
+                  onChanged: (val) {
+                    controller.onSearchChanged(val);
+                    setState(() {}); // For clear button
+                  },
+                  readOnly: widget.readOnly,
+                  autofocus: widget.autofocus,
+                  textInputAction: TextInputAction.search,
+                  onSubmitted: (val) {
+                    ref.read(searchHistoryProvider.notifier).add(val);
+                    onFieldSubmitted();
+                  },
+                  onTap: widget.onTap,
+                  decoration: InputDecoration.collapsed(
+                    hintText: l10n.searchProducts,
+                  ),
+                ),
+              );
+            },
         optionsViewBuilder: (context, onSelected, options) {
           return Align(
             alignment: Alignment.topLeft,
@@ -230,10 +229,9 @@ class _ProductSearchAutocompleteState
                   maxHeight: 400,
                   maxWidth: constraints.maxWidth,
                 ),
-                child: 
-                prudoctsList(options, onSelected, theme, locale),
-           // SizedBox.shrink( )
+                child: prudoctsList(options, onSelected, theme, locale),
 
+                // SizedBox.shrink( )
               ),
             ),
           );
@@ -242,96 +240,104 @@ class _ProductSearchAutocompleteState
     );
   }
 
-  ListView prudoctsList(Iterable<Object> options, AutocompleteOnSelected<Object> onSelected, ThemeData theme, String locale) {
+  ListView prudoctsList(
+    Iterable<Object> options,
+    AutocompleteOnSelected<Object> onSelected,
+    ThemeData theme,
+    String locale,
+  ) {
     return ListView.separated(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                shrinkWrap: true,
-                itemCount: options.length,
-                separatorBuilder: (context, index) =>
-                    const Divider(height: 1, indent: 16),
-                itemBuilder: (context, index) {
-                  final option = options.elementAt(index);
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      shrinkWrap: true,
+      itemCount: options.length,
+      separatorBuilder: (context, index) =>
+          const Divider(height: 1, indent: 16),
+      itemBuilder: (context, index) {
+        final option = options.elementAt(index);
 
-                  // Search History Item UI
-                  if (option is String) {
-                    return ListTile(
-                      leading: const Icon(Icons.history, size: 20),
-                      title: Text(option),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.close, size: 16),
-                        onPressed: () => ref.read(searchHistoryProvider.notifier).remove(option),
+        // Search History Item UI
+        if (option is String) {
+          return ListTile(
+            leading: const Icon(Icons.history, size: 20),
+            title: Text(option),
+            trailing: IconButton(
+              icon: const Icon(Icons.close, size: 16),
+              onPressed: () =>
+                  ref.read(searchHistoryProvider.notifier).remove(option),
+            ),
+            onTap: () => onSelected(option),
+          );
+        }
+
+        // Product Item UI
+        final product = option as ProductModel;
+        final query = _textController.text;
+        return InkWell(
+          onTap: () => onSelected(product),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 10.0,
+            ),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                    imageUrl: product.primaryThumbnailUrl ?? '',
+                    width: 48,
+                    height: 48,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Container(
+                      color: theme.colorScheme.surfaceContainerHighest,
+                      child: const Icon(Icons.image, size: 20),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      HighlightText(
+                        text: product.getLocalizedName(locale: locale),
+                        query: query,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      onTap: () => onSelected(option),
-                    );
-                  }
-
-                  // Product Item UI
-                  final product = option as ProductModel;
-                  final query = _textController.text;
-                  return InkWell(
-                    onTap: () => onSelected(product),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: CachedNetworkImage(
-                              imageUrl: product.primaryThumbnailUrl ?? '',
-                              width: 48,
-                              height: 48,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => Container(
-                                color: theme.colorScheme.surfaceContainerHighest,
-                                child: const Icon(Icons.image, size: 20),
-                              ),
-                            ),
+                      if (product.brand != null)
+                        Text(
+                          product.brand!,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                HighlightText(
-                                  text: product.getLocalizedName(locale: locale),
-                                  query: query,
-                                  style: theme.textTheme.titleSmall?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                if (product.brand != null)
-                                  Text(
-                                    product.brand!,
-                                    style: theme.textTheme.bodySmall?.copyWith(
-                                      color: theme.colorScheme.onSurfaceVariant,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '${product.price.toStringAsFixed(2)} LE',
-                                style: theme.textTheme.labelMedium?.copyWith(
-                                  color: theme.colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const Icon(Icons.north_west, size: 14, color: Colors.grey),
-                            ],
-                          ),
-                        ],
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '${product.price.toStringAsFixed(2)} LE',
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: theme.colorScheme.primary,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  );
-                },
-              );
+                    const Icon(Icons.north_west, size: 14, color: Colors.grey),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }
-

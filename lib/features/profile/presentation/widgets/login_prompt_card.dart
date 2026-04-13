@@ -76,9 +76,7 @@ class LoginPromptCard extends ConsumerWidget {
           const SizedBox(height: _messageSpacing),
           Text(
             l10n.loginMessage,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: AppColors.grey,
-            ),
+            style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.grey),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: _buttonsSpacing),
@@ -133,9 +131,7 @@ class LoginPromptCard extends ConsumerWidget {
 
   Future<void> _handleLogin(BuildContext context, WidgetRef ref) async {
     return AppGuard.runSafeInternet(ref, () async {
-      ref.read(routerProvider).push(
-        AppRoutes.auth);
-    }
-    );
+      ref.read(routerProvider).push(AppRoutes.auth);
+    });
   }
 }

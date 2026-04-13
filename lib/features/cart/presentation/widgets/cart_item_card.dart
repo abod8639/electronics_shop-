@@ -15,7 +15,7 @@ class CartItemCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-        final locale = Localizations.localeOf(context).languageCode;
+    final locale = Localizations.localeOf(context).languageCode;
 
     // final cartNotifier = ref.watch(cartControllerProvider.notifier);
 
@@ -29,7 +29,7 @@ class CartItemCard extends ConsumerWidget {
         },
       ),
       child: Card(
-        color:  const Color.fromARGB(133, 30, 30, 30) ,
+        color: const Color.fromARGB(133, 30, 30, 30),
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(
@@ -46,8 +46,7 @@ class CartItemCard extends ConsumerWidget {
                   width: 80,
                   height: 80,
                   fit: BoxFit.cover,
-                  errorWidget: (_, _, _) =>
-                      const Icon(Icons.image, size: 40),
+                  errorWidget: (_, _, _) => const Icon(Icons.image, size: 40),
                 ),
               ),
               const SizedBox(width: 16),
@@ -56,7 +55,7 @@ class CartItemCard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.product.getLocalizedName(locale: locale ),
+                      item.product.getLocalizedName(locale: locale),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -64,11 +63,9 @@ class CartItemCard extends ConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
-                    if (item.selectedColor != null ||
-                        item.selectedSize != null)
+                    if (item.selectedColor != null || item.selectedSize != null)
                       Text(
-                        '${
-                          locale == "ar" ? item.selectedColor ?? "" : item.selectedColor ?? ""} ${locale == "ar" ? item.selectedSize ?? "" : item.selectedSize ?? ""}',
+                        '${locale == "ar" ? item.selectedColor ?? "" : item.selectedColor ?? ""} ${locale == "ar" ? item.selectedSize ?? "" : item.selectedSize ?? ""}',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: Colors.grey,
                         ),
@@ -84,7 +81,7 @@ class CartItemCard extends ConsumerWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        
+
                         Text(
                           'LE ${item.product.basePrice}',
                           style: const TextStyle(

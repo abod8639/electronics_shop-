@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class HighlightText extends StatelessWidget {
@@ -7,7 +6,7 @@ class HighlightText extends StatelessWidget {
   final TextStyle? style;
 
   const HighlightText({
-    super.key, 
+    super.key,
     required this.text,
     required this.query,
     this.style,
@@ -19,7 +18,7 @@ class HighlightText extends StatelessWidget {
 
     final String lowerText = text.toLowerCase();
     final String lowerQuery = query.toLowerCase();
-    
+
     final List<TextSpan> spans = [];
     int start = 0;
     int indexOfMatch;
@@ -28,10 +27,15 @@ class HighlightText extends StatelessWidget {
       if (indexOfMatch > start) {
         spans.add(TextSpan(text: text.substring(start, indexOfMatch)));
       }
-      spans.add(TextSpan(
-        text: text.substring(indexOfMatch, indexOfMatch + query.length),
-        style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-      ));
+      spans.add(
+        TextSpan(
+          text: text.substring(indexOfMatch, indexOfMatch + query.length),
+          style: const TextStyle(
+            color: Colors.blue,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
       start = indexOfMatch + query.length;
     }
 
@@ -49,4 +53,3 @@ class HighlightText extends StatelessWidget {
     );
   }
 }
-

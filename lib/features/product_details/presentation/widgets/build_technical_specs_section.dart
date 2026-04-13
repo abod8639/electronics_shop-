@@ -5,7 +5,9 @@ import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
 Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
   final dynamic technicalSpecs = product.technicalSpecifications;
-  if (technicalSpecs == null || technicalSpecs is! Map || technicalSpecs.isEmpty) {
+  if (technicalSpecs == null ||
+      technicalSpecs is! Map ||
+      technicalSpecs.isEmpty) {
     return const SizedBox.shrink();
   }
 
@@ -43,7 +45,7 @@ Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
           Container(
             decoration: BoxDecoration(
               color: isDark
-                                 ? AppColors.surfaceDark
+                  ? AppColors.surfaceDark
                   : AppColors.greyLight.withValues(alpha: .3),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
@@ -72,7 +74,9 @@ Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
                             child: Text(
                               entry.key,
                               style: theme.textTheme.bodyMedium?.copyWith(
-                                color: isDark ? Colors.grey[400] : Colors.grey[600],
+                                color: isDark
+                                    ? Colors.grey[400]
+                                    : Colors.grey[600],
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -84,7 +88,9 @@ Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
                               entry.value.toString(),
                               textAlign: TextAlign.end,
                               style: theme.textTheme.bodyMedium?.copyWith(
-                                color: isDark ? AppColors.white : AppColors.black,
+                                color: isDark
+                                    ? AppColors.white
+                                    : AppColors.black,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -117,13 +123,17 @@ Widget _getSpecIcon(String key, bool isDark) {
   IconData iconData = Icons.info_outline;
   Color iconColor = isDark ? Colors.grey[500]! : Colors.grey[400]!;
 
-  if (lowerKey.contains('cpu') || lowerKey.contains('processor') || lowerKey.contains('chip')) {
+  if (lowerKey.contains('cpu') ||
+      lowerKey.contains('processor') ||
+      lowerKey.contains('chip')) {
     iconData = Icons.memory_rounded;
     iconColor = Colors.blue.withValues(alpha: .5);
   } else if (lowerKey.contains('ram') || lowerKey.contains('memory')) {
     iconData = Icons.speed_rounded;
     iconColor = Colors.orange.withValues(alpha: .5);
-  } else if (lowerKey.contains('storage') || lowerKey.contains('ssd') || lowerKey.contains('hdd')) {
+  } else if (lowerKey.contains('storage') ||
+      lowerKey.contains('ssd') ||
+      lowerKey.contains('hdd')) {
     iconData = Icons.storage_rounded;
     iconColor = Colors.amber.withValues(alpha: .5);
   } else if (lowerKey.contains('battery')) {
@@ -149,11 +159,6 @@ Widget _getSpecIcon(String key, bool isDark) {
       color: iconColor.withValues(alpha: 0.1),
       shape: BoxShape.circle,
     ),
-    child: Icon(
-      iconData,
-      size: 18,
-      color: iconColor,
-    ),
+    child: Icon(iconData, size: 18, color: iconColor),
   );
 }
-

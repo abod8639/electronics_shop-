@@ -17,7 +17,9 @@ class TitleAndDescription extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         HighlightText(
-          text: product.getLocalizedName(locale: locale),
+          text: product.getLocalizedName(locale: locale).length > 40
+              ? '${product.getLocalizedName(locale: locale).substring(0, 40)}...'
+              : product.getLocalizedName(locale: locale),
           query: query ?? "",
           style: theme.textTheme.titleSmall?.copyWith(
             fontWeight: FontWeight.bold,
@@ -33,7 +35,9 @@ class TitleAndDescription extends StatelessWidget {
                   ? '${description.substring(0, 100)}...'
                   : description,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
+                color: theme.colorScheme.onSurfaceVariant.withValues(
+                  alpha: 0.8,
+                ),
                 height: 1.2,
               ),
               maxLines: 2,

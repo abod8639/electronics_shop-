@@ -25,18 +25,21 @@ class PromoRemoteDataSourceImpl implements PromoRemoteDataSource {
     try {
       final response = await _apiService.get(ApiConfig.promos);
       final data = response.data;
-      
+
       List<dynamic> list = [];
       if (data is List) {
         list = data;
       } else if (data is Map && data['data'] != null) {
         list = data['data'];
       }
-      
+
       return list.map((json) => PromoModel.fromJson(json)).toList();
     } catch (e) {
       if (e is Failure) rethrow;
-      throw Failure(message: "تعذر جلب العروض الترويجية", type: FailureType.unknown);
+      throw Failure(
+        message: "تعذر جلب العروض الترويجية",
+        type: FailureType.unknown,
+      );
     }
   }
 }

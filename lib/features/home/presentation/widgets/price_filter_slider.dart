@@ -34,7 +34,10 @@ class PriceFilterSliderState extends ConsumerState<PriceFilterSlider> {
     final effectiveMax = maxData > minData ? maxData : minData + 0.1;
 
     // Clamp values to current bounds to prevent assertion errors
-    final startValue = _currentRangeValues.start.clamp(effectiveMin, effectiveMax);
+    final startValue = _currentRangeValues.start.clamp(
+      effectiveMin,
+      effectiveMax,
+    );
     final endValue = _currentRangeValues.end.clamp(effectiveMin, effectiveMax);
     final effectiveValues = RangeValues(startValue, endValue);
 
@@ -78,10 +81,9 @@ class PriceFilterSliderState extends ConsumerState<PriceFilterSlider> {
           width: double.infinity,
           child: FilledButton(
             onPressed: () {
-              ref.read(productSearchControllerProvider.notifier).applyPriceFilter(
-                    effectiveValues.start,
-                    effectiveValues.end,
-                  );
+              ref
+                  .read(productSearchControllerProvider.notifier)
+                  .applyPriceFilter(effectiveValues.start, effectiveValues.end);
               Navigator.pop(context);
             },
             child: const Text('Apply'),

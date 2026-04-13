@@ -5,9 +5,9 @@ import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
 Widget buildProductBadges(
   ProductModel product,
-   BuildContext context,
-   double alpha,
-   ) {
+  BuildContext context,
+  double alpha,
+) {
   final l10n = AppLocalizations.of(context);
   if (l10n == null) return const SizedBox.shrink();
 
@@ -16,7 +16,11 @@ Widget buildProductBadges(
   // Discount Badge
   if (product.hasDiscount) {
     badges.add(
-      _buildBadge('${product.discountPercentage.toInt()}% OFF', Colors.red, alpha),
+      _buildBadge(
+        '${product.discountPercentage.toInt()}% OFF',
+        Colors.red,
+        alpha,
+      ),
     );
   }
 
@@ -43,9 +47,9 @@ Widget buildProductBadges(
   if (badges.isEmpty) return const SizedBox.shrink();
 
   return Wrap(spacing: 8, runSpacing: 8, children: badges);
-
 }
-Widget _buildBadge(String label, Color color , double alpha) {
+
+Widget _buildBadge(String label, Color color, double alpha) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
     decoration: BoxDecoration(

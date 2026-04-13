@@ -38,5 +38,4 @@ class ApiConfig {
 
   // Legacy/Deprecated - Keep for compatibility until services are updated
   static const String usersStats = '/customer/profile';
-  
 }

@@ -42,7 +42,6 @@ class ProfileController extends _$ProfileController {
     return 0;
   }
 
-
   void _clearData() {
     // We use try-catch and check if we can still use ref
     try {

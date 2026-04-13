@@ -20,7 +20,8 @@ class ExpandableDescriptionCard extends StatefulWidget {
   });
 
   @override
-  State<ExpandableDescriptionCard> createState() => _ExpandableDescriptionCardState();
+  State<ExpandableDescriptionCard> createState() =>
+      _ExpandableDescriptionCardState();
 }
 
 class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
@@ -53,7 +54,9 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
   void _toggleExpanded() {
     setState(() {
       _isExpanded = !_isExpanded;
-      _isExpanded ? _animationController.forward() : _animationController.reverse();
+      _isExpanded
+          ? _animationController.forward()
+          : _animationController.reverse();
     });
   }
 
@@ -105,11 +108,10 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
         overflow: TextOverflow.ellipsis,
         style: textStyle,
       ),
-      secondChild: Text(
-        widget.description,
-        style: textStyle,
-      ),
-      crossFadeState: _isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+      secondChild: Text(widget.description, style: textStyle),
+      crossFadeState: _isExpanded
+          ? CrossFadeState.showSecond
+          : CrossFadeState.showFirst,
       duration: _animationDuration,
     );
   }
@@ -140,7 +142,11 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
               const SizedBox(width: 4),
               RotationTransition(
                 turns: _iconRotation,
-                child: const Icon(Icons.keyboard_arrow_down, color: AppColors.primary, size: 20),
+                child: const Icon(
+                  Icons.keyboard_arrow_down,
+                  color: AppColors.primary,
+                  size: 20,
+                ),
               ),
             ],
           ),
@@ -158,11 +164,20 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: isDark
-            ? [theme.colorScheme.surface, theme.colorScheme.surface.withValues(alpha: .8)]
-            : [theme.colorScheme.surface, theme.colorScheme.primaryContainer.withValues(alpha: .1)],
+            ? [
+                theme.colorScheme.surface,
+                theme.colorScheme.surface.withValues(alpha: .8),
+              ]
+            : [
+                theme.colorScheme.surface,
+                theme.colorScheme.primaryContainer.withValues(alpha: .1),
+              ],
       ),
       borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: AppColors.primary.withValues(alpha: .2), width: 1.5),
+      border: Border.all(
+        color: AppColors.primary.withValues(alpha: .2),
+        width: 1.5,
+      ),
       boxShadow: [
         BoxShadow(
           color: AppColors.primary.withValues(alpha: .08),
@@ -177,12 +192,15 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
     final textPainter = TextPainter(
       text: TextSpan(
         text: widget.description,
-        style: theme.textTheme.bodyLarge?.copyWith(height: 1.6, letterSpacing: 0.2),
+        style: theme.textTheme.bodyLarge?.copyWith(
+          height: 1.6,
+          letterSpacing: 0.2,
+        ),
       ),
       maxLines: _collapsedMaxLines,
       textDirection: Directionality.of(context),
     )..layout(maxWidth: MediaQuery.sizeOf(context).width - 64);
-    
+
     return textPainter.didExceedMaxLines;
   }
 }

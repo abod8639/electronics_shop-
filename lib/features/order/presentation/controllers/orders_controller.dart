@@ -17,7 +17,7 @@ class OrdersController extends _$OrdersController {
   FutureOr<List<OrderModel>> build() async {
     // Re-fetch or clear when auth state changes
     final authState = ref.watch(authControllerProvider);
-    
+
     // Only fetch if we have a user and aren't loading/erroring
     if (authState.value == null) return [];
 

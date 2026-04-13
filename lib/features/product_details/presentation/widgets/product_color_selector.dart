@@ -42,7 +42,7 @@ class ProductColorSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-            padding: const EdgeInsets.all(3),
+          padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
             color: AppColors.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(8),

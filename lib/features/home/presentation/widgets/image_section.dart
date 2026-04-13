@@ -43,7 +43,7 @@ class _ImageSectionState extends State<ImageSection> {
             width: double.maxFinite,
             height: double.infinity,
             decoration: BoxDecoration(
-              color:Color.fromARGB(47, 30, 30, 30),
+              color: Color.fromARGB(47, 30, 30, 30),
               //  theme.colorScheme.surfaceContainerLowest,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(16.0),
@@ -85,29 +85,30 @@ class _ImageSectionState extends State<ImageSection> {
             ),
 
           if (widget.widget.product.discountPrice != null)
-          Positioned(
-            top: 12,
-             right: 15,
-              child: buildProductBadges( widget.widget.product, context, .5))
-            // Positioned(
-            //   top: 12,
-            //   right: 15,
-            //   child: Container(
-            //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            //     decoration: BoxDecoration(
-            //       color: Colors.redAccent,
-            //       borderRadius: BorderRadius.circular(8),
-            //     ),
-            //     child: const Text(
-            //       'خصم',
-            //       style: TextStyle(
-            //         color: Colors.white,
-            //         fontSize: 10,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            Positioned(
+              top: 12,
+              right: 15,
+              child: buildProductBadges(widget.widget.product, context, .5),
+            ),
+          // Positioned(
+          //   top: 12,
+          //   right: 15,
+          //   child: Container(
+          //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          //     decoration: BoxDecoration(
+          //       color: Colors.redAccent,
+          //       borderRadius: BorderRadius.circular(8),
+          //     ),
+          //     child: const Text(
+          //       'خصم',
+          //       style: TextStyle(
+          //         color: Colors.white,
+          //         fontSize: 10,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -9,7 +9,6 @@ const double _verticalPadding = 12.0;
 const double _searchBarHeight = 48.0;
 const double _iconButtonSize = 48.0;
 
-
 class SearchBar extends StatelessWidget {
   const SearchBar({super.key, this.onTap});
   final Function()? onTap;
@@ -27,10 +26,7 @@ class SearchBar extends StatelessWidget {
       titleSpacing: _horizontalPadding,
       title: const Hero(
         tag: 'searchBar',
-        child: Material(
-          color: Colors.transparent,
-          child: SearchInputGroup(),
-        ),
+        child: Material(color: Colors.transparent, child: SearchInputGroup()),
       ),
     );
   }

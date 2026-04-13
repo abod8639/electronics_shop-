@@ -25,23 +25,25 @@ Widget buildProductInfo(
     searchNotifier.clearSearch();
     searchNotifier.textController.text = brandName;
     searchNotifier.updateSearchQuery(brandName);
-    context.push(AppRoutes.search , extra: false);
+    context.push(AppRoutes.search, extra: false);
   }
 
-    final List<Map<String, dynamic>> dataMap = [
+  final List<Map<String, dynamic>> dataMap = [
     if (product.brand?.isNotEmpty ?? false)
       {'label': l10n.brand, 'value': product.brand!, 'isLink': true},
     if (product.category?.name != null)
-      {'label': l10n.category, 'value': product.category!.getLocalizedName(locale: locale)},
-    if (product.sku != null) 
-      {'label': l10n.sku, 'value': product.sku!},
-    if (product.warrantyInfo != null) 
+      {
+        'label': l10n.category,
+        'value': product.category!.getLocalizedName(locale: locale),
+      },
+    if (product.sku != null) {'label': l10n.sku, 'value': product.sku!},
+    if (product.warrantyInfo != null)
       {'label': l10n.warrantyInfo, 'value': product.warrantyInfo!},
-    if (product.weight != null) 
+    if (product.weight != null)
       {'label': l10n.weight, 'value': '${product.weight} كجم'},
-    if (product.manufacturer != null) 
+    if (product.manufacturer != null)
       {'label': l10n.manufacturer, 'value': product.manufacturer!},
-    if (product.countryOfOrigin != null) 
+    if (product.countryOfOrigin != null)
       {'label': l10n.countryOfOrigin, 'value': product.countryOfOrigin!},
   ];
 
@@ -53,11 +55,15 @@ Widget buildProductInfo(
         value: item['value'] as String,
         isDark: isDark,
         isLink: item['isLink'] == true,
-        onTap: item['isLink'] == true ? () => navigateToBrandPage(item['value'] as String) : null,
+        onTap: item['isLink'] == true
+            ? () => navigateToBrandPage(item['value'] as String)
+            : null,
       ),
     );
     if (i < dataMap.length - 1) {
-      infoItems.add(Divider(color: AppColors.primary.withValues(alpha: 0.1), height: 16));
+      infoItems.add(
+        Divider(color: AppColors.primary.withValues(alpha: 0.1), height: 16),
+      );
     }
   }
 
@@ -134,8 +140,8 @@ Widget _buildInfoRow({
               textAlign: TextAlign.end,
               style: TextStyle(
                 fontSize: 14,
-                color: isLink 
-                    ? AppColors.info 
+                color: isLink
+                    ? AppColors.info
                     : (isDark ? AppColors.white : AppColors.black),
                 fontWeight: isLink ? FontWeight.bold : FontWeight.w600,
                 // decoration: isLink ? TextDecoration.underline : null,

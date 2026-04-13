@@ -47,13 +47,16 @@ class CategoriesSectionsController extends _$CategoriesSectionsController {
   }
 
   List<SelectionsModel> _getSelectionsList(
-      List<CategoryModel> categoryList, String langCode) {
+    List<CategoryModel> categoryList,
+    String langCode,
+  ) {
     return [
       SelectionsModel(id: "", label: 'categoryHome', icon: Icons.home),
       ...categoryList.map(
         (cat) => SelectionsModel(
           id: cat.id,
-          label: cat.id, // Use ID as the label key for local mapping in ShortcutItem
+          label: cat
+              .id, // Use ID as the label key for local mapping in ShortcutItem
           icon: _getIconForCategory(cat.id),
           image: cat.imageUrl,
         ),

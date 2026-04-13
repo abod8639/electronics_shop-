@@ -63,46 +63,46 @@ class ShortcutItem extends ConsumerWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child:
-                    //  (item.image != null && item.image!.isNotEmpty)
-                    //     ? 
-                    //     CachedNetworkImage(
-                    //         imageUrl: item.image!,
-                    //         fit: BoxFit.none,
-                    //         placeholder: (context, url) => Center(
-                    //           child: SizedBox(
-                    //             width: 20,
-                    //             height: 20,
-                    //             child: CircularProgressIndicator(
-                    //               strokeWidth: 2,
-                    //               color: theme.colorScheme.primary,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         errorWidget: (context, url, error) => Icon(
-                    //           item.icon,
-                    //           color: isSelected
-                    //               ? theme.colorScheme.primary
-                    //               : theme.colorScheme.onSurfaceVariant,
-                    //         ),
-                    //       )
-                    //     :
-                         Icon(
-                            item.icon,
-                            shadows: [
-                              BoxShadow(
-                                color: isSelected
-                                    ? theme.colorScheme.primary
-                                    : theme.colorScheme.onSurfaceVariant,
-                                blurRadius: isSelected ? 10 : 3,
-                                offset: isSelected ? Offset(1, 3) : Offset(0, 0),
-                                blurStyle: BlurStyle.outer,
-                              ),
-                            ],
-                            color: isSelected
-                                ? theme.colorScheme.primary
-                                : theme.colorScheme.onSurfaceVariant,
-                            size: _iconInnerSize,
-                          ),
+                        //  (item.image != null && item.image!.isNotEmpty)
+                        //     ?
+                        //     CachedNetworkImage(
+                        //         imageUrl: item.image!,
+                        //         fit: BoxFit.none,
+                        //         placeholder: (context, url) => Center(
+                        //           child: SizedBox(
+                        //             width: 20,
+                        //             height: 20,
+                        //             child: CircularProgressIndicator(
+                        //               strokeWidth: 2,
+                        //               color: theme.colorScheme.primary,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         errorWidget: (context, url, error) => Icon(
+                        //           item.icon,
+                        //           color: isSelected
+                        //               ? theme.colorScheme.primary
+                        //               : theme.colorScheme.onSurfaceVariant,
+                        //         ),
+                        //       )
+                        //     :
+                        Icon(
+                          item.icon,
+                          shadows: [
+                            BoxShadow(
+                              color: isSelected
+                                  ? theme.colorScheme.primary
+                                  : theme.colorScheme.onSurfaceVariant,
+                              blurRadius: isSelected ? 10 : 3,
+                              offset: isSelected ? Offset(1, 3) : Offset(0, 0),
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                          color: isSelected
+                              ? theme.colorScheme.primary
+                              : theme.colorScheme.onSurfaceVariant,
+                          size: _iconInnerSize,
+                        ),
                   ),
                 ),
                 const SizedBox(height: _labelSpacing),

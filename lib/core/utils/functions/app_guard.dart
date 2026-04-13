@@ -82,10 +82,13 @@ class AppGuard {
             children: [
               Icon(icon, color: Colors.amber, size: 20),
               const SizedBox(width: 10),
-              Expanded(child: Text(
-                style: Theme.of(context).textTheme.bodyMedium,
-                
-                message)),
+              Expanded(
+                child: Text(
+                  style: Theme.of(context).textTheme.bodyMedium,
+
+                  message,
+                ),
+              ),
             ],
           ),
           backgroundColor: Colors.black87,

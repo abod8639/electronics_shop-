@@ -60,8 +60,8 @@ class SavedAddressesList extends ConsumerWidget {
   Widget _buildHeader(BuildContext context, ThemeData theme, bool isDark) {
     final intl10n = AppLocalizations.of(context)!;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(    // final addressNotifier = ref.watch(addressControllerProvider.notifier);
-
+      padding: const EdgeInsets.fromLTRB(
+        // final addressNotifier = ref.watch(addressControllerProvider.notifier);
         _headerPaddingLeft,
         _headerPaddingVertical,
         _headerPaddingRight,

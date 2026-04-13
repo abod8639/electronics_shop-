@@ -47,8 +47,9 @@ final routerProvider = Provider<GoRouter>((ref) {
     redirect: (context, state) {
       final authState = ref.read(authControllerProvider);
       final isLoggedIn = authState.value != null;
-      
-      final isAuthPath = state.matchedLocation.startsWith(AppRoutes.auth) ||
+
+      final isAuthPath =
+          state.matchedLocation.startsWith(AppRoutes.auth) ||
           state.matchedLocation == AppRoutes.signIn ||
           state.matchedLocation == AppRoutes.signUp;
 
@@ -118,7 +119,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const WishlistView(),
       ),
       GoRoute(
-        
         path: AppRoutes.search,
         builder: (context, state) {
           final extra = state.extra;
@@ -175,35 +175,36 @@ CustomTransitionPage<T> buildPageWithTransition<T>({
       switch (transitionType) {
         case PageTransitionType.fade:
           return FadeTransition(opacity: animation, child: child);
-          // TODO: Handle this case.
+        // TODO: Handle this case.
         case PageTransitionType.slideRight:
           return SlideTransition(
-            position: Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero)
-                .animate(animation),
+            position: Tween<Offset>(
+              begin: const Offset(1, 0),
+              end: Offset.zero,
+            ).animate(animation),
             child: child,
           );
-          // bottom to top
+        // bottom to top
         case PageTransitionType.slideUp:
           return SlideTransition(
-            position: Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero)
-                .animate(animation),
+            position: Tween<Offset>(
+              begin: const Offset(0, -1),
+              end: Offset.zero,
+            ).animate(animation),
             child: child,
           );
-          
+
         // case PageTransitionType.slideUp:
         //   return SlideTransition(
         //     position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
         //         .animate(animation),
         //     child: child,
         //   );
-          
+
         case PageTransitionType.scale:
           return ScaleTransition(
             scale: Tween<double>(begin: 0.0, end: 1.0).animate(
-              CurvedAnimation(
-                parent: animation,
-                curve: Curves.fastOutSlowIn,
-              ),
+              CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn),
             ),
             child: child,
           );
@@ -211,6 +212,7 @@ CustomTransitionPage<T> buildPageWithTransition<T>({
     },
   );
 }
+
 /// A listenable that triggers whenever the auth state changes.
 class AuthRefreshListenable extends ChangeNotifier {
   AuthRefreshListenable(Ref ref) {

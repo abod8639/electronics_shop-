@@ -44,8 +44,7 @@ class ProductDetailsController extends _$ProductDetailsController {
     final wishlistService = ref.watch(wishlistServiceProvider.notifier);
 
     final color =
-        initialColor ??
-        (product.colors.isNotEmpty ? product.colors.first : "");
+        initialColor ?? (product.colors.isNotEmpty ? product.colors.first : "");
 
     ProductSize? sizeObj;
     if (product.productSizes.isNotEmpty) {

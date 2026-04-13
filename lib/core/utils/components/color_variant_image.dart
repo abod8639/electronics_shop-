@@ -70,13 +70,15 @@ class ColorVariantImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width:  45,
+      width: 45,
       height: 45,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         // borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected ? AppColors.primary : AppColors.surfaceContainerHighest,
+          color: isSelected
+              ? AppColors.primary
+              : AppColors.surfaceContainerHighest,
           width: 3,
         ),
 
@@ -90,27 +92,26 @@ class ColorVariantImage extends StatelessWidget {
               ]
             : [],
         // image: details.image != null
-            // ? 
-            // DecorationImage(
-            //     image: CachedNetworkImageProvider(
-            //       details.image!,
-            //       cacheManager: CustomCacheManager.instance,
-            //     ),
-            //     fit: BoxFit.cover,
-            //     colorFilter: shadow == true
-            //         ? ColorFilter.mode(
-            //             isSelected
-            //                 ? Colors.black.withValues(alpha: .2)
-            //                 : Colors.black.withValues(alpha: .5),
-            //             BlendMode.darken,
-            //           )
-            //         : null,
-            //   )
-            // : null,
-        color:
-          baseColor,//
+        // ?
+        // DecorationImage(
+        //     image: CachedNetworkImageProvider(
+        //       details.image!,
+        //       cacheManager: CustomCacheManager.instance,
+        //     ),
+        //     fit: BoxFit.cover,
+        //     colorFilter: shadow == true
+        //         ? ColorFilter.mode(
+        //             isSelected
+        //                 ? Colors.black.withValues(alpha: .2)
+        //                 : Colors.black.withValues(alpha: .5),
+        //             BlendMode.darken,
+        //           )
+        //         : null,
+        //   )
+        // : null,
+        color: baseColor, //
         //  details.image == null ?
-          //  : null,
+        //  : null,
       ),
       // child: Center(
       //   child: Text(

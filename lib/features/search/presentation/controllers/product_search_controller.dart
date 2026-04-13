@@ -14,7 +14,7 @@ part 'product_search_controller.g.dart';
 class ProductSearchController extends _$ProductSearchController {
   final SearchLocalDataSource _localDataSource = SearchLocalDataSource();
   final TextEditingController textController = TextEditingController();
-  
+
   Timer? _debounceTimer;
 
   List<ProductModel> _localProducts = [];
@@ -40,7 +40,7 @@ class ProductSearchController extends _$ProductSearchController {
       textController.dispose();
       _debounceTimer?.cancel();
     });
-    
+
     // Initialize with home products if they are already loaded
     final homeProducts = ref.read(homeControllerProvider).value;
     if (homeProducts != null && homeProducts.isNotEmpty) {
@@ -48,7 +48,7 @@ class ProductSearchController extends _$ProductSearchController {
       _combinedResults = homeProducts;
       return homeProducts;
     }
-    
+
     return [];
   }
 
@@ -62,7 +62,7 @@ class ProductSearchController extends _$ProductSearchController {
 
   void onSearchChanged(String query) {
     _searchQuery = query.trim();
-    
+
     // 1. Instant local search for immediate feedback
     _performLocalSearchOnly(_searchQuery);
 
@@ -100,11 +100,11 @@ class ProductSearchController extends _$ProductSearchController {
     _hasSearched = true;
     final locale = ref.read(languageControllerProvider).languageCode;
     final homeProducts = ref.read(homeControllerProvider).value ?? [];
-    
+
     // Use prioritized local filtering
     final results = _prioritizedLocalFilter(query, homeProducts, locale);
     _combinedResults = results;
-    
+
     _updateDataBounds();
     _applyFiltersToResults(results);
   }
@@ -115,14 +115,15 @@ class ProductSearchController extends _$ProductSearchController {
 
     try {
       final remoteDataSource = ref.read(searchRemoteDataSourceProvider);
-      
+
       // Fetch remote results
-      final List<ProductModel> remoteResults = await remoteDataSource.fetchProductsFromApi(query);
+      final List<ProductModel> remoteResults = await remoteDataSource
+          .fetchProductsFromApi(query);
 
       // Merge with current local results
       final existingIds = _combinedResults.map((e) => e.id).toSet();
       final List<ProductModel> merged = List.from(_combinedResults);
-      
+
       for (var product in remoteResults) {
         if (!existingIds.contains(product.id)) {
           merged.add(product);
@@ -141,9 +142,13 @@ class ProductSearchController extends _$ProductSearchController {
   }
 
   /// Prioritized Local Filter: Exact > Prefix > Contains > Fuzzy
-  List<ProductModel> _prioritizedLocalFilter(String query, List<ProductModel> products, String locale) {
+  List<ProductModel> _prioritizedLocalFilter(
+    String query,
+    List<ProductModel> products,
+    String locale,
+  ) {
     final lowerQuery = query.toLowerCase();
-    
+
     final List<ProductModel> exact = [];
     final List<ProductModel> prefix = [];
     final List<ProductModel> contains = [];
@@ -152,14 +157,20 @@ class ProductSearchController extends _$ProductSearchController {
     for (var p in products) {
       final name = p.getLocalizedName(locale: locale).toLowerCase();
       final brand = (p.brand ?? "").toLowerCase();
-      final category = (p.category?.getLocalizedName(locale: locale) ?? "").toLowerCase();
+      final category = (p.category?.getLocalizedName(locale: locale) ?? "")
+          .toLowerCase();
       final tags = p.tags.map((t) => t.toLowerCase()).toList();
 
       if (name == lowerQuery || brand == lowerQuery || category == lowerQuery) {
         exact.add(p);
-      } else if (name.startsWith(lowerQuery) || brand.startsWith(lowerQuery) || category.startsWith(lowerQuery)) {
+      } else if (name.startsWith(lowerQuery) ||
+          brand.startsWith(lowerQuery) ||
+          category.startsWith(lowerQuery)) {
         prefix.add(p);
-      } else if (name.contains(lowerQuery) || brand.contains(lowerQuery) || category.contains(lowerQuery) || tags.any((t) => t.contains(lowerQuery))) {
+      } else if (name.contains(lowerQuery) ||
+          brand.contains(lowerQuery) ||
+          category.contains(lowerQuery) ||
+          tags.any((t) => t.contains(lowerQuery))) {
         contains.add(p);
       } else {
         others.add(p);
@@ -167,7 +178,7 @@ class ProductSearchController extends _$ProductSearchController {
     }
 
     final combined = [...exact, ...prefix, ...contains];
-    
+
     // If we have few results, use fuzzy as fallback
     if (combined.length < 5) {
       final fuzzyResults = _performLocalFuzzySearch(query, products, locale);
@@ -182,14 +193,22 @@ class ProductSearchController extends _$ProductSearchController {
     return combined;
   }
 
-  List<ProductModel> _performLocalFuzzySearch(String query, List<ProductModel> products, String locale) {
+  List<ProductModel> _performLocalFuzzySearch(
+    String query,
+    List<ProductModel> products,
+    String locale,
+  ) {
     if (query.isEmpty) return [];
 
     final fuse = Fuzzy<ProductModel>(
       products,
       options: FuzzyOptions(
         keys: [
-          WeightedKey(name: 'name', getter: (p) => p.getLocalizedName(locale: locale), weight: 1.0),
+          WeightedKey(
+            name: 'name',
+            getter: (p) => p.getLocalizedName(locale: locale),
+            weight: 1.0,
+          ),
           WeightedKey(name: 'brand', getter: (p) => p.brand ?? "", weight: 0.7),
         ],
         threshold: 0.35,
@@ -200,7 +219,9 @@ class ProductSearchController extends _$ProductSearchController {
   }
 
   void _updateDataBounds() {
-    final source = _combinedResults.isEmpty && !_hasSearched ? _localProducts : _combinedResults;
+    final source = _combinedResults.isEmpty && !_hasSearched
+        ? _localProducts
+        : _combinedResults;
     if (source.isEmpty) return;
 
     final bounds = _localDataSource.calculatePriceBounds(source);
@@ -214,7 +235,11 @@ class ProductSearchController extends _$ProductSearchController {
   void applyPriceFilter(double min, double max) {
     _filterMinPrice = min;
     _filterMaxPrice = max;
-    _applyFiltersToResults(_combinedResults.isEmpty && !_hasSearched ? _localProducts : _combinedResults);
+    _applyFiltersToResults(
+      _combinedResults.isEmpty && !_hasSearched
+          ? _localProducts
+          : _combinedResults,
+    );
   }
 
   void _applyFilters() {
@@ -222,7 +247,11 @@ class ProductSearchController extends _$ProductSearchController {
   }
 
   void _applyFiltersToResults(List<ProductModel> results) {
-    final filtered = _localDataSource.filterByPrice(results, _filterMinPrice, _filterMaxPrice);
+    final filtered = _localDataSource.filterByPrice(
+      results,
+      _filterMinPrice,
+      _filterMaxPrice,
+    );
     state = AsyncData(filtered);
   }
 }

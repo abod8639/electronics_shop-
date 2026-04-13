@@ -51,9 +51,7 @@ class ProductModel with _$ProductModel {
     @HiveField(12)
     @JsonKey(name: 'technical_specifications')
     dynamic technicalSpecifications,
-    @HiveField(13)
-    @JsonKey(name: 'warranty_info')
-    String? warrantyInfo,
+    @HiveField(13) @JsonKey(name: 'warranty_info') String? warrantyInfo,
     @HiveField(15) @JsonKey(name: 'colors') @Default([]) List<String> colors,
     @HiveField(16)
     @JsonKey(name: 'product_sizes')
@@ -174,5 +172,6 @@ class ProductModel with _$ProductModel {
   }
 
   /// Check if the base price has a discount
-  bool get baseHasDiscount => discountPrice != null && discountPrice! < price && price > 0;
+  bool get baseHasDiscount =>
+      discountPrice != null && discountPrice! < price && price > 0;
 }

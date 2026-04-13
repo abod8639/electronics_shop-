@@ -104,12 +104,10 @@ class ProductDetailsView extends ConsumerWidget {
                           product!,
                           alternateEffectivePrice: detailsNotifier
                               .getDisplayEffectivePrice(product!),
-                          alternateOriginalPrice: detailsNotifier.getDisplayPrice(
-                            product!,
-                          ),
-                          alternateHasDiscount: detailsNotifier.getDisplayHasDiscount(
-                            product!,
-                          ),
+                          alternateOriginalPrice: detailsNotifier
+                              .getDisplayPrice(product!),
+                          alternateHasDiscount: detailsNotifier
+                              .getDisplayHasDiscount(product!),
                         ),
                       ],
                     ),

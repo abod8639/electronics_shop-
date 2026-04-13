@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,9 +7,7 @@ import 'package:electronics_shop/features/search/presentation/widgets/search_bar
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:electronics_shop/routes/routes.dart';
 
-
 const double _spacing = 12.0;
-
 
 class SearchInputGroup extends ConsumerWidget {
   const SearchInputGroup({super.key});
@@ -28,9 +25,7 @@ class SearchInputGroup extends ConsumerWidget {
             autofocus: false,
             onTap: () {
               ref.read(productSearchControllerProvider.notifier).clearSearch();
-              context.push(
-                
-                AppRoutes.search, extra: controller.searchQuery);
+              context.push(AppRoutes.search, extra: controller.searchQuery);
             },
           ),
         ),
@@ -47,4 +42,3 @@ class SearchInputGroup extends ConsumerWidget {
     );
   }
 }
-

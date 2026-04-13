@@ -37,7 +37,7 @@ class PromoController extends _$PromoController {
   void _startAutoPlay() {
     _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
       if (!pageController.hasClients) return;
-      
+
       final promosAsync = ref.read(promosProvider);
       if (promosAsync.value == null || promosAsync.value!.isEmpty) return;
 
@@ -80,12 +80,13 @@ class PromoController extends _$PromoController {
 
     if (promo.targetType == 'brand') {
       final brandName = promo.targetId!;
-      ref.read(productSearchControllerProvider.notifier).updateSearchQuery(brandName);
+      ref
+          .read(productSearchControllerProvider.notifier)
+          .updateSearchQuery(brandName);
       if (context.mounted) {
         context.push(AppRoutes.search);
       }
       return;
     }
   }
-  
 }

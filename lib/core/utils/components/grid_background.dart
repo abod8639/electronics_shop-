@@ -16,7 +16,7 @@ class GridBackground extends StatelessWidget {
             // color: const Color(0xFF0A0A0A),
           ),
         ),
-        
+
         // 2. Neon grid
         Positioned.fill(
           child: CustomPaint(
@@ -42,7 +42,7 @@ class GridBackground extends StatelessWidget {
             ),
           ),
         ),
-        
+
         // 4. Content
         child,
       ],

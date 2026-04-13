@@ -16,8 +16,12 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedCategoryIndex = ref.watch(categoriesSectionsControllerProvider).maybeWhen(
-          data: (_) => ref.read(categoriesSectionsControllerProvider.notifier).selectedIndex,
+    final selectedCategoryIndex = ref
+        .watch(categoriesSectionsControllerProvider)
+        .maybeWhen(
+          data: (_) => ref
+              .read(categoriesSectionsControllerProvider.notifier)
+              .selectedIndex,
           orElse: () => 0,
         );
 

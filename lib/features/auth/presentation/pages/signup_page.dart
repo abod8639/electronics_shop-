@@ -42,7 +42,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   void _onSignUpPressed() {
     AppGuard.runSafeInternet(ref, () async {
       if (_formKey.currentState!.validate()) {
-        await ref.read(authControllerProvider.notifier).signUpWithEmail(
+        await ref
+            .read(authControllerProvider.notifier)
+            .signUpWithEmail(
               email: _emailController.text.trim(),
               password: _passwordController.text,
               name: _nameController.text.trim(),
@@ -126,10 +128,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     );
   }
 
-  Widget _buildInputFields(
-    BuildContext context,
-    AppLocalizations l10n,
-  ) {
+  Widget _buildInputFields(BuildContext context, AppLocalizations l10n) {
     final theme = Theme.of(context);
     return Column(
       children: [

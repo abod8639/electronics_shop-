@@ -54,34 +54,31 @@ class PromoBanner extends ConsumerWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          length,
-          (index) {
-            final isSelected = currentIndex == index;
-            return AnimatedContainer(
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              height: 6,
-              width: isSelected ? 24 : 8,
-              decoration: BoxDecoration(
-                color: isSelected
-                    ? AppColors.primary
-                    : AppColors.primary.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: isSelected
-                        ? AppColors.primary.withValues(alpha: 0.4)
-                        : Colors.transparent,
-                    blurRadius: isSelected ? 10 : 0,
-                    spreadRadius: isSelected ? 1 : 0,
-                  )
-                ],
-              ),
-            );
-          },
-        ),
+        children: List.generate(length, (index) {
+          final isSelected = currentIndex == index;
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            height: 6,
+            width: isSelected ? 24 : 8,
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? AppColors.primary
+                  : AppColors.primary.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: isSelected
+                      ? AppColors.primary.withValues(alpha: 0.4)
+                      : Colors.transparent,
+                  blurRadius: isSelected ? 10 : 0,
+                  spreadRadius: isSelected ? 1 : 0,
+                ),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
@@ -120,7 +117,7 @@ class PromoBanner extends ConsumerWidget {
               errorWidget: (context, error, stackTrace) =>
                   Container(color: promo.backgroundColor),
             ),
-            
+
             // Modern Multi-stage Gradient
             Positioned.fill(
               child: DecoratedBox(
@@ -146,11 +143,10 @@ class PromoBanner extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (promo.title != null)
-                    _buildGlassTag(promo.title!),
-                  
+                  if (promo.title != null) _buildGlassTag(promo.title!),
+
                   const SizedBox(height: 12),
-                  
+
                   if (promo.subtitle != null)
                     ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 200),
@@ -166,18 +162,17 @@ class PromoBanner extends ConsumerWidget {
                               color: Colors.black.withValues(alpha: 0.3),
                               blurRadius: 4,
                               offset: const Offset(1, 1),
-                            )
+                            ),
                           ],
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                  
+
                   const SizedBox(height: 20),
-                  
-                  if (promo.targetId != null)
-                    _buildCTAButton(promo.buttonText),
+
+                  if (promo.targetId != null) _buildCTAButton(promo.buttonText),
                 ],
               ),
             ),
@@ -186,7 +181,6 @@ class PromoBanner extends ConsumerWidget {
       ),
     );
   }
-
 
   Widget _buildGlassTag(String text) {
     return ClipRRect(
@@ -225,7 +219,7 @@ class PromoBanner extends ConsumerWidget {
             color: Colors.black.withValues(alpha: 0.2),
             blurRadius: 10,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: Text(
@@ -239,4 +233,3 @@ class PromoBanner extends ConsumerWidget {
     );
   }
 }
-

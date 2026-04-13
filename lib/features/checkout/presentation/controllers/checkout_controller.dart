@@ -107,8 +107,9 @@ class CheckoutController extends _$CheckoutController {
       ref.read(routerProvider).go(AppRoutes.orderSuccess);
     } catch (e) {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).
-      showSnackBar(SnackBar(content: Text('Failed to place order: $e')));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to place order: $e')));
     } finally {
       state = state.copyWith(isProcessing: false);
     }

@@ -40,7 +40,9 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   void _onLoginPressed() {
     AppGuard.runSafeInternet(ref, () async {
       if (_formKey.currentState!.validate()) {
-        await ref.read(authControllerProvider.notifier).signInWithEmail(
+        await ref
+            .read(authControllerProvider.notifier)
+            .signInWithEmail(
               email: _emailController.text.trim(),
               password: _passwordController.text,
             );
@@ -164,10 +166,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     );
   }
 
-  Widget _buildInputFields(
-    BuildContext context,
-    AppLocalizations l10n,
-  ) {
+  Widget _buildInputFields(BuildContext context, AppLocalizations l10n) {
     final theme = Theme.of(context);
     return Column(
       children: [
@@ -207,7 +206,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
           label: l10n.password,
           icon: IconButton(
             icon: Icon(
-                _passwordVisible ? Icons.visibility_off : Icons.visibility),
+              _passwordVisible ? Icons.visibility_off : Icons.visibility,
+            ),
             onPressed: () {
               setState(() {
                 _passwordVisible = !_passwordVisible;

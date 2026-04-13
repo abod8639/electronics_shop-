@@ -90,11 +90,11 @@ class AddressCard extends ConsumerWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return _buildMapLoading();
         }
-        
+
         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
           final loc = snapshot.data!.first;
           // X5WH+7C Al Haram
-          
+
           // return _buildMapWidget(LatLng(29.4 , 31.1));
           return _buildMapWidget(LatLng(loc.latitude, loc.longitude));
         }
@@ -120,7 +120,6 @@ class AddressCard extends ConsumerWidget {
       child: Stack(
         children: [
           GoogleMap(
-
             key: ValueKey('map_${address.id}_${position.latitude}'),
             initialCameraPosition: CameraPosition(
               target: position,
@@ -147,11 +146,7 @@ class AddressCard extends ConsumerWidget {
               child: Container(color: Colors.transparent),
             ),
           ),
-          Positioned(
-            top: 12,
-            right: 12,
-            child: _buildMapIcon(),
-          ),
+          Positioned(top: 12, right: 12, child: _buildMapIcon()),
         ],
       ),
     );
@@ -161,9 +156,7 @@ class AddressCard extends ConsumerWidget {
     return Container(
       height: _mapHeight,
       color: Colors.grey[100],
-      child: const Center(
-        child: CircularProgressIndicator(strokeWidth: 2),
-      ),
+      child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
     );
   }
 
@@ -187,7 +180,11 @@ class AddressCard extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.location_off_outlined, color: Colors.grey[400], size: 32),
+              Icon(
+                Icons.location_off_outlined,
+                color: Colors.grey[400],
+                size: 32,
+              ),
               const SizedBox(height: 8),
               Text(
                 intl10n.mapUnavailable,
@@ -219,8 +216,10 @@ class AddressCard extends ConsumerWidget {
   Widget _buildCardTopRow(BuildContext context) {
     final intl10n = AppLocalizations.of(context)!;
     IconData labelIcon = Icons.location_on_rounded;
-    if (address.label?.toLowerCase() == intl10n.home) labelIcon = Icons.home_rounded;
-    if (address.label?.toLowerCase() == intl10n.work) labelIcon = Icons.work_rounded;
+    if (address.label?.toLowerCase() == intl10n.home)
+      labelIcon = Icons.home_rounded;
+    if (address.label?.toLowerCase() == intl10n.work)
+      labelIcon = Icons.work_rounded;
 
     return Row(
       children: [

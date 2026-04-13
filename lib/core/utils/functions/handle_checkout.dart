@@ -21,5 +21,4 @@ Future<void> handleCheckout(WidgetRef ref) async {
       () async => ref.read(routerProvider).push(AppRoutes.signIn),
     );
   }
-
 }

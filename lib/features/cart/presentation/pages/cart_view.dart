@@ -30,6 +30,4 @@ class CartView extends ConsumerWidget {
       ),
     );
   }
-
-
 }

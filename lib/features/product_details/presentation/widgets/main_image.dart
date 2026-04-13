@@ -77,16 +77,15 @@ class _MainImageState extends ConsumerState<MainImage> {
         final imageUrl = widget.product.imageUrls[index];
         return GestureDetector(
           onTap: () => widget.onImageTap?.call(index),
-          child: 
-            Container(
-              decoration: BoxDecoration(
-                color: widget.product.isBackgroundWhite
-                    ? Colors.white
-                    : Colors.transparent,
-              ),
-              child: Hero(
-            tag: 'product_image_${widget.product.id}',
-            child:  CachedNetworkImage(
+          child: Container(
+            decoration: BoxDecoration(
+              color: widget.product.isBackgroundWhite
+                  ? Colors.white
+                  : Colors.transparent,
+            ),
+            child: Hero(
+              tag: 'product_image_${widget.product.id}',
+              child: CachedNetworkImage(
                 cacheManager: CustomCacheManager.instance,
                 imageUrl: imageUrl.medium,
                 fit: BoxFit.scaleDown,

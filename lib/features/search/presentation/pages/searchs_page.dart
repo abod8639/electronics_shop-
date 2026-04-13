@@ -19,14 +19,14 @@ class ProductSearchsPage extends ConsumerWidget {
     final searchNotifier = ref.watch(productSearchControllerProvider.notifier);
     // final homeProducts = ref.watch(homeControllerProvider).value ?? [];
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Scaffold(
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),
         ),
         slivers: [
-           SliverAppBar(
+          SliverAppBar(
             backgroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
             elevation: 0,
@@ -38,14 +38,14 @@ class ProductSearchsPage extends ConsumerWidget {
               tag: 'searchBar',
               child: Material(
                 color: Colors.transparent,
-                child: SearchBarInline(
-                  
-                  isFocused: isFocused),
+                child: SearchBarInline(isFocused: isFocused),
               ),
             ),
           ),
 
-          SliverToBoxAdapter(child: _buildFilterChips(ref,l10n.searchForProducts)),
+          SliverToBoxAdapter(
+            child: _buildFilterChips(ref, l10n.searchForProducts),
+          ),
 
           searchState.when(
             data: (products) {
@@ -54,7 +54,9 @@ class ProductSearchsPage extends ConsumerWidget {
               final displayedProducts = products;
 
               if (searchNotifier.hasSearched && displayedProducts.isEmpty) {
-                return SliverToBoxAdapter(child: _buildEmptyState(l10n.noResultsFound));
+                return SliverToBoxAdapter(
+                  child: _buildEmptyState(l10n.noResultsFound),
+                );
               }
 
               return SliverPadding(
@@ -112,16 +114,13 @@ class ProductSearchsPage extends ConsumerWidget {
         children: [
           Icon(Icons.search_off, size: 80, color: Colors.grey[400]),
           const SizedBox(height: 16),
-          Text(
-            title,
-            style: TextStyle(fontSize: 16, color: Colors.grey),
-          ),
+          Text(title, style: TextStyle(fontSize: 16, color: Colors.grey)),
         ],
       ),
     );
   }
 
-  Widget _buildFilterChips(WidgetRef ref , String lable) {
+  Widget _buildFilterChips(WidgetRef ref, String lable) {
     final query = ref
         .watch(productSearchControllerProvider.notifier)
         .searchQuery;

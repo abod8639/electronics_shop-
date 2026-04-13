@@ -6,7 +6,7 @@ class AppColors {
   static const Color primaryLight = Color(0xFFE0E7FF);
   static const Color accent = Color(0xFF9193FF);
   static const Color purple = Color(0xFF3838A0);
-  
+
   static const Color white = Colors.white;
   static const Color black = Colors.black;
   static const Color transparent = Colors.transparent;
@@ -29,4 +29,4 @@ class AppColors {
   static const Color surfaceLight = Colors.white;
   static const Color surfaceDark = Color(0xFF131313);
   static const Color surfaceContainerHighest = Color(0xFF262626);
-} 
+}
