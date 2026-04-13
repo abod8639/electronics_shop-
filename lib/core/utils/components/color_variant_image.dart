@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
-import 'package:electronics_shop/core/utils/functions/cache_manager.dart';
+// import 'package:electronics_shop/core/utils/functions/cache_manager.dart';
 
 class ProductColorModel {
   final String name;
@@ -70,12 +70,13 @@ class ColorVariantImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width: width ?? 110,
-      height: height ?? 60,
+      width:  45,
+      height: 45,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        shape: BoxShape.circle,
+        // borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected ? AppColors.primary : AppColors.grey,
+          color: isSelected ? AppColors.primary : AppColors.surfaceContainerHighest,
           width: 3,
         ),
 
@@ -83,8 +84,8 @@ class ColorVariantImage extends StatelessWidget {
             ? [
                 BoxShadow(
                   color: baseColor.withValues(alpha: .4),
-                  blurRadius: 12,
-                  spreadRadius: 2,
+                  blurRadius: 8,
+                  spreadRadius: .5,
                 ),
               ]
             : [],
@@ -107,28 +108,28 @@ class ColorVariantImage extends StatelessWidget {
             //   )
             // : null,
         color:
-        //  details.image == null ?
           baseColor,//
+        //  details.image == null ?
           //  : null,
       ),
-      child: Center(
-        child: Text(
-          details.name.toUpperCase(),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w900,
-            fontSize: 12,
-            shadows: [
-              Shadow(
-                blurRadius: 8,
-                color: Colors.black.withValues(alpha: .8),
-                offset: const Offset(1, 1),
-              ),
-            ],
-          ),
-        ),
-      ),
+      // child: Center(
+      //   child: Text(
+      //     details.name.toUpperCase(),
+      //     textAlign: TextAlign.center,
+      //     style: TextStyle(
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.w900,
+      //       fontSize: 12,
+      //       shadows: [
+      //         Shadow(
+      //           blurRadius: 8,
+      //           color: Colors.black.withValues(alpha: .8),
+      //           offset: const Offset(1, 1),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
