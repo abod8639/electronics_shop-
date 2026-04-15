@@ -1,4 +1,6 @@
 // import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:electronics_shop/features/home/data/models/selection_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/features/home/presentation/controllers/categories_sections_controller.dart';
@@ -64,27 +66,7 @@ class ShortcutItem extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(12),
                     child:
                         //  (item.image != null && item.image!.isNotEmpty)
-                        //     ?
-                        //     CachedNetworkImage(
-                        //         imageUrl: item.image!,
-                        //         fit: BoxFit.none,
-                        //         placeholder: (context, url) => Center(
-                        //           child: SizedBox(
-                        //             width: 20,
-                        //             height: 20,
-                        //             child: CircularProgressIndicator(
-                        //               strokeWidth: 2,
-                        //               color: theme.colorScheme.primary,
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         errorWidget: (context, url, error) => Icon(
-                        //           item.icon,
-                        //           color: isSelected
-                        //               ? theme.colorScheme.primary
-                        //               : theme.colorScheme.onSurfaceVariant,
-                        //         ),
-                        //       )
+                        //  _buildImage(item.image, item.icon, isSelected, context, item)
                         //     :
                         Icon(
                           item.icon,
@@ -93,8 +75,9 @@ class ShortcutItem extends ConsumerWidget {
                               color: isSelected
                                   ? theme.colorScheme.primary
                                   : theme.colorScheme.onSurfaceVariant,
-                              blurRadius: isSelected ? 10 : 3,
-                              offset: isSelected ? Offset(1, 3) : Offset(0, 0),
+                              spreadRadius: isSelected ? 1 : 0,
+                              blurRadius: isSelected ? 2 : 1,
+                              offset: isSelected ? Offset(1, 1) : Offset(0, 0),
                               blurStyle: BlurStyle.outer,
                             ),
                           ],
@@ -159,4 +142,34 @@ class ShortcutItem extends ConsumerWidget {
         return key;
     }
   }
+}
+
+Widget _buildImage(
+  String? imageUrl,
+  IconData icon,
+  bool isSelected,
+  BuildContext context,
+  SelectionsModel item,
+) {
+  final theme = Theme.of(context);
+  return CachedNetworkImage(
+    imageUrl: imageUrl!,
+    fit: BoxFit.none,
+    placeholder: (context, url) => Center(
+      child: SizedBox(
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          color: theme.colorScheme.primary,
+        ),
+      ),
+    ),
+    errorWidget: (context, url, error) => Icon(
+      item.icon,
+      color: isSelected
+          ? theme.colorScheme.primary
+          : theme.colorScheme.onSurfaceVariant,
+    ),
+  );
 }
