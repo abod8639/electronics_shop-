@@ -230,7 +230,7 @@ class _ProductSearchAutocompleteState
                   maxHeight: 400,
                   maxWidth: constraints.maxWidth,
                 ),
-                child: prudoctsList(options, onSelected, theme, locale),
+                // child: prudoctsList(options, onSelected, theme, locale),
 
                 // SizedBox.shrink( )
               ),

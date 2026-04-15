@@ -60,7 +60,7 @@ class AppNetworkImage extends StatelessWidget {
       memCacheWidth: memCacheWidth,
       memCacheHeight: memCacheHeight,
       placeholder: (context, _) => _buildPlaceholder(context),
-      errorWidget: (context, _, __) => _buildErrorWidget(context),
+      errorWidget: (context, _, _) => _buildErrorWidget(context),
     );
   }
 

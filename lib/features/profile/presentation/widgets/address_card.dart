@@ -216,10 +216,12 @@ class AddressCard extends ConsumerWidget {
   Widget _buildCardTopRow(BuildContext context) {
     final intl10n = AppLocalizations.of(context)!;
     IconData labelIcon = Icons.location_on_rounded;
-    if (address.label?.toLowerCase() == intl10n.home)
+    if (address.label?.toLowerCase() == intl10n.home) {
       labelIcon = Icons.home_rounded;
-    if (address.label?.toLowerCase() == intl10n.work)
+    }
+    if (address.label?.toLowerCase() == intl10n.work) {
       labelIcon = Icons.work_rounded;
+    }
 
     return Row(
       children: [

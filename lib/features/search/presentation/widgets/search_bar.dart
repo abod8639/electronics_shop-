@@ -27,8 +27,7 @@ class SearchBar extends StatelessWidget {
       title: const Hero(
         tag: 'searchBar',
         child: Material(color: Colors.transparent, 
-        child: SizedBox.shrink()
-          // SearchInputGroup()
+        child:  SearchInputGroup()
         ),
       ),
     );

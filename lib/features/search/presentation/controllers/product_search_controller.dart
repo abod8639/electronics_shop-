@@ -172,6 +172,7 @@ class ProductSearchController extends _$ProductSearchController {
       for (var product in remoteResults) {
         if (!existingIds.contains(product.id)) {
           merged.add(product);
+          existingIds.add(product.id);
         }
       }
 
@@ -186,53 +187,88 @@ class ProductSearchController extends _$ProductSearchController {
     }
   }
 
-  /// Prioritized Local Filter: Exact > Prefix > Contains > Fuzzy
+  /// Advanced Local Filter: Multi-language & Multi-token Search
   List<ProductModel> _prioritizedLocalFilter(
     String query,
     List<ProductModel> products,
     String locale,
   ) {
-    final lowerQuery = query.toLowerCase();
+    final lowerQuery = query.toLowerCase().trim();
+    // Split the query into individual words (tokens)
+    final searchTerms = lowerQuery.split(RegExp(r'\s+')).where((t) => t.isNotEmpty).toList();
+    if (searchTerms.isEmpty) return [];
 
     final List<ProductModel> exact = [];
-    final List<ProductModel> prefix = [];
-    final List<ProductModel> contains = [];
-    final List<ProductModel> others = [];
+    final List<ProductModel> containsAllTokens = [];
+    final List<ProductModel> containsAnyToken = [];
 
     for (var p in products) {
-      final name = p.getLocalizedName(locale: locale).toLowerCase();
+      // Gather all searchable fields across both Arabic and English regardless of current app locale
+      final nameAr = (p.name?.ar ?? "").toLowerCase();
+      final nameEn = (p.name?.en ?? "").toLowerCase();
       final brand = (p.brand ?? "").toLowerCase();
-      final category = (p.category?.getLocalizedName(locale: locale) ?? "")
-          .toLowerCase();
+      final categoryAr = (p.category?.name?.ar ?? "").toLowerCase();
+      final categoryEn = (p.category?.name?.en ?? "").toLowerCase();
       final tags = p.tags.map((t) => t.toLowerCase()).toList();
 
-      if (name == lowerQuery || brand == lowerQuery || category == lowerQuery) {
+      // Exact match check (if the user types exactly the brand or name)
+      if (nameAr == lowerQuery ||
+          nameEn == lowerQuery ||
+          brand == lowerQuery ||
+          categoryAr == lowerQuery ||
+          categoryEn == lowerQuery) {
         exact.add(p);
-      } else if (name.startsWith(lowerQuery) ||
-          brand.startsWith(lowerQuery) ||
-          category.startsWith(lowerQuery)) {
-        prefix.add(p);
-      } else if (name.contains(lowerQuery) ||
-          brand.contains(lowerQuery) ||
-          category.contains(lowerQuery) ||
-          tags.any((t) => t.contains(lowerQuery))) {
-        contains.add(p);
-      } else {
-        others.add(p);
+        continue;
+      }
+
+      // Combine text to check for tokens
+      final fullText = "$nameAr $nameEn $brand $categoryAr $categoryEn ${tags.join(" ")}";
+
+      bool matchesAll = true;
+      bool matchesAny = false;
+
+      for (var term in searchTerms) {
+        if (fullText.contains(term)) {
+          matchesAny = true;
+        } else {
+          matchesAll = false;
+        }
+      }
+
+      if (matchesAll) {
+        containsAllTokens.add(p);
+      } else if (matchesAny) {
+        containsAnyToken.add(p);
       }
     }
 
-    final combined = [...exact, ...prefix, ...contains];
+    // Deduplicate and combine results
+    final combined = <ProductModel>[];
+    final addedIds = <String>{};
 
-    // If we have few results, use fuzzy as fallback
-    if (combined.length < 5) {
-      final fuzzyResults = _performLocalFuzzySearch(query, products, locale);
-      final existingIds = combined.map((e) => e.id).toSet();
-      for (var f in fuzzyResults) {
-        if (!existingIds.contains(f.id)) {
-          combined.add(f);
+    void addProducts(List<ProductModel> list) {
+      for (var p in list) {
+        if (!addedIds.contains(p.id)) {
+          combined.add(p);
+          addedIds.add(p.id);
         }
       }
+    }
+
+    // Priority 1: Exact matches
+    addProducts(exact);
+    // Priority 2: Matches that contain ALL query words (e.g., "samsung" AND "galaxy")
+    addProducts(containsAllTokens);
+    
+    // Priority 3: Matches that contain ANY of the words, only if combined results are few
+    if (combined.length < 5) {
+      addProducts(containsAnyToken);
+    }
+
+    // Priority 4: Fuzzy search fallback if still few results
+    if (combined.length < 5) {
+      final fuzzyResults = _performLocalFuzzySearch(query, products, locale);
+      addProducts(fuzzyResults);
     }
 
     return combined;
@@ -249,9 +285,15 @@ class ProductSearchController extends _$ProductSearchController {
       products,
       options: FuzzyOptions(
         keys: [
+          // Search across both English and Arabic names for better fuzzy matching
           WeightedKey(
-            name: 'name',
-            getter: (p) => p.getLocalizedName(locale: locale),
+            name: 'nameEn',
+            getter: (p) => p.name?.en ?? "",
+            weight: 1.0,
+          ),
+          WeightedKey(
+            name: 'nameAr',
+            getter: (p) => p.name?.ar ?? "",
             weight: 1.0,
           ),
           WeightedKey(name: 'brand', getter: (p) => p.brand ?? "", weight: 0.7),
@@ -292,8 +334,18 @@ class ProductSearchController extends _$ProductSearchController {
   }
 
   void _applyFiltersToResults(List<ProductModel> results) {
+    // Ensure absolute uniqueness by ID before applying further states
+    final uniqueProducts = <ProductModel>[];
+    final seen = <String>{};
+    for (var p in results) {
+      if (!seen.contains(p.id)) {
+        uniqueProducts.add(p);
+        seen.add(p.id);
+      }
+    }
+
     final filtered = _localDataSource.filterByPrice(
-      results,
+      uniqueProducts,
       _filterMinPrice,
       _filterMaxPrice,
     );
