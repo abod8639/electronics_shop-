@@ -50,6 +50,17 @@ class AppTheme {
       selectedItemColor: AppColors.primary,
       unselectedItemColor: AppColors.grey,
     ),
+    
+    // pageTransitionsTheme: const PageTransitionsTheme(
+
+    //   builders: {
+    //     TargetPlatform.android:   CupertinoPageTransitionsBuilder(),
+    //     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+    //     TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
+    //     TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+    //     TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+    //   },
+    // ),
   );
 
   static final ThemeData darkTheme = ThemeData(
@@ -101,5 +112,14 @@ class AppTheme {
       unselectedItemColor: Colors.grey,
       type: BottomNavigationBarType.fixed,
     ),
+    // pageTransitionsTheme: const PageTransitionsTheme(
+    //   builders: {
+    //     TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+    //     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+    //     TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
+    //     TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+    //     TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+    //   },
+    // ),
   );
 }

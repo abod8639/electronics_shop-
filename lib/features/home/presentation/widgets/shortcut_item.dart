@@ -1,6 +1,3 @@
-// import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:electronics_shop/features/home/data/models/selection_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/features/home/presentation/controllers/categories_sections_controller.dart';
@@ -48,7 +45,6 @@ class ShortcutItem extends ConsumerWidget {
                   width: _iconSize,
                   height: _iconSize,
                   decoration: BoxDecoration(
-                    // shape: BoxShape.circle,
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                     color: theme.colorScheme.surfaceContainerHighest,
                     boxShadow: [
@@ -144,32 +140,32 @@ class ShortcutItem extends ConsumerWidget {
   }
 }
 
-Widget _buildImage(
-  String? imageUrl,
-  IconData icon,
-  bool isSelected,
-  BuildContext context,
-  SelectionsModel item,
-) {
-  final theme = Theme.of(context);
-  return CachedNetworkImage(
-    imageUrl: imageUrl!,
-    fit: BoxFit.none,
-    placeholder: (context, url) => Center(
-      child: SizedBox(
-        width: 20,
-        height: 20,
-        child: CircularProgressIndicator(
-          strokeWidth: 2,
-          color: theme.colorScheme.primary,
-        ),
-      ),
-    ),
-    errorWidget: (context, url, error) => Icon(
-      item.icon,
-      color: isSelected
-          ? theme.colorScheme.primary
-          : theme.colorScheme.onSurfaceVariant,
-    ),
-  );
-}
+// Widget _buildImage(
+//   String? imageUrl,
+//   IconData icon,
+//   bool isSelected,
+//   BuildContext context,
+//   SelectionsModel item,
+// ) {
+//   final theme = Theme.of(context);
+//   return CachedNetworkImage(
+//     imageUrl: imageUrl!,
+//     fit: BoxFit.none,
+//     placeholder: (context, url) => Center(
+//       child: SizedBox(
+//         width: 20,
+//         height: 20,
+//         child: CircularProgressIndicator(
+//           strokeWidth: 2,
+//           color: theme.colorScheme.primary,
+//         ),
+//       ),
+//     ),
+//     errorWidget: (context, url, error) => Icon(
+//       item.icon,
+//       color: isSelected
+//           ? theme.colorScheme.primary
+//           : theme.colorScheme.onSurfaceVariant,
+//     ),
+//   );
+// }

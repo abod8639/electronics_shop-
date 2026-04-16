@@ -89,9 +89,9 @@ class ProductSearchController extends _$ProductSearchController {
     // 1. Instant local search for immediate feedback
     _performLocalSearchOnly(_searchQuery);
 
-    // 2. Debounce remote search
+    // 2. Debounce remote search — this is the authoritative source
     _debounceTimer?.cancel();
-    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+    _debounceTimer = Timer(const Duration(milliseconds: 400), () {
       _handleRemoteSearch(_searchQuery);
     });
   }
@@ -106,79 +106,85 @@ class ProductSearchController extends _$ProductSearchController {
     _searchQuery = "";
     _hasSearched = false;
     textController.clear();
-    final homeProducts = ref.read(homeControllerProvider).value;
-    final cachedProducts = ref
-        .read(productRepositoryProvider.notifier)
-        .getCachedProducts();
-    if (_localProducts.isEmpty) {
-      if (cachedProducts.isNotEmpty) {
-        _localProducts = List.from(cachedProducts);
-      } else if (homeProducts != null && homeProducts.isNotEmpty) {
-        _localProducts = homeProducts;
-      }
-    }
+
+    // Rebuild the local product pool from cache + homeProducts
+    _rebuildLocalProducts();
+
     _combinedResults = _localProducts;
     _updateDataBounds();
     state = AsyncData(_localProducts);
+  }
+
+  /// Rebuilds the local product pool using all available sources (cache + home)
+  void _rebuildLocalProducts() {
+    final cachedProducts = ref
+        .read(productRepositoryProvider.notifier)
+        .getCachedProducts();
+    final homeProducts = ref.read(homeControllerProvider).value ?? [];
+
+    // Merge cache and home products, deduplicated by ID
+    final seen = <String>{};
+    final merged = <ProductModel>[];
+    for (var p in [...cachedProducts, ...homeProducts]) {
+      if (seen.add(p.id)) merged.add(p);
+    }
+    if (merged.isNotEmpty) {
+      _localProducts = merged;
+    }
   }
 
   /// Performs an instant local search on the provided query
   void _performLocalSearchOnly(String query) {
     if (query.isEmpty) {
       _hasSearched = false;
-      final homeProducts = ref.read(homeControllerProvider).value;
-      final cachedProducts = ref
-          .read(productRepositoryProvider.notifier)
-          .getCachedProducts();
-      if (_localProducts.isEmpty) {
-        if (cachedProducts.isNotEmpty) {
-          _localProducts = List.from(cachedProducts);
-        } else if (homeProducts != null && homeProducts.isNotEmpty) {
-          _localProducts = homeProducts;
-        }
-      }
+      _rebuildLocalProducts();
       _combinedResults = _localProducts;
       state = AsyncData(_localProducts);
       return;
     }
 
+    // Ensure we have the freshest full product pool before filtering
+    _rebuildLocalProducts();
+
     _hasSearched = true;
     final locale = ref.read(languageControllerProvider).languageCode;
-    final homeProducts = ref.read(homeControllerProvider).value ?? [];
 
-    // Use prioritized local filtering
-    final results = _prioritizedLocalFilter(query, homeProducts, locale);
+    // Search across ALL locally available products (cache + home)
+    final results = _prioritizedLocalFilter(query, _localProducts, locale);
     _combinedResults = results;
 
     _updateDataBounds();
     _applyFiltersToResults(results);
   }
 
-  /// Handles remote search with combined results
+  /// Handles remote search — the API is the authoritative source for search
+  /// because it has access to ALL products, not just the locally cached ones.
   Future<void> _handleRemoteSearch(String query) async {
     if (query.isEmpty) return;
+    // If query changed while waiting, skip this stale call
+    if (query != _searchQuery) return;
 
     try {
       final remoteDataSource = ref.read(searchRemoteDataSourceProvider);
 
-      // Fetch remote results
+      // Fetch all matching products from the API for this query
       final List<ProductModel> remoteResults = await remoteDataSource
           .fetchProductsFromApi(query);
 
-      // Merge with current local results
-      final existingIds = _combinedResults.map((e) => e.id).toSet();
-      final List<ProductModel> merged = List.from(_combinedResults);
-
-      for (var product in remoteResults) {
-        if (!existingIds.contains(product.id)) {
-          merged.add(product);
-          existingIds.add(product.id);
+      // The API result is authoritative — use it directly as the result set
+      // Also cache any new products found by the remote search
+      final cachedIds = _localProducts.map((e) => e.id).toSet();
+      for (var p in remoteResults) {
+        if (!cachedIds.contains(p.id)) {
+          _localProducts.add(p);
+          cachedIds.add(p.id);
         }
       }
 
-      _combinedResults = merged;
+      // Replace combined results with the authoritative API response
+      _combinedResults = remoteResults;
       _updateDataBounds();
-      _applyFiltersToResults(merged);
+      _applyFiltersToResults(_combinedResults);
     } catch (e, st) {
       // Don't overwrite state with error if we already have local results
       if (_combinedResults.isEmpty) {
@@ -186,6 +192,7 @@ class ProductSearchController extends _$ProductSearchController {
       }
     }
   }
+
 
   /// Advanced Local Filter: Multi-language & Multi-token Search
   List<ProductModel> _prioritizedLocalFilter(
@@ -351,4 +358,6 @@ class ProductSearchController extends _$ProductSearchController {
     );
     state = AsyncData(filtered);
   }
+
+
 }
