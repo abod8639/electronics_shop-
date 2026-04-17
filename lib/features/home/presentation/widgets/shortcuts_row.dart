@@ -6,7 +6,7 @@ import 'package:electronics_shop/features/home/presentation/widgets/shortcut_ite
 class CategoriesShortcutsRow extends ConsumerWidget {
   static const double _horizontalPadding = 12.0;
   static const double _verticalPadding = 8.0;
-  static const double _rowHeight = 110.0;
+  static const double _rowHeight = 110;
   static const double _spacing = 8.0;
 
   const CategoriesShortcutsRow({super.key});
@@ -17,9 +17,11 @@ class CategoriesShortcutsRow extends ConsumerWidget {
 
     return sectionsState.when(
       data: (selections) => Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: _horizontalPadding,
-          vertical: _verticalPadding,
+        padding: const EdgeInsets.only(
+          left: _horizontalPadding,
+          right: _horizontalPadding,
+          top: _verticalPadding,
+          bottom: _verticalPadding,
         ),
         child: SizedBox(
           height: _rowHeight,

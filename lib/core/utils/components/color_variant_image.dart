@@ -48,6 +48,27 @@ final Map<String, ProductColorModel> electronicsColorsData = {
   ),
 };
 
+class CyberpunkColorClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    double cut = size.width * 0.25;
+    path.moveTo(cut, 0);
+    path.lineTo(size.width - cut, 0);
+    path.lineTo(size.width, cut);
+    path.lineTo(size.width, size.height - cut);
+    path.lineTo(size.width - cut, size.height);
+    path.lineTo(cut, size.height);
+    path.lineTo(0, size.height - cut);
+    path.lineTo(0, cut);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 class ColorVariantImage extends StatelessWidget {
   const ColorVariantImage({
     super.key,
@@ -70,67 +91,44 @@ class ColorVariantImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width: 45,
-      height: 45,
+      width: width ?? 50,
+      height: height ?? 50,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        // borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: isSelected
-              ? AppColors.primary
-              : AppColors.surfaceContainerHighest,
-          width: 3,
-        ),
-
         boxShadow: isSelected
             ? [
                 BoxShadow(
-                  color: baseColor.withValues(alpha: .4),
-                  blurRadius: 8,
-                  spreadRadius: .5,
+                  color: AppColors.cyan.withValues(alpha: .3),
+                  blurRadius: 10,
+                  spreadRadius: 1,
                 ),
               ]
             : [],
-        // image: details.image != null
-        // ?
-        // DecorationImage(
-        //     image: CachedNetworkImageProvider(
-        //       details.image!,
-        //       cacheManager: CustomCacheManager.instance,
-        //     ),
-        //     fit: BoxFit.cover,
-        //     colorFilter: shadow == true
-        //         ? ColorFilter.mode(
-        //             isSelected
-        //                 ? Colors.black.withValues(alpha: .2)
-        //                 : Colors.black.withValues(alpha: .5),
-        //             BlendMode.darken,
-        //           )
-        //         : null,
-        //   )
-        // : null,
-        color: baseColor, //
-        //  details.image == null ?
-        //  : null,
       ),
-      // child: Center(
-      //   child: Text(
-      //     details.name.toUpperCase(),
-      //     textAlign: TextAlign.center,
-      //     style: TextStyle(
-      //       color: Colors.white,
-      //       fontWeight: FontWeight.w900,
-      //       fontSize: 12,
-      //       shadows: [
-      //         Shadow(
-      //           blurRadius: 8,
-      //           color: Colors.black.withValues(alpha: .8),
-      //           offset: const Offset(1, 1),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
+      child: ClipPath(
+        clipper: CyberpunkColorClipper(),
+        child: Container(
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.cyan : Colors.transparent,
+          ),
+          padding: const EdgeInsets.all(2),
+          child: ClipPath(
+            clipper: CyberpunkColorClipper(),
+            child: Container(
+              color: baseColor,
+              child: isSelected 
+                  ? Center(
+                      child: Icon(
+                        Icons.check, 
+                        size: 20, 
+                        color: baseColor.computeLuminance() > 0.5 ? Colors.black : Colors.white
+                      ),
+                    )
+                  : null,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
+

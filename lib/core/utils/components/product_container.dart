@@ -1,3 +1,4 @@
+import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
@@ -56,14 +57,11 @@ class _ProductContainerState extends State<ProductContainer>
     super.build(context);
     final theme = Theme.of(context);
 
-    final cyan = const Color(0xFF00FBFF);
-    final magenta = const Color(0xFFFF00F7);
-
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: cyan.withValues(alpha: 0.01),
+            color: AppColors.cyan.withValues(alpha: 0.01),
             blurRadius: 10,
             spreadRadius: -2,
           ),
@@ -75,8 +73,8 @@ class _ProductContainerState extends State<ProductContainer>
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
             border: Border(
-              left: BorderSide(color: cyan.withAlpha(50), width: 3),
-              bottom: BorderSide(color: cyan.withAlpha(50), width: 1),
+              left: BorderSide(color: AppColors.cyan.withAlpha(50), width: 3),
+              bottom: BorderSide(color: AppColors.cyan.withAlpha(50), width: 1),
             ),
           ),
           child: Stack(
@@ -86,7 +84,7 @@ class _ProductContainerState extends State<ProductContainer>
                 child: Opacity(
                   opacity: 0.04,
                   child: GridPaper(
-                    color: cyan,
+                    color: AppColors.cyan,
                     divisions: 1,
                     subdivisions: 1,
                     interval: 25,
@@ -103,26 +101,26 @@ class _ProductContainerState extends State<ProductContainer>
                       children: [
                         ImageSection(widget: widget),
                         // Pseudo-tech detail on image
-                        Positioned(
-                          top: 8,
-                          left: 8,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: magenta.withValues(alpha: .8),
-                              borderRadius: BorderRadius.circular(2),
-                            ),
-                            child: Text(
-                              "STATUS: SCAN",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 6,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'monospace',
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Positioned(
+                        //   top: 8,
+                        //   left: 8,
+                        //   child: Container(
+                        //     padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                        //     decoration: BoxDecoration(
+                        //       color: AppColors.magenta.withValues(alpha: .8),
+                        //       borderRadius: BorderRadius.circular(2),
+                        //     ),
+                        //     child: Text(
+                        //       "STATUS: SCAN",
+                        //       style: TextStyle(
+                        //         color: Colors.white,
+                        //         fontSize: 6,
+                        //         fontWeight: FontWeight.bold,
+                        //         fontFamily: 'monospace',
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     )
                   ),
@@ -152,7 +150,7 @@ class _ProductContainerState extends State<ProductContainer>
                             Text(
                               'LE ${widget.product.baseEffectivePrice}',
                               style: TextStyle(
-                                color: magenta,
+                                color: AppColors.magenta,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
                                 fontFamily: 'monospace',
@@ -174,7 +172,7 @@ class _ProductContainerState extends State<ProductContainer>
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                             decoration: BoxDecoration(
-                              border: Border.all(color: cyan.withValues(alpha: .5), width: 0.5),
+                              border: Border.all(color: AppColors.cyan.withValues(alpha: .5), width: 0.5),
                             ),
                             child: Row(
                               children: [
@@ -189,7 +187,7 @@ class _ProductContainerState extends State<ProductContainer>
                                   style: TextStyle(
                                     fontSize: 9,
                                     fontWeight: FontWeight.bold,
-                                    color: cyan,
+                                    color: AppColors.cyan,
                                     fontFamily: 'monospace',
                                   ),
                                 ),
@@ -210,7 +208,7 @@ class _ProductContainerState extends State<ProductContainer>
                 right: 0,
                 child: CustomPaint(
                   size: const Size(12, 12),
-                  painter: CornerAccentPainter(color: cyan),
+                  painter: CornerAccentPainter(color: AppColors.cyan),
                 ),
               ),
             ],

@@ -41,46 +41,60 @@ class ProductColorSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: const EdgeInsets.all(3),
-          decoration: BoxDecoration(
-            color: AppColors.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(
-            l10n.chooseYourColor,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.2,
-              fontStyle: FontStyle.italic,
-            ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8),
+          child: Row(
+            children: [
+              Container(
+                width: 3,
+                height: 14,
+                margin: const EdgeInsets.only(right: 8),
+                decoration: BoxDecoration(
+                  color: AppColors.cyan,
+                  boxShadow: [BoxShadow(color: AppColors.cyan.withValues(alpha: .5), blurRadius: 4)],
+                ),
+              ),
+              Text(
+                "CHOOSE_COLOR_VARIANT".toUpperCase(),
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.1,
+                  fontFamily: 'monospace',
+                  color: AppColors.cyan,
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 12),
-        Wrap(
-          spacing: 10,
-          runSpacing: 12,
-          children: colorsList.map((color) {
-            final isSelected = selectedColor == color;
-            final details = getColorDetails(color);
-            final baseColor = details.color;
+        Padding(
+          padding: const EdgeInsets.only(left: 4),
+          child: Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: colorsList.map((color) {
+              final isSelected = selectedColor == color;
+              final details = getColorDetails(color);
+              final baseColor = details.color;
 
-            return GestureDetector(
-              onTap: () {
-                HapticFeedback.lightImpact();
-                onColorSelected(color);
-              },
-              child: ColorVariantImage(
-                shadow: true,
-                isSelected: isSelected,
-                baseColor: baseColor,
-                details: details,
-              ),
-            );
-          }).toList(),
+              return GestureDetector(
+                onTap: () {
+                  HapticFeedback.lightImpact();
+                  onColorSelected(color);
+                },
+                child: ColorVariantImage(
+                  shadow: true,
+                  isSelected: isSelected,
+                  baseColor: baseColor,
+                  details: details,
+                ),
+              );
+            }).toList(),
+          ),
         ),
       ],
     );
+
   }
 }
