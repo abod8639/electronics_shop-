@@ -6,8 +6,27 @@ import 'package:electronics_shop/features/home/presentation/widgets/price_filter
 
 const double _horizontalPadding = 16.0;
 const double _verticalPadding = 12.0;
-const double _searchBarHeight = 48.0;
+const double _searchBarHeight = 56.0;
 const double _iconButtonSize = 48.0;
+
+class CyberpunkShapeClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    double cut = 12.0;
+    path.moveTo(cut, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height - cut);
+    path.lineTo(size.width - cut, size.height);
+    path.lineTo(0, size.height);
+    path.lineTo(0, cut);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
 
 class SearchBar extends StatelessWidget {
   const SearchBar({super.key, this.onTap});
@@ -46,25 +65,36 @@ Widget buildFilterButton({
         width: _iconButtonSize,
         height: _iconButtonSize,
         decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceContainerHighest,
-          shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: .03),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+              color: const Color(0xFFFF00F7).withValues(alpha: .3),
+              blurRadius: 10,
+              spreadRadius: -2,
             ),
           ],
         ),
-        child: IconButton(
-          icon: Icon(Icons.tune, color: theme.colorScheme.onSurfaceVariant),
-          onPressed: onTap,
-          tooltip: l10n.filter,
+        child: ClipPath(
+          clipper: CyberpunkShapeClipper(),
+          child: Container(
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
+              border: Border(
+                right: const BorderSide(color: Color(0xFFFF00F7), width: 3),
+                top: const BorderSide(color: Color(0xFFFF00F7), width: 1),
+              ),
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.tune, color: Color(0xFFFF00F7)),
+              onPressed: onTap,
+              tooltip: l10n.filter,
+            ),
+          ),
         ),
       );
     },
   );
 }
+
 
 void showFilterBottomSheet(BuildContext context, AppLocalizations l10n) {
   showModalBottomSheet(

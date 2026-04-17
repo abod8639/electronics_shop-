@@ -11,8 +11,27 @@ import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:electronics_shop/routes/routes.dart';
 import 'package:electronics_shop/core/utils/components/app_network_image.dart';
 
-const double _borderRadius = 24.0;
-const double _searchBarHeight = 48.0;
+const double _borderRadius = 4.0; // Cyberpunk is more angular
+const double _searchBarHeight = 56.0;
+
+class CyberpunkShapeClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    double cut = 12.0;
+    path.moveTo(cut, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height - cut);
+    path.lineTo(size.width - cut, size.height);
+    path.lineTo(0, size.height);
+    path.lineTo(0, cut);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
 
 class ProductSearchAutocomplete extends ConsumerStatefulWidget {
   final bool autofocus;
@@ -60,38 +79,101 @@ class _ProductSearchAutocompleteState
 
     Widget searchContainer(Widget field) => Container(
       height: _searchBarHeight,
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      margin: const EdgeInsets.symmetric(vertical: 4),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(_borderRadius),
         boxShadow: [
           BoxShadow(
-            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: .03),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
+            color: Color(0xFF00FBFF).withValues(alpha: .2),
+            blurRadius: 15,
+            spreadRadius: -2,
           ),
         ],
       ),
-      child: Row(
-        children: [
-          Icon(Icons.search, color: theme.colorScheme.onSurfaceVariant),
-          const SizedBox(width: 8.0),
-          Expanded(child: field),
-          if (_textController.text.isNotEmpty && !widget.readOnly)
-            IconButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                _textController.clear();
-                controller.onSearchChanged("");
-                setState(() {});
-              },
-              icon: Icon(
-                Icons.clear,
-                size: 18,
-                color: theme.colorScheme.onSurfaceVariant,
+      child: GestureDetector(
+        onTap: widget.onTap,
+          
+        
+        child: ClipPath(
+          clipper: CyberpunkShapeClipper(),
+          child: Container(
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
+              border: Border(
+                left: BorderSide(color: Color(0xFF00FBFF), width: 3),
+                bottom: BorderSide(color: Color(0xFF00FBFF), width: 1),
               ),
             ),
-        ],
+            child: Stack(
+              children: [
+                // Digital background pattern
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: 0.05,
+                    child: GridPaper(
+                      color: Color(0xFF00FBFF),
+                      divisions: 1,
+                      subdivisions: 1,
+                      interval: 20,
+                    ),
+                  ),
+                ),
+                // Pseudo-tech detail text
+                Positioned(
+                  right: 20,
+                  top: 2,
+                  child: Text(
+                    "STATUS: ACTIVE",
+                    style: TextStyle(
+                      fontSize: 7,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFFF00F7).withValues(alpha: .5),
+                      letterSpacing: 1.0,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.search,
+                        color: Color(0xFF00FBFF),
+                        size: 20,
+                      ),
+                      const SizedBox(width: 12.0),
+                      Expanded(child: field),
+                      if (_textController.text.isNotEmpty && !widget.readOnly)
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            _textController.clear();
+                            controller.onSearchChanged("");
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            Icons.clear,
+                            size: 18,
+                            color: Color(0xFFFF00F7),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                // Small vertical tech lines
+                Positioned(
+                  left: 0,
+                  top: 15,
+                  bottom: 15,
+                  child: Container(
+                    width: 2,
+                    color: Color(0xFF00FBFF).withValues(alpha: .7),
+                  ),
+                ),
+              ],
+            ),
+        
+          ),
+        ),
       ),
     );
 
@@ -213,7 +295,15 @@ class _ProductSearchAutocompleteState
                   },
                   onTap: widget.onTap,
                   decoration: InputDecoration.collapsed(
-                    hintText: l10n.searchProducts,
+                    hintText: l10n.searchProducts.toUpperCase(),
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                      color: Color(0xFF00FBFF).withValues(alpha: .5),
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: Color(0xFF00FBFF),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               );

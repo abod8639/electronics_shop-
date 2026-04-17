@@ -6,8 +6,8 @@ import 'package:electronics_shop/features/home/presentation/widgets/shortcut_ite
 class CategoriesShortcutsRow extends ConsumerWidget {
   static const double _horizontalPadding = 12.0;
   static const double _verticalPadding = 8.0;
-  static const double _rowHeight = 90.0;
-  static const double _spacing = 0.0;
+  static const double _rowHeight = 110.0;
+  static const double _spacing = 8.0;
 
   const CategoriesShortcutsRow({super.key});
 

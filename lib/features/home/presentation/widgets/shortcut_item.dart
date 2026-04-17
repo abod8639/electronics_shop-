@@ -3,16 +3,35 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/features/home/presentation/controllers/categories_sections_controller.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
+class CyberpunkClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    double cut = 10.0;
+    path.moveTo(cut, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height - cut);
+    path.lineTo(size.width - cut, size.height);
+    path.lineTo(0, size.height);
+    path.lineTo(0, cut);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 class ShortcutItem extends ConsumerWidget {
   final int index;
 
   const ShortcutItem({super.key, required this.index});
 
   static const double _iconSize = 56.0;
-  static const double _iconInnerSize = 28.0;
-  static const double _labelWidth = 70.0;
-  static const double _labelFontSize = 12.0;
-  static const double _labelSpacing = 6.0;
+  static const double _iconInnerSize = 24.0;
+  static const double _labelWidth = 75.0;
+  static const double _labelFontSize = 10.0;
+  static const double _labelSpacing = 8.0;
   static const Duration _animationDuration = Duration(milliseconds: 180);
 
   @override
@@ -22,11 +41,13 @@ class ShortcutItem extends ConsumerWidget {
         .watch(categoriesSectionsControllerProvider.notifier)
         .selectedIndex;
     final isSelected = selectedIndex == index;
+    final theme = Theme.of(context);
+    final cyan = const Color(0xFF00FBFF);
+    final magenta = const Color(0xFFFF00F7);
 
     return sectionsState.when(
       data: (selections) {
         final item = selections[index];
-        final theme = Theme.of(context);
 
         return Semantics(
           label: '${getLocalizedLabel(context, item.label)} category',
@@ -39,68 +60,98 @@ class ShortcutItem extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                AnimatedContainer(
-                  duration: _animationDuration,
-                  curve: Curves.easeInOut,
-                  width: _iconSize,
-                  height: _iconSize,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: theme.colorScheme.surfaceContainerHighest,
-                    boxShadow: [
-                      BoxShadow(
-                        color: isSelected
-                            ? theme.colorScheme.primary.withValues(alpha: .3)
-                            : theme.colorScheme.primary.withValues(alpha: .1),
-                        blurRadius: isSelected ? 6 : 3,
-                        offset: const Offset(2, 3),
-                        blurStyle: BlurStyle.outer,
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child:
-                        //  (item.image != null && item.image!.isNotEmpty)
-                        //  _buildImage(item.image, item.icon, isSelected, context, item)
-                        //     :
-                        Icon(
-                          item.icon,
-                          shadows: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // Glow effect
+                    if (isSelected)
+                      Container(
+                        width: _iconSize + 4,
+                        height: _iconSize + 4,
+                        decoration: BoxDecoration(
+                          boxShadow: [
                             BoxShadow(
-                              color: isSelected
-                                  ? theme.colorScheme.primary
-                                  : theme.colorScheme.onSurfaceVariant,
-                              spreadRadius: isSelected ? 1 : 0,
-                              blurRadius: isSelected ? 2 : 1,
-                              offset: isSelected ? Offset(1, 1) : Offset(0, 0),
-                              blurStyle: BlurStyle.outer,
+                              color: cyan.withValues(alpha: .4),
+                              blurRadius: 12,
+                              spreadRadius: 2,
                             ),
                           ],
-                          color: isSelected
-                              ? theme.colorScheme.primary
-                              : theme.colorScheme.onSurfaceVariant,
-                          size: _iconInnerSize,
                         ),
-                  ),
+                      ),
+                    // Clipped Container
+                    ClipPath(
+                      clipper: CyberpunkClipper(),
+                      child: AnimatedContainer(
+                        duration: _animationDuration,
+                        width: _iconSize,
+                        height: _iconSize,
+                        decoration: BoxDecoration(
+                          color: isSelected 
+                            ? theme.colorScheme.surface 
+                            : theme.colorScheme.surfaceContainerHighest.withValues(alpha: .5),
+                          border: Border(
+                            left: BorderSide(
+                              color: isSelected ? cyan : Colors.transparent, 
+                              width: 3
+                            ),
+                            bottom: BorderSide(
+                              color: isSelected ? cyan : Colors.transparent, 
+                              width: 1
+                            ),
+                          ),
+                        ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // Grid pattern
+                            Positioned.fill(
+                              child: Opacity(
+                                opacity: isSelected ? 0.1 : 0.05,
+                                child: GridPaper(
+                                  color: cyan,
+                                  divisions: 1,
+                                  subdivisions: 1,
+                                  interval: 15,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              item.icon,
+                              color: isSelected ? cyan : theme.colorScheme.onSurfaceVariant,
+                              size: _iconInnerSize,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: _labelSpacing),
                 SizedBox(
                   width: _labelWidth,
-                  child: Text(
-                    getLocalizedLabel(context, item.label),
-                    style: TextStyle(
-                      fontSize: _labelFontSize,
-                      fontWeight: isSelected
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                      color: isSelected
-                          ? theme.colorScheme.primary
-                          : theme.colorScheme.onSurfaceVariant,
-                    ),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+                  child: Column(
+                    children: [
+                      Text(
+                        getLocalizedLabel(context, item.label).toUpperCase(),
+                        style: TextStyle(
+                          fontSize: _labelFontSize,
+                          letterSpacing: 1.1,
+                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                          color: isSelected ? cyan : theme.colorScheme.onSurfaceVariant,
+                          fontFamily: 'monospace',
+                        ),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      if (isSelected)
+                        Container(
+                          margin: const EdgeInsets.only(top: 2),
+                          width: 20,
+                          height: 2,
+                          color: magenta,
+                        ),
+                    ],
                   ),
                 ),
               ],
@@ -139,6 +190,7 @@ class ShortcutItem extends ConsumerWidget {
     }
   }
 }
+
 
 // Widget _buildImage(
 //   String? imageUrl,
