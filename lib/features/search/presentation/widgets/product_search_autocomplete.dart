@@ -11,7 +11,7 @@ import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:electronics_shop/routes/routes.dart';
 import 'package:electronics_shop/core/utils/components/app_network_image.dart';
 
-const double _borderRadius = 4.0; // Cyberpunk is more angular
+// const double _borderRadius = 4.0; // Cyberpunk is more angular
 const double _searchBarHeight = 56.0;
 
 class CyberpunkShapeClipper extends CustomClipper<Path> {

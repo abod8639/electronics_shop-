@@ -5,6 +5,25 @@ import 'package:electronics_shop/features/product_details/presentation/widgets/h
 import 'package:electronics_shop/features/product_details/presentation/widgets/stars_record.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
+class CyberpunkCardClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    double cut = 16.0;
+    path.moveTo(cut, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height - cut);
+    path.lineTo(size.width - cut, size.height);
+    path.lineTo(0, size.height);
+    path.lineTo(0, cut);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 class ExpandableDescriptionCard extends StatefulWidget {
   final String description;
   final double? stars;
@@ -64,32 +83,69 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
+    final cyan = const Color(0xFF00FBFF);
+    final magenta = const Color(0xFFFF00F7);
+
 
     return Container(
-      decoration: _buildCardDecoration(theme),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const HeaderWithIconandTitle(),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: cyan.withValues(alpha: 0.1),
+            blurRadius: 10,
+            spreadRadius: -2,
+          ),
+        ],
+      ),
+      child: ClipPath(
+        clipper: CyberpunkCardClipper(),
+        child: Container(
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
+            border: Border(
+              left: BorderSide(color: cyan.withValues(alpha: .5), width: 3),
+              bottom: BorderSide(color: cyan.withValues(alpha: .5), width: 1),
+            ),
+          ),
+          child: Stack(
+            children: [
+              // Digital grid pattern
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0.04,
+                  child: GridPaper(
+                    color: cyan,
+                    divisions: 1,
+                    subdivisions: 1,
+                    interval: 30,
+                  ),
+                ),
+              ),
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildDescriptionText(theme),
-                  if (_shouldShowExpandButton(context, theme))
-                    _buildToggleButton(theme, l10n),
-                  const SizedBox(height: 16),
-                  StarsRecord(reviews: widget.reviews),
+                  const HeaderWithIconandTitle(),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildDescriptionText(theme),
+                        if (_shouldShowExpandButton(context, theme))
+                          _buildToggleButton(theme, l10n, cyan, magenta),
+                        const SizedBox(height: 16),
+                        StarsRecord(reviews: widget.reviews),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
+
   }
 
   // --- Widgets ---
@@ -116,35 +172,36 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
     );
   }
 
-  Widget _buildToggleButton(ThemeData theme, AppLocalizations l10n) {
+  Widget _buildToggleButton(ThemeData theme, AppLocalizations l10n, Color cyan, Color magenta) {
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: InkWell(
         onTap: _toggleExpanded,
-        borderRadius: BorderRadius.circular(8),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+            color: magenta.withValues(alpha: .1),
+            border: Border.all(color: magenta.withValues(alpha: .5), width: 1),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                _isExpanded ? l10n.readLess : l10n.readMore,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
+                (_isExpanded ? l10n.readLess : l10n.readMore).toUpperCase(),
+                style: TextStyle(
+                  color: magenta,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  fontFamily: 'monospace',
+                  letterSpacing: 1.1,
                 ),
               ),
               const SizedBox(width: 4),
               RotationTransition(
                 turns: _iconRotation,
-                child: const Icon(
+                child: Icon(
                   Icons.keyboard_arrow_down,
-                  color: AppColors.primary,
+                  color: magenta,
                   size: 20,
                 ),
               ),
@@ -155,38 +212,10 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
     );
   }
 
+
   // ---(Helper Methods) ---
 
-  BoxDecoration _buildCardDecoration(ThemeData theme) {
-    final isDark = theme.brightness == Brightness.dark;
-    return BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: isDark
-            ? [
-                theme.colorScheme.surface,
-                theme.colorScheme.surface.withValues(alpha: .8),
-              ]
-            : [
-                theme.colorScheme.surface,
-                theme.colorScheme.primaryContainer.withValues(alpha: .1),
-              ],
-      ),
-      borderRadius: BorderRadius.circular(16),
-      border: Border.all(
-        color: AppColors.primary.withValues(alpha: .2),
-        width: 1.5,
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.primary.withValues(alpha: .08),
-          blurRadius: 12,
-          offset: const Offset(0, 4),
-        ),
-      ],
-    );
-  }
+
 
   bool _shouldShowExpandButton(BuildContext context, ThemeData theme) {
     final textPainter = TextPainter(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:electronics_shop/core/constants/app_colors.dart';
+// import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/features/home/presentation/widgets/image_section.dart';
 import 'package:electronics_shop/features/home/presentation/widgets/title_and_description.dart';
-import 'package:electronics_shop/l10n/generated/app_localizations.dart';
+// import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
 class CyberpunkCardClipper extends CustomClipper<Path> {
   @override
