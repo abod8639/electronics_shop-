@@ -3,6 +3,26 @@ import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/features/home/presentation/widgets/image_section.dart';
 import 'package:electronics_shop/features/home/presentation/widgets/title_and_description.dart';
+import 'package:electronics_shop/l10n/generated/app_localizations.dart';
+
+class CyberpunkCardClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    double cut = 16.0;
+    path.moveTo(cut, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height - cut);
+    path.lineTo(size.width - cut, size.height);
+    path.lineTo(0, size.height);
+    path.lineTo(0, cut);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
 
 class ProductContainer extends StatefulWidget {
   const ProductContainer({
@@ -36,31 +56,83 @@ class _ProductContainerState extends State<ProductContainer>
     super.build(context);
     final theme = Theme.of(context);
 
+    final cyan = const Color(0xFF00FBFF);
+    final magenta = const Color(0xFFFF00F7);
+
     return Container(
       decoration: BoxDecoration(
-        color: const Color.fromARGB(133, 30, 30, 30),
-        borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
           BoxShadow(
-            color: theme.shadowColor.withValues(alpha: 0.08),
-            blurRadius: 15.0,
-            offset: const Offset(0, 4),
-            spreadRadius: 2,
+            color: cyan.withValues(alpha: 0.01),
+            blurRadius: 10,
+            spreadRadius: -2,
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image Section
-          Expanded(flex: 4, child: ImageSection(widget: widget)),
+      child: ClipPath(
+        clipper: CyberpunkCardClipper(),
+        child: Container(
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
+            border: Border(
+              left: BorderSide(color: cyan.withAlpha(50), width: 3),
+              bottom: BorderSide(color: cyan.withAlpha(50), width: 1),
+            ),
+          ),
+          child: Stack(
+            children: [
+              // Digital grid background 
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0.04,
+                  child: GridPaper(
+                    color: cyan,
+                    divisions: 1,
+                    subdivisions: 1,
+                    interval: 25,
+                  ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image Section
+                  Expanded(
+                    flex: 4, 
+                    child: Stack(
+                      children: [
+                        ImageSection(widget: widget),
+                        // Pseudo-tech detail on image
+                        Positioned(
+                          top: 8,
+                          left: 8,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: magenta.withValues(alpha: .8),
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                            child: Text(
+                              "STATUS: SCAN",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 6,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'monospace',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ),
 
           // Details Section
           if (widget.showName != null && widget.showName == true)
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 12.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,54 +140,61 @@ class _ProductContainerState extends State<ProductContainer>
                     TitleAndDescription(
                       product: widget.product,
                       query: widget.query,
+                      // Note: We might need to adjust TitleAndDescription's text style too
                     ),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Wrap(
-                          spacing: 8,
-                          crossAxisAlignment: WrapCrossAlignment.center,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'LE ${widget.product.baseEffectivePrice}',
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: AppColors.primary,
+                              style: TextStyle(
+                                color: magenta,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                fontFamily: 'monospace',
+                                letterSpacing: -0.5,
                               ),
                             ),
                             if (widget.product.baseHasDiscount)
                               Text(
                                 'LE ${widget.product.formattedPrice}',
-                                style: theme.textTheme.bodySmall?.copyWith(
+                                style: theme.textTheme.labelSmall?.copyWith(
                                   color: Colors.grey,
                                   decoration: TextDecoration.lineThrough,
+                                  fontSize: 9,
                                 ),
                               ),
                           ],
                         ),
                         if (widget.product.reviewCount > 0)
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star_rounded,
-                                size: 16.0,
-                                color: Colors.amber,
-                              ),
-                              const SizedBox(width: 4.0),
-                              Text(
-                                widget.product.averageRating.toStringAsFixed(1),
-                                style: theme.textTheme.labelMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: cyan.withValues(alpha: .5), width: 0.5),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.bolt, // Lightning bolt for rating
+                                  size: 10.0,
+                                  color: Colors.amber,
                                 ),
-                              ),
-                              Text(
-                                ' (${widget.product.reviewCount})',
-                                style: theme.textTheme.labelSmall?.copyWith(
-                                  color: theme.colorScheme.onSurfaceVariant,
+                                const SizedBox(width: 2.0),
+                                Text(
+                                  widget.product.averageRating.toStringAsFixed(1),
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.bold,
+                                    color: cyan,
+                                    fontFamily: 'monospace',
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                       ],
                     ),
@@ -123,8 +202,43 @@ class _ProductContainerState extends State<ProductContainer>
                 ),
               ),
             ),
-        ],
+                ],
+              ),
+              // Corner Accent
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: CustomPaint(
+                  size: const Size(12, 12),
+                  painter: CornerAccentPainter(color: cyan),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+
+class CornerAccentPainter extends CustomPainter {
+  final Color color;
+  CornerAccentPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+    var path = Path();
+    path.moveTo(size.width, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
