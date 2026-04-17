@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/core/utils/components/color_variant_image.dart';
-import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
 ProductColorModel getColorDetails(String colorName) {
   final key = colorName.toLowerCase().trim();

@@ -1,3 +1,4 @@
+import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
@@ -13,8 +14,8 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final cyan = const Color(0xFF00FBFF);
-    final magenta = const Color(0xFFFF00F7);
+    final cyan = AppColors.cyan;
+    final magenta = AppColors.magenta;
 
 
     return Padding(

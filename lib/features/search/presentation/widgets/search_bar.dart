@@ -1,32 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
+import 'package:electronics_shop/features/home/presentation/widgets/price_filter_slider.dart';
+import 'package:electronics_shop/features/search/presentation/controllers/product_search_controller.dart';
 import 'package:electronics_shop/features/search/presentation/widgets/search_input_group.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
-import 'package:electronics_shop/features/search/presentation/controllers/product_search_controller.dart';
-import 'package:electronics_shop/features/home/presentation/widgets/price_filter_slider.dart';
+import 'package:flutter/material.dart';
 
 const double _horizontalPadding = 16.0;
 const double _verticalPadding = 12.0;
 const double _searchBarHeight = 56.0;
 const double _iconButtonSize = 48.0;
-
-class CyberpunkShapeClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    double cut = 12.0;
-    path.moveTo(cut, 0);
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height - cut);
-    path.lineTo(size.width - cut, size.height);
-    path.lineTo(0, size.height);
-    path.lineTo(0, cut);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
 
 class SearchBar extends StatelessWidget {
   const SearchBar({super.key, this.onTap});

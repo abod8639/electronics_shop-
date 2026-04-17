@@ -152,19 +152,23 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
 
   Widget _buildDescriptionText(ThemeData theme) {
     final textStyle = theme.textTheme.bodyLarge?.copyWith(
-      color: theme.colorScheme.onSurfaceVariant,
+      color: theme.colorScheme.onSurface.withValues(alpha: .8),
       height: 1.6,
       letterSpacing: 0.2,
+      
     );
 
     return AnimatedCrossFade(
       firstChild: Text(
+        
         widget.description,
         maxLines: _collapsedMaxLines,
         overflow: TextOverflow.ellipsis,
         style: textStyle,
       ),
-      secondChild: Text(widget.description, style: textStyle),
+      secondChild: Text(
+        
+        widget.description, style: textStyle),
       crossFadeState: _isExpanded
           ? CrossFadeState.showSecond
           : CrossFadeState.showFirst,

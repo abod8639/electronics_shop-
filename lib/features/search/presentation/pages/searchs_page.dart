@@ -27,9 +27,11 @@ class ProductSearchsPage extends ConsumerWidget {
         ),
         slivers: [
           SliverAppBar(
+            
             backgroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
             elevation: 0,
+            
             pinned: false,
             floating: true,
             snap: true,

@@ -117,7 +117,7 @@ class _ProductSizeSelectorState extends State<ProductSizeSelector> {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.cyan.withValues(alpha: .4),
+                    color: AppColors.cyan.withValues(alpha: .2),
                     blurRadius: 10,
                     spreadRadius: 1,
                   ),

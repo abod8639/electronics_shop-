@@ -8,6 +8,7 @@ class HeaderWithIconandTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -35,21 +36,23 @@ class HeaderWithIconandTitle extends StatelessWidget {
             ),
             child: Icon(
               Icons.description_outlined,
-              color: AppColors.primary,
-              size: 20,
+              color: AppColors.magenta,
+              size: 30,
             ),
           ),
 
           const SizedBox(width: 12),
 
-          Text(
-            AppLocalizations.of(context)!.productDescription,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: theme.colorScheme.onSurface,
-              letterSpacing: -0.5,
-            ),
-          ),
+              Text(
+                AppLocalizations.of(context)!.productDescription.toUpperCase(),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'monospace',
+                  letterSpacing: 1,
+                  color: isDark ? Colors.white : Colors.black87,
+                ),
+              ),
         ],
       ),
     );

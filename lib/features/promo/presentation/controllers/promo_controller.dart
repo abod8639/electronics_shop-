@@ -23,7 +23,7 @@ class PromoController extends _$PromoController {
 
   @override
   int build() {
-    pageController = PageController(initialPage: initialPage);
+    pageController = PageController(initialPage: initialPage, keepPage: false);
     _startAutoPlay();
 
     ref.onDispose(() {

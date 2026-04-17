@@ -143,73 +143,74 @@ class _ProductContainerState extends State<ProductContainer>
               flex: 2,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TitleAndDescription(
-                      product: widget.product,
-                      query: widget.query,
-                      // Note: We might need to adjust TitleAndDescription's text style too
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Expanded(
+                          child: TitleAndDescription(
+                            product: widget.product,
+                            query: widget.query,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'LE ${widget.product.baseEffectivePrice}',
-                              style: TextStyle(
-                                color: AppColors.magenta,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                                fontFamily: 'monospace',
-                                letterSpacing: -0.5,
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'LE ${widget.product.baseEffectivePrice}',
+                                  style: TextStyle(
+                                    color: AppColors.magenta,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    fontFamily: 'monospace',
+                                    letterSpacing: -0.5,
+                                  ),
+                                ),
+                                if (widget.product.baseHasDiscount)
+                                  Text(
+                                    'LE ${widget.product.formattedPrice}',
+                                    style: theme.textTheme.labelSmall?.copyWith(
+                                      color: Colors.grey,
+                                      decoration: TextDecoration.lineThrough,
+                                      fontSize: 9,
+                                    ),
+                                  ),
+                              ],
                             ),
-                            if (widget.product.baseHasDiscount)
-                              Text(
-                                'LE ${widget.product.formattedPrice}',
-                                style: theme.textTheme.labelSmall?.copyWith(
-                                  color: Colors.grey,
-                                  decoration: TextDecoration.lineThrough,
-                                  fontSize: 9,
+                            if (widget.product.reviewCount > 0)
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: AppColors.cyan.withValues(alpha: .5), width: 0.5),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.bolt,
+                                      size: 10.0,
+                                      color: Colors.amber,
+                                    ),
+                                    const SizedBox(width: 2.0),
+                                    Text(
+                                      widget.product.averageRating.toStringAsFixed(1),
+                                      style: TextStyle(
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.cyan,
+                                        fontFamily: 'monospace',
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                           ],
                         ),
-                        if (widget.product.reviewCount > 0)
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.cyan.withValues(alpha: .5), width: 0.5),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.bolt, // Lightning bolt for rating
-                                  size: 10.0,
-                                  color: Colors.amber,
-                                ),
-                                const SizedBox(width: 2.0),
-                                Text(
-                                  widget.product.averageRating.toStringAsFixed(1),
-                                  style: TextStyle(
-                                    fontSize: 9,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.cyan,
-                                    fontFamily: 'monospace',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                       ],
                     ),
-                  ],
-                ),
+
               ),
             ),
                 ],
