@@ -70,27 +70,39 @@ class _ProductContainerState extends State<ProductContainer>
       child: ClipPath(
         clipper: CyberpunkCardClipper(),
         child: Container(
+          
           decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.cyan.withValues(alpha: 0.01),
+                blurRadius: 10,
+                spreadRadius: -2,
+                blurStyle: BlurStyle.outer,
+                // offset: Offset(0, 2),
+                
+              ),
+            ],
+            color: Colors.transparent,
+            // color: theme.colorScheme.surface,
             border: Border(
               left: BorderSide(color: AppColors.cyan.withAlpha(50), width: 3),
-              bottom: BorderSide(color: AppColors.cyan.withAlpha(50), width: 1),
+              bottom: BorderSide(color: AppColors.cyan.withAlpha(50), width: 2),
             ),
           ),
           child: Stack(
             children: [
               // Digital grid background 
-              Positioned.fill(
-                child: Opacity(
-                  opacity: 0.04,
-                  child: GridPaper(
-                    color: AppColors.cyan,
-                    divisions: 1,
-                    subdivisions: 1,
-                    interval: 25,
-                  ),
-                ),
-              ),
+              // Positioned.fill(
+              //   child: Opacity(
+              //     opacity: 0.04,
+              //     child: GridPaper(
+              //       color: AppColors.cyan,
+              //       divisions: 1,
+              //       subdivisions: 1,
+              //       interval: 25,
+              //     ),
+              //   ),
+              // ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -130,7 +142,7 @@ class _ProductContainerState extends State<ProductContainer>
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

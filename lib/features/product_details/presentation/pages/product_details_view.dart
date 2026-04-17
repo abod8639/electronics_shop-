@@ -18,7 +18,7 @@ import 'package:electronics_shop/features/product_details/presentation/widgets/b
 import 'package:electronics_shop/features/product_details/presentation/widgets/build_product_info.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/build_technical_specs_section.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/build_warranty_section.dart';
-import 'package:electronics_shop/features/product_details/presentation/widgets/product_size_selector.dart';
+import 'package:electronics_shop/features/product_details/presentation/widgets/cyberpunk_size_clipper.dart';
 
 class ProductDetailsView extends ConsumerWidget {
   static const double _contentPadding = 16.0;
