@@ -4,8 +4,9 @@ import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 class SectionTitle extends StatelessWidget {
   static const double _horizontalPadding = 16.0;
   static const double _verticalPadding = 8.0;
+  final String title;
 
-  const SectionTitle({super.key});
+  const SectionTitle({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,8 @@ class SectionTitle extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              AppLocalizations.of(context)!.mostPopularOffers,
+              title,
+              // AppLocalizations.of(context)!.mostPopularOffers,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: theme.colorScheme.onSurface,

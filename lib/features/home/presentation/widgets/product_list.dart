@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:electronics_shop/features/home/presentation/controllers/home_controller.dart';
 import 'package:electronics_shop/core/utils/components/product_container.dart';
-import 'package:electronics_shop/core/utils/responsive_helper.dart';
+// import 'package:electronics_shop/core/utils/responsive_helper.dart';
 import 'package:electronics_shop/routes/routes.dart';
 
 class ProductList extends ConsumerWidget {
   static const double _horizontalPadding = 8.0;
   static const double _mainAxisSpacing = 12.0;
-  static const double _crossAxisSpacing = 8.0;
+  // static const double _crossAxisSpacing = 8.0;
 
   const ProductList({super.key});
 
@@ -47,36 +47,62 @@ class ProductList extends ConsumerWidget {
           );
         }
 
-        return SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
-          sliver: SliverGrid(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: ResponsiveHelper.getGridCrossAxisCount(context),
-              childAspectRatio: ResponsiveHelper.getGridChildAspectRatio(
-                context,
-              ),
-              crossAxisSpacing: _crossAxisSpacing,
-              mainAxisSpacing: _mainAxisSpacing,
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
+        return SliverToBoxAdapter(
+          child: SizedBox(
+            height: 300, 
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
                 final product = products[index];
-                return GestureDetector(
-                  onTap: () =>
-                      context.push(AppRoutes.productDetails, extra: product),
-                  child: ProductContainer(
-                    showName: true,
-                    product: product,
-                    isBackgroundWhite: false,
+                return Container(
+                  width: 200, 
+                  margin: const EdgeInsets.only(right: _mainAxisSpacing),
+                  child: GestureDetector(
+                    onTap: () => context.push(AppRoutes.productDetails, extra: product),
+                    child: ProductContainer(
+                      showName: true,
+                      product: product,
+                      isBackgroundWhite: false,
+                    ),
                   ),
                 );
               },
-              childCount: products.length,
-              addAutomaticKeepAlives: false,
-              addRepaintBoundaries: true,
             ),
           ),
         );
+
+        // return SliverPadding(
+        //   padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
+        //   sliver: SliverGrid(
+        //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //       crossAxisCount: ResponsiveHelper.getGridCrossAxisCount(context),
+        //       childAspectRatio: ResponsiveHelper.getGridChildAspectRatio(
+        //         context,
+        //       ),
+        //       crossAxisSpacing: _crossAxisSpacing,
+        //       mainAxisSpacing: _mainAxisSpacing,
+        //     ),
+        //     delegate: SliverChildBuilderDelegate(
+        //       (context, index) {
+        //         final product = products[index];
+        //         return GestureDetector(
+        //           onTap: () =>
+        //               context.push(AppRoutes.productDetails, extra: product),
+        //           child: ProductContainer(
+        //             showName: true,
+        //             product: product,
+        //             isBackgroundWhite: false,
+        //           ),
+        //         );
+        //       },
+        //       childCount: products.length,
+        //       addAutomaticKeepAlives: false,
+        //       addRepaintBoundaries: true,
+        //     ),
+        //   ),
+        // );
       },
       loading: () => const SliverToBoxAdapter(
         child: Center(heightFactor: 3, child: CircularProgressIndicator()),

@@ -1,3 +1,4 @@
+import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart' hide SearchBar;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/core/utils/functions/app_guard.dart';
@@ -39,13 +40,13 @@ class HomeView extends ConsumerWidget {
                 physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics(),
                 ),
-                slivers: [
+                slivers: [ 
                   const SearchBar(),
                   const SliverToBoxAdapter(child: CategoriesShortcutsRow()),
                   if (selectedCategoryIndex == 0)
                     const SliverToBoxAdapter(child: PromoBanner()),
                   if (selectedCategoryIndex == 0)
-                    const SliverToBoxAdapter(child: SectionTitle()),
+                    SliverToBoxAdapter(child: SectionTitle(title: AppLocalizations.of(context)!.mostPopularOffers)),
                   const ProductList(),
                   const SliverToBoxAdapter(
                     child: SizedBox(height: _bottomPadding),
