@@ -47,7 +47,7 @@ class HomeView extends ConsumerWidget {
                     const SliverToBoxAdapter(child: PromoBanner()),
                   if (selectedCategoryIndex == 0)
                     SliverToBoxAdapter(child: SectionTitle(title: AppLocalizations.of(context)!.mostPopularOffers)),
-                  const ProductList(),
+                  const ProductRowList(),
                   const SliverToBoxAdapter(
                     child: SizedBox(height: _bottomPadding),
                   ),
