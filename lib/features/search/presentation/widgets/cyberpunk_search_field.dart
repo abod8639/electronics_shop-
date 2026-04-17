@@ -11,6 +11,7 @@ class CyberpunkSearchField extends StatelessWidget {
   final VoidCallback? onTap;
 
   const CyberpunkSearchField({
+    
     super.key,
     required this.controller,
     required this.focusNode,
