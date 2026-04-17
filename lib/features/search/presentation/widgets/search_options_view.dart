@@ -12,6 +12,7 @@ class SearchOptionsView extends StatelessWidget {
   final AutocompleteOnSelected<Object> onSelected;
   final String query;
 
+
   const SearchOptionsView({
     super.key,
     required this.constraints,
