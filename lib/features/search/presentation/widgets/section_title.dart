@@ -3,10 +3,12 @@ import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
 class SectionTitle extends StatelessWidget {
   static const double _horizontalPadding = 16.0;
-  static const double _verticalPadding = 8.0;
+  static const double _verticalPadding = 10.0;
   final String title;
+  final VoidCallback? onSeeAllPressed;
+  final String? buttonTitle;
 
-  const SectionTitle({super.key, required this.title});
+  const SectionTitle({super.key, required this.title, this.onSeeAllPressed, this.buttonTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class SectionTitle extends StatelessWidget {
         left: _horizontalPadding,
         right: _horizontalPadding,
         bottom: _verticalPadding,
-        top: 0,
+        top: _verticalPadding,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,12 +34,12 @@ class SectionTitle extends StatelessWidget {
               ),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              // TODO: Implement see all functionality
-            },
-            child: Text(AppLocalizations.of(context)!.seeAll),
-          ),
+          if (onSeeAllPressed != null || buttonTitle != null)
+            TextButton(
+              onPressed: onSeeAllPressed,
+              child: Text(buttonTitle ?? AppLocalizations.of(context)!.seeAll),
+            ),
+
         ],
       ),
     );
