@@ -3,6 +3,25 @@ import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
+class CyberpunkSpecsClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    double cut = 16.0;
+    path.moveTo(cut, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height - cut);
+    path.lineTo(size.width - cut, size.height);
+    path.lineTo(0, size.height);
+    path.lineTo(0, cut);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
   final dynamic technicalSpecs = product.technicalSpecifications;
   if (technicalSpecs == null ||
@@ -11,31 +30,33 @@ Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
     return const SizedBox.shrink();
   }
 
-  final specs = Map<String, dynamic>.from(technicalSpecs);
-
-  return Builder(
-    builder: (context) {
-      final l10n = AppLocalizations.of(context)!;
-      final theme = Theme.of(context);
+      final cyan = const Color(0xFF00FBFF);
+      final magenta = const Color(0xFFFF00F7);
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8),
             child: Row(
               children: [
-                // Icon(
-                //   Icons.settings_suggest_outlined,
-                //   size: 20,
-                //   color: isDark ? AppColors.accent : AppColors.primary,
-                // ),
-                // const SizedBox(width: 8),
+                Container(
+                  width: 3,
+                  height: 16,
+                  margin: const EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    color: cyan,
+                    boxShadow: [BoxShadow(color: cyan.withValues(alpha: .5), blurRadius: 4)],
+                  ),
+                ),
                 Text(
-                  l10n.technicalSpecifications,
-                  style: theme.textTheme.titleMedium?.copyWith(
+                  l10n.technicalSpecifications.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
+                    letterSpacing: 1.2,
+                    fontFamily: 'monospace',
+                    color: isDark ? cyan : theme.colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -44,72 +65,98 @@ Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
           const SizedBox(height: 16),
           Container(
             decoration: BoxDecoration(
-              color: isDark
-                  ? AppColors.surfaceDark
-                  : AppColors.greyLight.withValues(alpha: .3),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.05)
-                    : Colors.black.withValues(alpha: 0.05),
-              ),
+              boxShadow: [
+                BoxShadow(
+                  color: cyan.withValues(alpha: 0.05),
+                  blurRadius: 15,
+                  spreadRadius: -5,
+                ),
+              ],
             ),
-            child: Column(
-              children: specs.entries.indexed.map<Widget>((item) {
-                final index = item.$1;
-                final entry = item.$2;
-                final isLast = index == specs.length - 1;
-
-                return Column(
+            child: ClipPath(
+              clipper: CyberpunkSpecsClipper(),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isDark ? theme.colorScheme.surface : Colors.white,
+                  border: Border(
+                    left: BorderSide(color: cyan.withValues(alpha: .5), width: 3),
+                    bottom: BorderSide(color: cyan.withValues(alpha: .3), width: 1),
+                  ),
+                ),
+                child: Stack(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          _getSpecIcon(entry.key, isDark),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            flex: 4,
-                            child: Text(
-                              entry.key,
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: isDark
-                                    ? Colors.grey[400]
-                                    : Colors.grey[600],
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            flex: 6,
-                            child: Text(
-                              entry.value.toString(),
-                              textAlign: TextAlign.end,
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: isDark
-                                    ? AppColors.white
-                                    : AppColors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
+                    // Digital grid pattern
+                    Positioned.fill(
+                      child: Opacity(
+                        opacity: 0.03,
+                        child: GridPaper(
+                          color: cyan,
+                          divisions: 1,
+                          subdivisions: 1,
+                          interval: 20,
+                        ),
                       ),
                     ),
-                    if (!isLast)
-                      Divider(
-                        height: 1,
-                        indent: 50,
-                        endIndent: 16,
-                        color: isDark
-                            ? Colors.white.withValues(alpha: 0.05)
-                            : Colors.black.withValues(alpha: 0.05),
-                      ),
+                    Column(
+                      children: specs.entries.indexed.map<Widget>((item) {
+                        final index = item.$1;
+                        final entry = item.$2;
+                        final isLast = index == specs.length - 1;
+
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  _getSpecIcon(entry.key, isDark, cyan),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    flex: 4,
+                                    child: Text(
+                                      entry.key.toUpperCase(),
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontFamily: 'monospace',
+                                        letterSpacing: 0.5,
+                                        color: cyan.withValues(alpha: .8),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    flex: 6,
+                                    child: Text(
+                                      entry.value.toString(),
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontFamily: 'monospace',
+                                        color: isDark ? Colors.white : Colors.black87,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            if (!isLast)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Opacity(
+                                  opacity: 0.1,
+                                  child: Divider(color: cyan, height: 1),
+                                ),
+                              ),
+                          ],
+                        );
+                      }).toList(),
+                    ),
                   ],
-                );
-              }).toList(),
+                ),
+              ),
             ),
           ),
         ],

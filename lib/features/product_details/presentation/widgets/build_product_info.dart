@@ -2,11 +2,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:electronics_shop/core/constants/app_colors.dart';
+// import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/features/search/presentation/controllers/product_search_controller.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:electronics_shop/routes/routes.dart';
+
+class CyberpunkInfoClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    double cut = 16.0;
+    path.moveTo(0, cut);
+    path.lineTo(cut, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height - cut);
+    path.lineTo(size.width - cut, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
 
 Widget buildProductInfo(
   ProductModel product,
@@ -47,13 +66,18 @@ Widget buildProductInfo(
       {'label': l10n.countryOfOrigin, 'value': product.countryOfOrigin!},
   ];
 
+  final cyan = const Color(0xFF00FBFF);
+  final magenta = const Color(0xFFFF00F7);
+
   for (var i = 0; i < dataMap.length; i++) {
     final item = dataMap[i];
     infoItems.add(
       _buildInfoRow(
-        label: item['label'] as String,
+        label: (item['label'] as String).toUpperCase(),
         value: item['value'] as String,
         isDark: isDark,
+        cyan: cyan,
+        magenta: magenta,
         isLink: item['isLink'] == true,
         onTap: item['isLink'] == true
             ? () => navigateToBrandPage(item['value'] as String)
@@ -62,7 +86,13 @@ Widget buildProductInfo(
     );
     if (i < dataMap.length - 1) {
       infoItems.add(
-        Divider(color: AppColors.primary.withValues(alpha: 0.1), height: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Opacity(
+            opacity: 0.1,
+            child: Divider(color: cyan, height: 1),
+          ),
+        ),
       );
     }
   }
@@ -73,34 +103,71 @@ Widget buildProductInfo(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-        child: Text(
-          l10n.productInfo,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: isDark ? AppColors.white : AppColors.black,
-          ),
-        ),
-      ),
-      Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: isDark ? theme.colorScheme.surface : Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: AppColors.primary.withValues(alpha: 0.15),
-            width: 1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+        child: Row(
+          children: [
+            Container(
+              width: 3,
+              height: 16,
+              margin: const EdgeInsets.only(right: 8),
+              decoration: BoxDecoration(
+                color: cyan,
+                boxShadow: [BoxShadow(color: cyan.withValues(alpha: .5), blurRadius: 4)],
+              ),
+            ),
+            Text(
+              l10n.productInfo.toUpperCase(),
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+                fontFamily: 'monospace',
+                color: isDark ? cyan : theme.colorScheme.onSurface,
+              ),
             ),
           ],
         ),
-        child: Column(children: infoItems),
+      ),
+      Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: cyan.withValues(alpha: 0.05),
+              blurRadius: 15,
+              spreadRadius: -5,
+            ),
+          ],
+        ),
+        child: ClipPath(
+          clipper: CyberpunkInfoClipper(),
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: isDark ? theme.colorScheme.surface : Colors.white,
+              border: Border(
+                left: BorderSide(color: cyan.withValues(alpha: .5), width: 2),
+                bottom: BorderSide(color: cyan.withValues(alpha: .3), width: 1),
+              ),
+            ),
+            child: Stack(
+              children: [
+                // Digital pattern
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: 0.03,
+                    child: GridPaper(
+                      color: cyan,
+                      divisions: 1,
+                      subdivisions: 1,
+                      interval: 20,
+                    ),
+                  ),
+                ),
+                Column(children: infoItems),
+              ],
+            ),
+          ),
+        ),
       ),
     ],
   );
@@ -110,11 +177,13 @@ Widget _buildInfoRow({
   required String label,
   required String value,
   required bool isDark,
+  required Color cyan,
+  required Color magenta,
   bool isLink = false,
   VoidCallback? onTap,
 }) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 4),
+    padding: const EdgeInsets.symmetric(vertical: 6),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -123,9 +192,11 @@ Widget _buildInfoRow({
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 16,
-              color: isDark ? Colors.grey[400] : Colors.grey[600],
-              fontWeight: FontWeight.w600,
+              fontSize: 11,
+              fontFamily: 'monospace',
+              letterSpacing: 0.5,
+              color: cyan.withValues(alpha: .8),
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -139,12 +210,12 @@ Widget _buildInfoRow({
               value,
               textAlign: TextAlign.end,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 13,
+                fontFamily: 'monospace',
                 color: isLink
-                    ? AppColors.info
-                    : (isDark ? AppColors.white : AppColors.black),
-                fontWeight: isLink ? FontWeight.bold : FontWeight.w600,
-                // decoration: isLink ? TextDecoration.underline : null,
+                    ? magenta
+                    : (isDark ? Colors.white : Colors.black87),
+                fontWeight: isLink ? FontWeight.bold : FontWeight.normal,
               ),
             ),
           ),
@@ -153,3 +224,4 @@ Widget _buildInfoRow({
     ),
   );
 }
+
