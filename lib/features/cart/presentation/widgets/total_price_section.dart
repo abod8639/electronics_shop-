@@ -1,13 +1,12 @@
+import 'package:electronics_shop/features/cart/presentation/controllers/cart_controller.dart';
+import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:electronics_shop/core/constants/app_colors.dart';
-import 'package:electronics_shop/l10n/generated/app_localizations.dart';
-import 'package:electronics_shop/features/cart/presentation/controllers/cart_controller.dart';
 
-const double _totalLabelFontSize = 14.0;
-const double _totalPriceFontSize = 24.0;
-const double _itemCountFontSize = 12.0;
-const double _smallSpacing = 4.0;
+const double _totalLabelFontSize = 12.0;
+const double _totalPriceFontSize = 22.0;
+const double _itemCountFontSize = 10.0;
+const double _smallSpacing = 2.0;
 
 class TotalPriceSection extends ConsumerWidget {
   const TotalPriceSection({super.key});
@@ -19,6 +18,9 @@ class TotalPriceSection extends ConsumerWidget {
     final theme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
 
+    final cyanColor = const Color(0xFF00FBFF);
+    final magentaColor = const Color(0xFFFF00F7);
+
     return cartState.when(
       data: (items) => Expanded(
         child: Column(
@@ -28,28 +30,31 @@ class TotalPriceSection extends ConsumerWidget {
             Row(
               children: [
                 Text(
-                  localizations.total,
+                  localizations.total.toUpperCase(),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: _totalLabelFontSize,
-                    color: theme.colorScheme.onSurfaceVariant,
+                    color: cyanColor,
+                    fontFamily: 'monospace',
+                    letterSpacing: 1.1,
                   ),
                 ),
                 const SizedBox(width: 8.0),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 2.0,
+                    horizontal: 6.0,
+                    vertical: 1.0,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: .1),
-                    borderRadius: BorderRadius.circular(12.0),
+                    color: magentaColor.withOpacity(0.1),
+                    border: Border.all(color: magentaColor.withOpacity(0.5), width: 0.5),
                   ),
                   child: Text(
-                    '${items.length} ${items.length == 1 ? localizations.item : localizations.items}',
+                    '[${items.length}]',
                     style: TextStyle(
                       fontSize: _itemCountFontSize,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                      color: magentaColor,
+                      fontFamily: 'monospace',
                     ),
                   ),
                 ),
@@ -57,11 +62,18 @@ class TotalPriceSection extends ConsumerWidget {
             ),
             const SizedBox(height: _smallSpacing),
             Text(
-              '\$${cartNotifier.totalPrice.toStringAsFixed(2)}',
+              '${cartNotifier.totalPrice.toStringAsFixed(2)} LE',
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontSize: _totalPriceFontSize,
                 fontWeight: FontWeight.bold,
-                color: AppColors.primary,
+                color: Colors.white,
+                fontFamily: 'monospace',
+                shadows: [
+                  Shadow(
+                    color: magentaColor.withOpacity(0.5),
+                    blurRadius: 8,
+                  ),
+                ],
               ),
             ),
           ],

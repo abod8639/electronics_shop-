@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const Color cyan = Color(0xFF00FBFF);
-  static const Color magenta = Color(0xFFFF00F7);
+  static const Color magenta = Color.fromARGB(230, 255, 0, 247);
   static const Color primary = Color.fromARGB(255, 102, 127, 214);
   static const Color primaryDark = Color(0xFF3766FF);
   static const Color primaryLight = Color(0xFFE0E7FF);

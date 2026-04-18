@@ -20,7 +20,7 @@ class MyBottomNavigationBar extends ConsumerWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00FBFF).withOpacity(0.15),
+            color: const Color(0xFF00FBFF).withValues(alpha: .15),
             blurRadius: 20,
             spreadRadius: -5,
             blurStyle: BlurStyle.outer

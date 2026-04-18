@@ -29,7 +29,7 @@ class BuildCartContent extends ConsumerWidget {
               },
             ),
           ),
-          Divider(height: 1, color: theme.colorScheme.outlineVariant),
+          // Divider(height: 1, color: theme.colorScheme.outlineVariant),
           const BuildCheckoutSection(),
         ],
       ),

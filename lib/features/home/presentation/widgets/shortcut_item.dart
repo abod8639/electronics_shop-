@@ -8,7 +8,7 @@ class CyberpunkClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    double cut = 10.0;
+    double cut = 13.0;
     path.moveTo(cut, 0);
     path.lineTo(size.width, 0);
     path.lineTo(size.width, size.height - cut);
@@ -72,7 +72,7 @@ class ShortcutItem extends ConsumerWidget {
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
-                                color: isSelected ? AppColors.cyan.withValues(alpha: .4) : Colors.black,
+                                color: isSelected ? AppColors.cyan.withValues(alpha: .3) : Colors.black,
                                 blurRadius: 12,
                                 spreadRadius: 2,
                               ),
