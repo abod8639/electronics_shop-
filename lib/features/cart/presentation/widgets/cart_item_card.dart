@@ -20,9 +20,10 @@ class CartItemCard extends ConsumerWidget {
     final locale = Localizations.localeOf(context).languageCode;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
         boxShadow: [
+          
           BoxShadow(
             color: AppColors.cyan.withValues(alpha: .15),
             blurRadius: 15,
@@ -35,6 +36,7 @@ class CartItemCard extends ConsumerWidget {
         clipper: CyberpunkShapeClipper(),
         child: Container(
           decoration: BoxDecoration(
+
             color: theme.colorScheme.surface.withValues(alpha: .9),
             border: Border.all(color: AppColors.cyan.withValues(alpha: .5), width: 0.5),
           ),
@@ -82,8 +84,8 @@ class CartItemCard extends ConsumerWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 4),
-                        if (item.selectedColor != null || item.selectedSize != null)
+                        const SizedBox(height: 5),
+                        if ( item.selectedSize != null)
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(

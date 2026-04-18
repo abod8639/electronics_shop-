@@ -4,7 +4,7 @@ class CyberpunkShapeClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    double cut = 20.0;
+    double cut = 16.0;
     path.moveTo(cut, 0);
     path.lineTo(size.width, 0);
     path.lineTo(size.width, size.height - cut);

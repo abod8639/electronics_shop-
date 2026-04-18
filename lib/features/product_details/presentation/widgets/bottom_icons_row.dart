@@ -209,7 +209,7 @@ class BottomIconsRow extends ConsumerWidget {
       child: ClipPath(
         clipper: CyberpunkBottomClipper(),
         child: Container(
-          color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05),
+          color: isDark ? AppColors.backgroundDark : Colors.black.withValues(alpha: 0.05),
           child: Container(
             decoration: BoxDecoration(
               border: Border(left: BorderSide(color: AppColors.cyan, width: 3)),
@@ -219,8 +219,12 @@ class BottomIconsRow extends ConsumerWidget {
               children: [
                 IconButton(
                   icon: Icon(
+                    
                     item.quantity > 1 ? Icons.remove_rounded : Icons.delete_rounded,
-                    color: item.quantity > 1 ? AppColors.cyan : Colors.redAccent,
+                    color:
+                     item.quantity > 1 ? AppColors.cyan :
+                     
+                      AppColors.error,
                   ),
                   onPressed: () => cartNotifier.decreaseQuantity(item),
                 ),
