@@ -37,7 +37,6 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final themeMode = ref.watch(themeControllerProvider.notifier).themeMode;
     final router = ref.watch(routerProvider);
     final isDarkMode = ref.watch(themeControllerProvider);
     final locale = ref.watch(languageControllerProvider);
@@ -63,7 +62,7 @@ class MyApp extends ConsumerWidget {
             bottom: 80,
             left: 0,
             right: 0,
-            child: InternetConnectionBanner(title: "No internet connection"),
+            child: InternetConnectionBanner(title: "No internet connection" ),
           ),
         ],
       ),

@@ -29,7 +29,10 @@ class MainPage extends ConsumerWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const MyBottomNavigationBar(),
+      bottomNavigationBar: const Padding(
+        padding: EdgeInsets.only(bottom: 20),
+        child: MyBottomNavigationBar(),
+      ),
     );
   }
 }
