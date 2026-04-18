@@ -1,58 +1,72 @@
-import 'package:flutter/material.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
-import 'package:electronics_shop/l10n/generated/app_localizations.dart';
+import 'package:flutter/material.dart';
 
 class HeaderWithIconandTitle extends StatelessWidget {
-  const HeaderWithIconandTitle({super.key});
+  final Widget? icon;
+  final String title;
+  final Color? color;
+  final double fontSize;
+  final EdgeInsets? padding;
+
+  const HeaderWithIconandTitle({
+    super.key,
+    this.icon,
+    required this.title,
+    this.color,
+    this.fontSize = 16,
+    this.padding,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final accentColor = color ?? AppColors.cyan;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: padding ?? const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppColors.primary.withValues(alpha: .1),
-            AppColors.primary.withValues(alpha: .05),
-          ],
-        ),
+        color: accentColor.withValues(alpha: 0.05),
         border: Border(
           bottom: BorderSide(
-            color: AppColors.primary.withValues(alpha: .15),
+            color: accentColor.withValues(alpha: .2),
             width: 1,
           ),
         ),
       ),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: .15),
-              borderRadius: BorderRadius.circular(8),
+          if (icon != null) ...[
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: accentColor.withValues(alpha: .1),
+                border: Border.all(color: accentColor.withValues(alpha: 0.3)),
+              ),
+              child: IconTheme(
+                data: IconThemeData(color: accentColor, size: 24),
+                child: icon!,
+              ),
             ),
-            child: Icon(
-              Icons.description_outlined,
-              color: AppColors.magenta,
-              size: 30,
+            const SizedBox(width: 12),
+          ],
+          Text(
+            title.toUpperCase(),
+            style: TextStyle(
+              fontSize: fontSize,
+              fontWeight: FontWeight.w900,
+              fontFamily: 'monospace',
+              letterSpacing: 1.2,
+              color: isDark ? accentColor : Colors.black87,
+              shadows: [
+                if (isDark)
+                  Shadow(
+                    color: accentColor.withValues(alpha: 0.5),
+                    blurRadius: 4,
+                  ),
+              ],
             ),
           ),
-
-          const SizedBox(width: 12),
-
-              Text(
-                AppLocalizations.of(context)!.productDescription.toUpperCase(),
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'monospace',
-                  letterSpacing: 1,
-                  color: isDark ? Colors.white : Colors.black87,
-                ),
-              ),
         ],
       ),
     );

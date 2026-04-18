@@ -1,4 +1,5 @@
 // [Certain]
+import 'package:electronics_shop/features/product_details/presentation/widgets/expandable_description_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -99,77 +100,13 @@ Widget buildProductInfo(
 
   if (infoItems.isEmpty) return const SizedBox.shrink();
 
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
-        child: Row(
-          children: [
-            Container(
-              width: 3,
-              height: 16,
-              margin: const EdgeInsets.only(right: 8),
-              decoration: BoxDecoration(
-                color: cyan,
-                boxShadow: [BoxShadow(color: cyan.withValues(alpha: .5), blurRadius: 4)],
-              ),
-            ),
-            Text(
-              l10n.productInfo.toUpperCase(),
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
-                fontFamily: 'monospace',
-                color: isDark ? cyan : theme.colorScheme.onSurface,
-              ),
-            ),
-          ],
-        ),
-      ),
-      Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: cyan.withValues(alpha: 0.05),
-              blurRadius: 15,
-              spreadRadius: -5,
-            ),
-          ],
-        ),
-        child: ClipPath(
-          clipper: CyberpunkInfoClipper(),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: isDark ? theme.colorScheme.surface : Colors.white,
-              border: Border(
-                left: BorderSide(color: cyan.withValues(alpha: .5), width: 2),
-                bottom: BorderSide(color: cyan.withValues(alpha: .3), width: 1),
-              ),
-            ),
-            child: Stack(
-              children: [
-                // Digital pattern
-                Positioned.fill(
-                  child: Opacity(
-                    opacity: 0.03,
-                    child: GridPaper(
-                      color: cyan,
-                      divisions: 1,
-                      subdivisions: 1,
-                      interval: 20,
-                    ),
-                  ),
-                ),
-                Column(children: infoItems),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ],
+  return ExpandableDescriptionCard(
+    title: l10n.productInfo.toUpperCase(),
+    accentColor: cyan,
+    icon: const Icon(Icons.info_outline_rounded),
+    child: Column(
+      children: infoItems,
+    ),
   );
 }
 

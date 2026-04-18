@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
-import 'package:electronics_shop/core/utils/components/build_quantity_controls.dart';
+import 'package:electronics_shop/core/utils/components/color_variant_image.dart';
 import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:electronics_shop/core/utils/functions/cache_manager.dart';
 import 'package:electronics_shop/features/cart/data/models/cart_item_model.dart';
@@ -87,14 +87,14 @@ class CartItemCard extends ConsumerWidget {
                         const SizedBox(height: 5),
                         if ( item.selectedSize != null)
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
                             decoration: BoxDecoration(
-                              color: AppColors.magenta.withValues(alpha: .1),
+                              color: AppColors.backgroundDark ,
                             ),
                             child: Text(
                               '${item.selectedColor ?? ""} ${item.selectedSize ?? ""}'.trim(),
                               style: theme.textTheme.bodySmall?.copyWith(
-                                color: AppColors.magenta,
+                                color: AppColors.cyan,
                                 fontFamily: 'monospace',
                                 fontWeight: FontWeight.bold,
                               ),
@@ -102,12 +102,13 @@ class CartItemCard extends ConsumerWidget {
                           ),
                         const SizedBox(height: 12),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
                               '${item.product.baseEffectivePrice} LE',
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: AppColors.magenta ,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'monospace',
                                 fontSize: 16,
@@ -127,17 +128,55 @@ class CartItemCard extends ConsumerWidget {
                                   decoration: TextDecoration.lineThrough,
                                 ),
                               ),
-                          ],
+
+                                                    //  QuantityControls(product: item.product),
+                                             Container(
+                                              
+                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.5)),
+                          color: AppColors.cyan.withValues(alpha: 0.1),
                         ),
+                        child: Text(
+                          'QTY: ${item.quantity}',
+                          style: const TextStyle(
+                            color: AppColors.cyan,
+                            fontFamily: 'monospace',
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                          ],
+
+                        ),
+
+
                       ],
                     ),
                   ),
                   const SizedBox(width: 8),
-                   Column(
-                    children: [
-                       QuantityControls(product: item.product),
-                    ],
-                  ),
+
+                  const SizedBox(width: 8),
+                  
+                  
+
+                  if (item.selectedColor != null) ...[
+                    Builder(
+                      builder: (context) {
+                        final details = electronicsColorsData[item.selectedColor!.toLowerCase()];
+                        return ColorVariantImage(
+                          shadow: true,
+                          isSelected: false,
+                          baseColor: details?.color ?? AppColors.primary,
+                          details: details ?? electronicsColorsData['default']!,
+                          width: 34,
+                          height: 34,
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                  ],
                 ],
               ),
             ),

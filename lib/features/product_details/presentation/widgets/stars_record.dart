@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/product/data/models/review_model.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
+import 'package:flutter/material.dart';
 
 class StarsRecord extends StatelessWidget {
   final List<ReviewModel> reviews;
@@ -19,62 +20,77 @@ class StarsRecord extends StatelessWidget {
     return totalRating / reviews.length;
   }
 
-  List<Icon> _buildStarRating(double stars) {
+  List<Widget> _buildStarRating(double stars) {
     final fullStars = stars.floor();
     final hasHalfStar = (stars - fullStars) >= 0.5;
+    const amber = Colors.amber;
 
-    final starIcons = <Icon>[];
+    final starIcons = <Widget>[];
 
-    // Add full stars
-    starIcons.addAll(
-      List.generate(
-        fullStars,
-        (index) =>
-            const Icon(Icons.star_rounded, color: Colors.amber, size: 20),
-      ),
-    );
+    for (int i = 0; i < 5; i++) {
+      IconData iconData;
+      Color color;
+      if (i < fullStars) {
+        iconData = Icons.star_rounded;
+        color = amber;
+      } else if (i == fullStars && hasHalfStar) {
+        iconData = Icons.star_half_rounded;
+        color = amber;
+      } else {
+        iconData = Icons.star_outline_rounded;
+        color = Colors.grey.withValues(alpha: 0.5);
+      }
 
-    // Add half star if applicable
-    if (hasHalfStar && fullStars < 5) {
       starIcons.add(
-        const Icon(Icons.star_half_rounded, color: Colors.amber, size: 20),
+        Icon(
+          iconData,
+          color: color,
+          size: 18,
+          shadows: [
+            if (color == amber)
+              Shadow(color: amber.withValues(alpha: 0.5), blurRadius: 4),
+          ],
+        ),
       );
     }
-
-    // Add empty stars
-    final emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    starIcons.addAll(
-      List.generate(
-        emptyStars,
-        (index) => const Icon(
-          Icons.star_outline_rounded,
-          color: Colors.grey,
-          size: 20,
-        ),
-      ),
-    );
 
     return starIcons;
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    // Use calculated average rating from reviews
     final averageRating = _calculateAverageRating();
     final actualReviewCount = reviews.length;
     final intl10n = AppLocalizations.of(context)!;
+    final magenta = AppColors.magenta;
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 16),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: magenta.withValues(alpha: 0.05),
+        border: Border.all(color: magenta.withValues(alpha: 0.2), width: 1),
+      ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           ..._buildStarRating(averageRating),
           const SizedBox(width: 8),
           Text(
-            '${averageRating.toStringAsFixed(1)} ($actualReviewCount ${intl10n.reviews})',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
+            '${averageRating.toStringAsFixed(1)} ',
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'monospace',
+              color: Colors.amber,
+            ),
+          ),
+          Text(
+            '($actualReviewCount ${intl10n.reviews})',
+            style: TextStyle(
+              fontSize: 12,
+              fontFamily: 'monospace',
+              color: magenta,
+              letterSpacing: 0.5,
             ),
           ),
         ],

@@ -1,10 +1,10 @@
+import 'package:electronics_shop/core/constants/app_colors.dart';
+import 'package:electronics_shop/core/utils/functions/handle_delete_from_wishlist.dart';
+import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:electronics_shop/core/constants/app_colors.dart';
-import 'package:electronics_shop/features/product/data/models/product_model.dart';
-import 'package:electronics_shop/core/utils/functions/handle_delete_from_wishlist.dart';
 
-const double _iconSize = 28.0;
+const double _iconSize = 24.0;
 
 class DeleteButtonFromWishlist extends ConsumerWidget {
   final ProductModel product;
@@ -16,14 +16,25 @@ class DeleteButtonFromWishlist extends ConsumerWidget {
       label: 'Remove ${product.getLocalizedName(locale: 'en')} from wishlist',
       button: true,
       child: IconButton(
-        icon: const Icon(
-          Icons.delete_outline_rounded,
-          size: _iconSize,
-          color: AppColors.primary,
+        icon: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.error.withValues(alpha: 0.3),
+                blurRadius: 8,
+                spreadRadius: 1,
+              ),
+            ],
+          ),
+          child: const Icon(
+            Icons.delete_sweep_rounded,
+            size: _iconSize,
+            color: AppColors.error,
+          ),
         ),
         onPressed: () => handleDeleteFromWishlist(context, ref, product),
         tooltip: 'Remove from Wishlist',
-        splashRadius: 24.0,
       ),
     );
   }

@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-// import 'package:electronics_shop/core/constants/app_colors.dart';
+import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/product/data/models/review_model.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/header_with_icon_and_title.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/stars_record.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
+import 'package:flutter/material.dart';
 
 class CyberpunkCardClipper extends CustomClipper<Path> {
   @override
@@ -25,17 +25,21 @@ class CyberpunkCardClipper extends CustomClipper<Path> {
 }
 
 class ExpandableDescriptionCard extends StatefulWidget {
-  final String description;
-  final double? stars;
-  final int? reviewCount;
-  final List<ReviewModel> reviews;
+  final String? title;
+  final Widget? icon;
+  final String? description;
+  final Widget? child;
+  final List<ReviewModel>? reviews;
+  final Color? accentColor;
 
   const ExpandableDescriptionCard({
     super.key,
-    required this.description,
-    this.stars,
-    this.reviewCount,
-    required this.reviews,
+    this.title,
+    this.icon,
+    this.description,
+    this.child,
+    this.reviews,
+    this.accentColor,
   });
 
   @override
@@ -56,7 +60,7 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: _animationDuration,
+       duration: _animationDuration,
       vsync: this,
     );
     _iconRotation = Tween<double>(begin: 0, end: 0.5).animate(
@@ -83,15 +87,15 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
-    final cyan = const Color(0xFF00FBFF);
-    final magenta = const Color(0xFFFF00F7);
-
+    final accentColor = widget.accentColor ?? AppColors.cyan;
+    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: cyan.withValues(alpha: 0.1),
+            color: accentColor.withValues(alpha: 0.1),
             blurRadius: 10,
             spreadRadius: -2,
           ),
@@ -101,20 +105,19 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
         clipper: CyberpunkCardClipper(),
         child: Container(
           decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
+            color: isDark ? theme.colorScheme.surface : Colors.white,
             border: Border(
-              left: BorderSide(color: cyan.withValues(alpha: .5), width: 3),
-              bottom: BorderSide(color: cyan.withValues(alpha: .5), width: 1),
+              left: BorderSide(color: accentColor.withValues(alpha: .5), width: 3),
+              bottom: BorderSide(color: accentColor.withValues(alpha: .3), width: 1),
             ),
           ),
           child: Stack(
             children: [
-              // Digital grid pattern
               Positioned.fill(
                 child: Opacity(
                   opacity: 0.04,
                   child: GridPaper(
-                    color: cyan,
+                    color: accentColor,
                     divisions: 1,
                     subdivisions: 1,
                     interval: 30,
@@ -124,17 +127,26 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const HeaderWithIconandTitle(),
+                  HeaderWithIconandTitle(
+                    icon: widget.icon,
+                    title: widget.title ?? l10n.productDescription,
+                    color: accentColor,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildDescriptionText(theme),
-                        if (_shouldShowExpandButton(context, theme))
-                          _buildToggleButton(theme, l10n, cyan, magenta),
-                        const SizedBox(height: 16),
-                        StarsRecord(reviews: widget.reviews),
+                        if (widget.description != null) ...[
+                          _buildDescriptionText(theme, widget.description!),
+                          if (_shouldShowExpandButton(context, theme, widget.description!))
+                            _buildToggleButton(theme, l10n, accentColor),
+                        ],
+                        if (widget.child != null) widget.child!,
+                        if (widget.reviews != null && widget.reviews!.isNotEmpty) ...[
+                          const SizedBox(height: 16),
+                          StarsRecord(reviews: widget.reviews!),
+                        ],
                       ],
                     ),
                   ),
@@ -145,30 +157,25 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
         ),
       ),
     );
-
   }
 
-  // --- Widgets ---
-
-  Widget _buildDescriptionText(ThemeData theme) {
+  Widget _buildDescriptionText(ThemeData theme, String text) {
     final textStyle = theme.textTheme.bodyLarge?.copyWith(
       color: theme.colorScheme.onSurface.withValues(alpha: .8),
       height: 1.6,
       letterSpacing: 0.2,
-      
+      fontFamily: 'monospace',
+      fontSize: 13,
     );
 
     return AnimatedCrossFade(
       firstChild: Text(
-        
-        widget.description,
+        text,
         maxLines: _collapsedMaxLines,
         overflow: TextOverflow.ellipsis,
         style: textStyle,
       ),
-      secondChild: Text(
-        
-        widget.description, style: textStyle),
+      secondChild: Text(text, style: textStyle),
       crossFadeState: _isExpanded
           ? CrossFadeState.showSecond
           : CrossFadeState.showFirst,
@@ -176,13 +183,14 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
     );
   }
 
-  Widget _buildToggleButton(ThemeData theme, AppLocalizations l10n, Color cyan, Color magenta) {
+  Widget _buildToggleButton(ThemeData theme, AppLocalizations l10n, Color accentColor) {
+    final magenta = AppColors.magenta;
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: InkWell(
         onTap: _toggleExpanded,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
             color: magenta.withValues(alpha: .1),
             border: Border.all(color: magenta.withValues(alpha: .5), width: 1),
@@ -195,7 +203,7 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
                 style: TextStyle(
                   color: magenta,
                   fontWeight: FontWeight.bold,
-                  fontSize: 12,
+                  fontSize: 10,
                   fontFamily: 'monospace',
                   letterSpacing: 1.1,
                 ),
@@ -206,7 +214,7 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
                 child: Icon(
                   Icons.keyboard_arrow_down,
                   color: magenta,
-                  size: 20,
+                  size: 16,
                 ),
               ),
             ],
@@ -216,18 +224,15 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
     );
   }
 
-
-  // ---(Helper Methods) ---
-
-
-
-  bool _shouldShowExpandButton(BuildContext context, ThemeData theme) {
+  bool _shouldShowExpandButton(BuildContext context, ThemeData theme, String text) {
     final textPainter = TextPainter(
       text: TextSpan(
-        text: widget.description,
+        text: text,
         style: theme.textTheme.bodyLarge?.copyWith(
           height: 1.6,
           letterSpacing: 0.2,
+          fontFamily: 'monospace',
+          fontSize: 13,
         ),
       ),
       maxLines: _collapsedMaxLines,

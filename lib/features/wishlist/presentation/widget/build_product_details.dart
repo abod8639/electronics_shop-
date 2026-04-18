@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
+import 'package:flutter/material.dart';
 
-const double _titleFontSize = 18.0;
+const double _titleFontSize = 14.0;
 const double _priceFontSize = 16.0;
 const int _maxTitleLines = 2;
 
@@ -12,17 +12,20 @@ Widget buildProductDetails(ProductModel product) {
       final theme = Theme.of(context);
       final locale = Localizations.localeOf(context).languageCode;
       final productName = product.getLocalizedName(locale: locale);
+      final magentaColor = const Color(0xFFFF00F7);
+
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           // Product Name
           Text(
-            productName,
+            productName.toUpperCase(),
             style: theme.textTheme.titleMedium?.copyWith(
               fontSize: _titleFontSize,
               fontWeight: FontWeight.bold,
-              color: theme.colorScheme.onSurface,
+              color: AppColors.cyan,
+              fontFamily: 'monospace',
             ),
             maxLines: _maxTitleLines,
             overflow: TextOverflow.ellipsis,
@@ -31,23 +34,38 @@ Widget buildProductDetails(ProductModel product) {
           const SizedBox(height: 8.0),
 
           // Product Price
-          Text(
-            'LE ${product.baseEffectivePrice.toStringAsFixed(2)}',
-            style: theme.textTheme.titleSmall?.copyWith(
-              fontSize: _priceFontSize,
-              color: AppColors.primary,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          // Original price if on discount
-          if (product.hasDiscount)
-            Text(
-              'LE ${product.price.toStringAsFixed(2)}',
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: Colors.grey,
-                decoration: TextDecoration.lineThrough,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${product.baseEffectivePrice.toStringAsFixed(2)} LE',
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontSize: _priceFontSize,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'monospace',
+                  shadows: [
+                    Shadow(
+                      color: magentaColor.withOpacity(0.5),
+                      blurRadius: 8,
+                    ),
+                  ],
+                ),
               ),
-            ),
+              if (product.hasDiscount) ...[
+                const SizedBox(width: 8),
+                Text(
+                  '${product.price.toStringAsFixed(2)}',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: Colors.grey.shade600,
+                    decoration: TextDecoration.lineThrough,
+                    fontFamily: 'monospace',
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ],
+          ),
         ],
       );
     },

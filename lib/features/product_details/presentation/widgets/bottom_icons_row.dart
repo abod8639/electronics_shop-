@@ -209,46 +209,62 @@ class BottomIconsRow extends ConsumerWidget {
       child: ClipPath(
         clipper: CyberpunkBottomClipper(),
         child: Container(
-          color: isDark ? AppColors.backgroundDark : Colors.black.withValues(alpha: 0.05),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(left: BorderSide(color: AppColors.cyan, width: 3)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    
-                    item.quantity > 1 ? Icons.remove_rounded : Icons.delete_rounded,
-                    color:
-                     item.quantity > 1 ? AppColors.cyan :
-                     
-                      AppColors.error,
+          color: isDark ? theme.colorScheme.surface : Colors.black.withValues(alpha: 0.05),
+          child: Stack(
+            children: [
+              // Digital grid pattern
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0.04,
+                  child: GridPaper(
+                    color: AppColors.cyan,
+                    divisions: 1,
+                    subdivisions: 1,
+                    interval: 30,
                   ),
-                  onPressed: () => cartNotifier.decreaseQuantity(item),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
-                  ),
-                  child: Text(
-                    item.quantity.toString().padLeft(2, '0'),
-                    style: const TextStyle(
-                      fontFamily: 'monospace',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                      color: AppColors.cyan,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(left: BorderSide(color: AppColors.cyan, width: 3)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        
+                        item.quantity > 1 ? Icons.remove_rounded : Icons.delete_rounded,
+                        color:
+                         item.quantity > 1 ? AppColors.cyan :
+                         
+                          AppColors.error,
+                      ),
+                      onPressed: () => cartNotifier.decreaseQuantity(item),
                     ),
-                  ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
+                      ),
+                      child: Text(
+                        item.quantity.toString().padLeft(2, '0'),
+                        style: const TextStyle(
+                          fontFamily: 'monospace',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.cyan,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.add_rounded, color: AppColors.cyan),
+                      onPressed: () => cartNotifier.increaseQuantity(item),
+                    ),
+                  ],
                 ),
-                IconButton(
-                  icon: const Icon(Icons.add_rounded, color: AppColors.cyan),
-                  onPressed: () => cartNotifier.increaseQuantity(item),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
