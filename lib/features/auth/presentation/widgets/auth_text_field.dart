@@ -28,25 +28,50 @@ class AuthTextField extends StatelessWidget {
       obscureText: isPassword,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
+      cursorColor: AppColors.cyan,
+      style: const TextStyle(
+        fontFamily: 'monospace',
+        fontSize: 14,
+        color: Colors.white,
+      ),
       decoration: InputDecoration(
-        labelText: label,
-        prefixIcon: icon,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: const BorderSide(color: AppColors.grey),
+        labelText: label.toUpperCase(),
+        labelStyle: TextStyle(
+          fontFamily: 'monospace',
+          fontSize: 12,
+          color: AppColors.cyan.withValues(alpha: 0.7),
+          letterSpacing: 1.5,
+        ),
+        prefixIcon: IconTheme(
+          data: const IconThemeData(color: AppColors.cyan),
+          child: icon,
+        ),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.zero,
+          borderSide: BorderSide(color: AppColors.cyan),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: AppColors.grey.withValues(alpha: .5)),
+          borderRadius: BorderRadius.zero,
+          borderSide: BorderSide(color: AppColors.cyan.withValues(alpha: .3)),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: const BorderSide(color: AppColors.primary, width: 2.0),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.zero,
+          borderSide: BorderSide(color: AppColors.cyan, width: 1.5),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.zero,
+          borderSide: BorderSide(color: AppColors.error),
+        ),
+        focusedErrorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.zero,
+          borderSide: BorderSide(color: AppColors.error, width: 1.5),
         ),
         filled: true,
-        fillColor: Colors.grey.withValues(alpha: .05),
+        fillColor: Colors.black.withValues(alpha: .2),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
       validator: validator,
     );
   }
 }
+

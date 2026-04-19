@@ -18,7 +18,6 @@ class AccountSettingsList extends ConsumerWidget {
     final themeNotifier = ref.watch(themeControllerProvider.notifier);
     final languageNotifier = ref.watch(languageControllerProvider.notifier);
     final currentLocale = ref.watch(languageControllerProvider);
-    final isDark = theme.brightness == Brightness.dark;
     final localizations = AppLocalizations.of(context)!;
 
     return Container(
@@ -292,17 +291,16 @@ class AccountSettingsList extends ConsumerWidget {
   }) {
     return Stack(
       children: [
-        if (onTap != null)
-          Positioned.fill(
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: onTap,
-                highlightColor: AppColors.cyan.withValues(alpha: 0.1),
-                splashColor: AppColors.cyan.withValues(alpha: 0.05),
-              ),
+        Positioned.fill(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onTap,
+              highlightColor: AppColors.cyan.withValues(alpha: 0.1),
+              splashColor: AppColors.cyan.withValues(alpha: 0.05),
             ),
           ),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: Row(

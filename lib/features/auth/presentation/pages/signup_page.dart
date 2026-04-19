@@ -1,5 +1,8 @@
+import 'package:electronics_shop/core/utils/components/back_grid.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:electronics_shop/core/utils/functions/app_guard.dart';
@@ -57,158 +60,259 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     // Listen to authentication errors
     ref.listen(authControllerProvider, (previous, next) {
       if (next is AsyncError) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(next.error.toString()),
-            backgroundColor: Colors.redAccent,
+            content: Text(
+              'REGISTRY_ERROR: [${next.error}]\nLINK_TERMINATED',
+              style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+            ),
+            backgroundColor: AppColors.error,
           ),
         );
       }
     });
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.transparent),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildInputFields(context, localizations),
-                authState.isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : ElevatedButton(
-                        onPressed: _onSignUpPressed,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          elevation: 2,
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          const BackGrid(accentColor: AppColors.magenta),
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    _buildTerminalHeader(localizations),
+                    const SizedBox(height: 32),
+                    ClipPath(
+                      clipper: CyberpunkCardClipper(),
+                      child: Container(
+                        padding: const EdgeInsets.all(24.0),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.surface.withValues(alpha: 0.9),
+                          border: Border.all(color: AppColors.magenta.withValues(alpha: 0.3)),
                         ),
-                        child: Text(
-                          localizations.signUp,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              _buildDiagnosticModule(localizations),
+                              const SizedBox(height: 24),
+                              AuthTextField(
+                                controller: _nameController,
+                                label: localizations.fullName,
+                                icon: const Icon(Icons.person_pin_rounded),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) return localizations.enterName;
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              AuthTextField(
+                                controller: _emailController,
+                                label: localizations.email,
+                                icon: const Icon(Icons.alternate_email_rounded),
+                                keyboardType: TextInputType.emailAddress,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) return localizations.enterEmail;
+                                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return localizations.validEmail;
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              AuthTextField(
+                                controller: _passwordController,
+                                label: localizations.password,
+                                icon: const Icon(Icons.lock_open_rounded),
+                                isPassword: true,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) return localizations.enterPassword;
+                                  if (value.length < 6) return localizations.passwordLength;
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              AuthTextField(
+                                controller: _confirmPasswordController,
+                                label: localizations.confirmPassword,
+                                icon: const Icon(Icons.lock_person_rounded),
+                                isPassword: true,
+                                textInputAction: TextInputAction.done,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) return localizations.confirmYourPassword;
+                                  if (value != _passwordController.text) return localizations.passwordsDoNotMatch;
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 32),
+                              _buildSubmitButton(authState.isLoading, localizations),
+                              const SizedBox(height: 24),
+                              _buildSocialAuth(localizations),
+                              const SizedBox(height: 24),
+                              _buildLoginRow(localizations),
+                            ],
                           ),
                         ),
                       ),
-                const SizedBox(height: 24.0),
-                OutlinedButton.icon(
-                  onPressed: () => ref
-                      .read(authControllerProvider.notifier)
-                      .signInWithGoogle(),
-                  icon: const Icon(Icons.g_mobiledata, size: 30),
-                  label: Text(localizations.signInWithGoogle),
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
                     ),
-                    side: BorderSide(color: Colors.grey[300]!),
-                  ),
+                  ],
                 ),
-                const SizedBox(height: 24.0),
-                _buildLoginRow(localizations),
-              ],
+              ),
             ),
           ),
-        ),
+          Positioned(
+            top: 10,
+            left: 10,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.magenta),
+              onPressed: () => context.pop(),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildInputFields(BuildContext context, AppLocalizations l10n) {
-    final theme = Theme.of(context);
+  Widget _buildTerminalHeader(AppLocalizations l10n) {
     return Column(
       children: [
+        const Icon(Icons.person_add_rounded, color: AppColors.magenta, size: 64),
+        const SizedBox(height: 16),
         Text(
-          l10n.createAccount,
-          textAlign: TextAlign.center,
-          style: theme.textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.primary,
+          "NEW_USER_REGISTRY",
+          style: TextStyle(
+            fontFamily: 'monospace',
+            color: AppColors.magenta.withValues(alpha: 0.5),
+            fontSize: 10,
+            letterSpacing: 4,
           ),
         ),
-        const SizedBox(height: 8.0),
+        const SizedBox(height: 4),
         Text(
-          l10n.signUpToGetStarted,
-          textAlign: TextAlign.center,
-          style: theme.textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
+          l10n.createAccount.toUpperCase(),
+          style: const TextStyle(
+            fontFamily: 'monospace',
+            fontWeight: FontWeight.w900,
+            fontSize: 24,
+            color: AppColors.magenta,
+            letterSpacing: 2,
+          ),
         ),
-        const SizedBox(height: 32.0),
-        AuthTextField(
-          controller: _nameController,
-          label: l10n.fullName,
-          icon: const Icon(Icons.person_outline),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return l10n.enterName;
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 16.0),
-        AuthTextField(
-          controller: _emailController,
-          label: l10n.email,
-          icon: const Icon(Icons.email_outlined),
-          keyboardType: TextInputType.emailAddress,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return l10n.enterEmail;
-            }
-            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-              return l10n.validEmail;
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 16.0),
-        AuthTextField(
-          controller: _passwordController,
-          label: l10n.password,
-          icon: const Icon(Icons.lock_outline),
-          isPassword: true,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return l10n.enterPassword;
-            }
-            if (value.length < 6) {
-              return l10n.passwordLength;
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 16.0),
-        AuthTextField(
-          controller: _confirmPasswordController,
-          label: l10n.confirmPassword,
-          icon: const Icon(Icons.lock_outline),
-          isPassword: true,
-          textInputAction: TextInputAction.done,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return l10n.confirmYourPassword;
-            }
-            if (value != _passwordController.text) {
-              return l10n.passwordsDoNotMatch;
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 32.0),
       ],
+    );
+  }
+
+  Widget _buildDiagnosticModule(AppLocalizations l10n) {
+    return Row(
+      children: [
+        Container(width: 4, height: 20, color: AppColors.cyan),
+        const SizedBox(width: 12),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "IDENTITY_REGISTRATION_SYSTEM",
+              style: TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 10,
+                color: AppColors.cyan.withValues(alpha: 0.8),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              "STATUS: [NEW_ENTRY_PENDING]",
+              style: TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 8,
+                color: AppColors.cyan.withValues(alpha: 0.5),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSubmitButton(bool isLoading, AppLocalizations l10n) {
+    return GestureDetector(
+      onTap: isLoading ? null : _onSignUpPressed,
+      child: Stack(
+        children: [
+          ClipPath(
+            clipper: CyberpunkShapeClipper(),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              decoration: BoxDecoration(
+                color: AppColors.magenta,
+                boxShadow: [
+                  BoxShadow(color: AppColors.magenta.withValues(alpha: 0.3), blurRadius: 15),
+                ],
+              ),
+              child: Center(
+                child: isLoading
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black),
+                      )
+                    : Text(
+                        l10n.signUp.toUpperCase(),
+                        style: const TextStyle(
+                          fontFamily: 'monospace',
+                          fontWeight: FontWeight.w900,
+                          fontSize: 16,
+                          color: Colors.black,
+                          letterSpacing: 2,
+                        ),
+                      ),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Container(width: 8, height: 8, color: Colors.black),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSocialAuth(AppLocalizations l10n) {
+    return GestureDetector(
+      onTap: () => ref.read(authControllerProvider.notifier).signInWithGoogle(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        decoration: BoxDecoration(
+          color: AppColors.cyan.withValues(alpha: 0.1),
+          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.g_mobiledata_rounded, color: AppColors.cyan, size: 28),
+            const SizedBox(width: 12),
+            Text(
+              l10n.signInWithGoogle.toUpperCase(),
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: AppColors.cyan,
+                letterSpacing: 1.2,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -217,17 +321,28 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          l10n.alreadyHaveAccount,
-          style: TextStyle(color: Colors.grey[600]),
+          l10n.alreadyHaveAccount.toUpperCase(),
+          style: TextStyle(
+            fontFamily: 'monospace',
+            fontSize: 10,
+            color: Colors.white.withValues(alpha: 0.5),
+          ),
         ),
         TextButton(
           onPressed: widget.onSignInTap,
           child: Text(
-            l10n.login,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            l10n.login.toUpperCase(),
+            style: const TextStyle(
+              fontFamily: 'monospace',
+              fontWeight: FontWeight.w900,
+              color: AppColors.magenta,
+              fontSize: 11,
+              letterSpacing: 1,
+            ),
           ),
         ),
       ],
     );
   }
 }
+

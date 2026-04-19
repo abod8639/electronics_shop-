@@ -277,9 +277,7 @@ class BottomIconsRow extends ConsumerWidget {
     ProductModel product,
   ) {
     final isInWishlist = detailsState.isInWishlist;
-    final magenta = AppColors.magenta;
-    final cyan = AppColors.cyan;
-    final accent = isInWishlist ? magenta : (isDark ? cyan : Colors.black54);
+
 
     return  CyberpunkButton(
             size: 55,

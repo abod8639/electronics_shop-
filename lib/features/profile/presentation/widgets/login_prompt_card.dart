@@ -17,7 +17,6 @@ class LoginPromptCard extends ConsumerWidget {
     return Consumer(
       builder: (context, ref, child) {
         final theme = Theme.of(context);
-        final isDark = theme.brightness == Brightness.dark;
         final l10n = AppLocalizations.of(context)!;
 
         return Container(
@@ -173,7 +172,7 @@ class LoginPromptCard extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(icon, color: color, size: 20),
+                  Icon(icon, color: color, size: 30),
                   const SizedBox(width: 12),
                   Text(
                     label.toUpperCase(),

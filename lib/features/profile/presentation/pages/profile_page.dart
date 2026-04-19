@@ -1,4 +1,3 @@
-import 'package:electronics_shop/core/utils/components/back_grid.dart';
 import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -98,7 +97,7 @@ class ProfilePage extends ConsumerWidget {
   Widget _buildAppBar(BuildContext context, ThemeData theme) {
     return SliverAppBar(
       expandedHeight: 60,
-      pinned: true,
+      pinned: false,
       elevation: 0,
       scrolledUnderElevation: 0,
       backgroundColor: theme.scaffoldBackgroundColor,
