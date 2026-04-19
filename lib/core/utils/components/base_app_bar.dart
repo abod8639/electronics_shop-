@@ -10,7 +10,7 @@ AppBar baseAppBar(BuildContext context, String title) {
       title.toUpperCase(),
       style: theme.textTheme.titleLarge?.copyWith(
         fontFamily: 'monospace',
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w800,
         color: AppColors.cyan,
         letterSpacing: 2,
         shadows: [
@@ -21,9 +21,12 @@ AppBar baseAppBar(BuildContext context, String title) {
     centerTitle: true,
     bottom: PreferredSize(
       preferredSize: const Size.fromHeight(1.0),
-      child: Container(
-        color: AppColors.cyan.withValues(alpha: 0.3),
-        height: 1.0,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+        child: Container(
+          color: AppColors.cyan.withValues(alpha: 0.3),
+          height: 0.5,
+        ),
       ),
     ),
   );

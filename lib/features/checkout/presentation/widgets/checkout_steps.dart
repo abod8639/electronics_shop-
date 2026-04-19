@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:electronics_shop/core/utils/components/back_grid.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
@@ -14,87 +16,124 @@ Step buildAddressStep(WidgetRef ref, String title) {
   final addresses = ref.watch(addressControllerProvider).value ?? [];
 
   return Step(
-    title: Text(title),
+    title: Text(
+      title,
+      style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
+    ),
     content: Column(
       children: [
         if (addresses.isEmpty)
-          const Text('No addresses found. Please add one in your profile.')
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              '[ERROR]: NO_ADDRESS_FOUND. PLEASE_INITIALIZE_LOCATION_IN_PROFILE.',
+              style: TextStyle(color: AppColors.magenta, fontFamily: 'monospace', fontSize: 12),
+            ),
+          )
         else
           Column(
             children: addresses.map((address) {
-              final bool isSelected =
-                  checkoutState.selectedAddress?.id == address.id;
-              return Card(
-                elevation: isSelected ? 2 : 0,
-                color: isSelected
-                    ? AppColors.primary.withValues(alpha: .05)
-                    : null,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(
-                    color: isSelected
-                        ? AppColors.primary
-                        : Colors.grey.shade300,
+              final bool isSelected = checkoutState.selectedAddress?.id == address.id;
+              return Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                child: ClipPath(
+                  clipper: CyberpunkCardClipper(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: isSelected ? AppColors.cyan.withValues(alpha: 0.05) : Colors.black12,
+                      border: Border.all(
+                        color: isSelected ? AppColors.cyan : AppColors.cyan.withValues(alpha: 0.2),
+                        width: isSelected ? 1.5 : 0.5,
+                      ),
+                    ),
+                    child: RadioListTile(
+                      value: address,
+                      groupValue: checkoutState.selectedAddress,
+                      onChanged: (value) => ref
+                          .read(checkoutControllerProvider.notifier)
+                          .setAddress(value!),
+                      title: Text(
+                        (address.label ?? "UNLABELED_NODE").toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'monospace',
+                          color: isSelected ? AppColors.cyan : null,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      subtitle: Text(
+                        address.fullAddress.toUpperCase(),
+                        style: const TextStyle(fontFamily: 'monospace', fontSize: 11),
+                      ),
+                      activeColor: AppColors.cyan,
+                    ),
                   ),
-                ),
-                child: RadioListTile(
-                  value: address,
-                  groupValue: checkoutState.selectedAddress,
-                  onChanged: (value) => ref
-                      .read(checkoutControllerProvider.notifier)
-                      .setAddress(value!),
-                  title: Text(
-                    address.label ?? "error",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(address.fullAddress),
-                  activeColor: AppColors.primary,
                 ),
               );
             }).toList(),
           ),
         const SizedBox(height: 16),
-        TextButton.icon(
-          onPressed: () => showAddressForm(ref.context),
-          icon: const Icon(Icons.add),
-          label: const Text('Add New Address'),
+        GestureDetector(
+          onTap: () => showAddressForm(ref.context),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.magenta, width: 1),
+              color: AppColors.magenta.withValues(alpha: 0.1),
+            ),
+            child: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.add, color: AppColors.magenta, size: 18),
+                SizedBox(width: 8),
+                Text(
+                  'ADD_NEW_LOCATION_NODE',
+                  style: TextStyle(
+                    color: AppColors.magenta,
+                    fontFamily: 'monospace',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     ),
     isActive: checkoutState.currentStep >= 0,
-    state: checkoutState.currentStep > 0
-        ? StepState.complete
-        : StepState.editing,
+    state: checkoutState.currentStep > 0 ? StepState.complete : StepState.editing,
   );
 }
 
 Step buildPaymentStep(WidgetRef ref, String title) {
   final checkoutState = ref.watch(checkoutControllerProvider);
   return Step(
-    title: Text(title),
+    title: Text(
+      title,
+      style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
+    ),
     content: Column(
       children: [
         buildPaymentOption(
           ref: ref,
           value: 'cash',
-          title: 'Cash on Delivery',
+          title: 'CREDIT_LIQUID_CASH',
           icon: Icons.money,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         buildPaymentOption(
           ref: ref,
           value: 'card',
-          title: 'Credit Card',
+          title: 'SECURE_TRANS_CARD',
           icon: Icons.credit_card,
-          subtitle: 'Coming soon',
+          subtitle: '[ENC_PENDING]',
           enabled: false,
         ),
       ],
     ),
     isActive: checkoutState.currentStep >= 1,
-    state: checkoutState.currentStep > 1
-        ? StepState.complete
-        : StepState.editing,
+    state: checkoutState.currentStep > 1 ? StepState.complete : StepState.editing,
   );
 }
 
@@ -104,15 +143,29 @@ Step buildReviewStep(WidgetRef ref, String title) {
   final cartNotifier = ref.watch(cartControllerProvider.notifier);
 
   return Step(
-    title: Text(title),
+    title: Text(
+      title,
+      style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
+    ),
     content: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Order Summary',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: const BoxDecoration(
+            color: AppColors.cyan,
+          ),
+          child: const Text(
+            'TRANSACTION_MANIFEST',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w900,
+              color: Colors.black,
+              fontFamily: 'monospace',
+            ),
+          ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 16),
         cartState.when(
           data: (items) => ListView.builder(
             shrinkWrap: true,
@@ -120,74 +173,108 @@ Step buildReviewStep(WidgetRef ref, String title) {
             itemCount: items.length,
             itemBuilder: (context, index) {
               final item = items[index];
-              return ListTile(
-                leading: CachedNetworkImage(
-                  cacheManager: CustomCacheManager.instance,
-                  imageUrl: item.product.imageUrls.isNotEmpty
-                      ? item.product.imageUrls.first.thumbnail
-                      : '',
-                  width: 40,
-                  height: 40,
-                  fit: BoxFit.cover,
-                  errorWidget: (_, _, _) => const Icon(Icons.image),
+              return Container(
+                margin: const EdgeInsets.only(bottom: 8),
+                decoration: BoxDecoration(
+                  border: Border(left: BorderSide(color: AppColors.cyan.withValues(alpha: 0.5), width: 2)),
+                  color: AppColors.cyan.withValues(alpha: 0.03),
                 ),
-                title: Text(item.product.getLocalizedName(locale: 'en')),
-                subtitle: Text(
-                  '${item.quantity} x LE ${item.product.baseEffectivePrice}',
-                ),
-                trailing: Text(
-                  'LE ${(item.product.baseEffectivePrice * item.quantity).toStringAsFixed(2)}',
+                child: ListTile(
+                  dense: true,
+                  leading: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
+                    ),
+                    child: CachedNetworkImage(
+                      cacheManager: CustomCacheManager.instance,
+                      imageUrl: item.product.imageUrls.isNotEmpty
+                          ? item.product.imageUrls.first.thumbnail
+                          : '',
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, _, _) => const Icon(Icons.image, size: 20),
+                    ),
+                  ),
+                  title: Text(
+                    item.product.getLocalizedName(locale: 'en').toUpperCase(),
+                    style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold, fontSize: 13),
+                  ),
+                  subtitle: Text(
+                    'UNIT_QTY: ${item.quantity} | PRICE: LE ${item.product.baseEffectivePrice}',
+                    style: const TextStyle(fontFamily: 'monospace', fontSize: 10),
+                  ),
+                  trailing: Text(
+                    'LE ${(item.product.baseEffectivePrice * item.quantity).toStringAsFixed(2)}',
+                    style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold, color: AppColors.cyan),
+                  ),
                 ),
               );
             },
           ),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, _) => Text('Error: $e'),
+          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.cyan)),
+          error: (e, _) => Text('[ERROR]: $e', style: const TextStyle(color: AppColors.magenta, fontFamily: 'monospace')),
         ),
-        const Divider(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Total Amount',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'LE ${cartNotifier.totalPrice.toStringAsFixed(2)}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: AppColors.primary,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        if (checkoutState.selectedAddress != null) ...[
-          const Text(
-            'Shipping To:',
-            style: TextStyle(fontWeight: FontWeight.bold),
+        const SizedBox(height: 12),
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.magenta.withValues(alpha: 0.5)),
+            color: AppColors.magenta.withValues(alpha: 0.05),
           ),
-          Text(checkoutState.selectedAddress!.fullAddress),
-        ],
-        const SizedBox(height: 8),
-        const Text(
-          'Payment Method:',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'TOTAL_CREDITS',
+                style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'monospace', color: AppColors.magenta),
+              ),
+              Text(
+                'LE ${cartNotifier.totalPrice.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 20,
+                  color: AppColors.magenta,
+                  fontFamily: 'monospace',
+                  shadows: [Shadow(color: AppColors.magenta, blurRadius: 8)],
+                ),
+              ),
+            ],
+          ),
         ),
+        const SizedBox(height: 24),
+        if (checkoutState.selectedAddress != null) ...[
+          const _ManifestRow(label: 'DESTINATION_NODE', value: 'VERIFIED'),
+          Text(
+            checkoutState.selectedAddress!.fullAddress.toUpperCase(),
+            style: const TextStyle(fontFamily: 'monospace', fontSize: 12, color: Colors.white70),
+          ),
+          const SizedBox(height: 12),
+        ],
+        const _ManifestRow(label: 'PAYMENT_PROTOCOL', value: 'AUTHORIZED'),
         Text(
           checkoutState.selectedPaymentMethod == 'cash'
-              ? 'Cash on Delivery'
-              : 'Credit Card',
+              ? 'CREDIT_LIQUID_CASH'
+              : 'SECURE_TRANS_CARD',
+          style: const TextStyle(fontFamily: 'monospace', fontSize: 12, color: Colors.white70),
         ),
-        const SizedBox(height: 16),
-        const Text('Notes:', style: TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 24),
+        const Text(
+          'PROTOCOL_NOTES:',
+          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'monospace', fontSize: 12, color: AppColors.cyan),
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: cartNotifier.notesController,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Enter any additional notes',
+          style: const TextStyle(fontFamily: 'monospace', fontSize: 13),
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.cyan)),
+            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.cyan.withValues(alpha: 0.3))),
+            focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.cyan)),
+            hintText: 'INPUT_EXTRA_NOTES_HERE...',
+            hintStyle: TextStyle(color: Colors.white24, fontFamily: 'monospace', fontSize: 11),
+            fillColor: Colors.black26,
+            filled: true,
           ),
         ),
       ],
@@ -196,3 +283,32 @@ Step buildReviewStep(WidgetRef ref, String title) {
     state: StepState.editing,
   );
 }
+
+class _ManifestRow extends StatelessWidget {
+  final String label;
+  final String value;
+  const _ManifestRow({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4.0),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'monospace', fontSize: 12, color: AppColors.cyan),
+          ),
+          const SizedBox(width: 8),
+          const Expanded(child: Opacity(opacity: 0.2, child: Divider(color: AppColors.cyan, height: 1))),
+          const SizedBox(width: 8),
+          Text(
+            value,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'monospace', fontSize: 12, color: AppColors.cyan),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
