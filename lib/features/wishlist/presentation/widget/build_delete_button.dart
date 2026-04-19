@@ -21,9 +21,9 @@ class DeleteButtonFromWishlist extends ConsumerWidget {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: AppColors.error.withValues(alpha: 0.3),
-                blurRadius: 8,
-                spreadRadius: 1,
+                color: AppColors.error.withValues(alpha: 0.1),
+                blurRadius: 10,
+                spreadRadius: 2,
               ),
             ],
           ),

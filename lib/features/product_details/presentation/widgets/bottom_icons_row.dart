@@ -1,5 +1,6 @@
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/core/utils/components/back_grid.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_button.dart';
 import 'package:electronics_shop/features/cart/data/models/cart_item_model.dart';
 import 'package:electronics_shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
@@ -80,6 +81,7 @@ class BottomIconsRow extends ConsumerWidget {
             ),
           ),
           const SizedBox(width: 16),
+
           _buildWishlistButton(theme, detailsState, detailsNotifier, isDark, product),
         ],
       ),
@@ -279,54 +281,51 @@ class BottomIconsRow extends ConsumerWidget {
     final cyan = AppColors.cyan;
     final accent = isInWishlist ? magenta : (isDark ? cyan : Colors.black54);
 
-    return InkWell(
-      onTap: () => detailsNotifier.toggleWishlist(product),
-      child: Container(
-        width: 55,
-        height: 55,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: accent.withValues(alpha: isInWishlist ? 0.3 : 0.1),
-              blurRadius: 12,
-              spreadRadius: -2,
-            ),
-          ],
-        ),
-        child: ClipPath(
-          clipper: CyberpunkBottomClipper(),
-          child: Container(
-            color: isDark ? theme.colorScheme.surface : Colors.black.withValues(alpha: 0.05),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned.fill(
-                  child: Opacity(
-                    opacity: 0.05,
-                    child: GridPaper(
-                      color: accent,
-                      divisions: 1,
-                      subdivisions: 1,
-                      interval: 15,
-                    ),
-                  ),
-                ),
-                Icon(
-                  isInWishlist ? Icons.favorite_rounded : Icons.favorite_outline_rounded,
-                  color: isInWishlist ? Colors.redAccent : accent,
-                  size: 26,
-                  shadows: [
-                    if (isInWishlist)
-                      Shadow(color: Colors.redAccent.withValues(alpha: 0.5), blurRadius: 8),
-                  ],
-                ),
+    return  CyberpunkButton(
+            size: 55,
+            icon: Icon(isInWishlist ? Icons.favorite_rounded : Icons.favorite_border, color: AppColors.magenta),
+            tooltip:"",
+            onTap: () => detailsNotifier.toggleWishlist(product),
+          );
+    
+    //  InkWell(
+    //   onTap: 
+    //   child: Container(
+    //     width: 55,
+    //     height: 55,
+    //     decoration: BoxDecoration(
+    //       boxShadow: [
+    //         BoxShadow(
+    //           color: accent.withValues(alpha: isInWishlist ? 0.3 : 0.1),
+    //           blurRadius: 12,
+    //           spreadRadius: -2,
+    //         ),
+    //       ],
+    //     ),
+    //     child: ClipPath(
+    //       clipper: CyberpunkBottomClipper(),
+    //       child: Container(
+    //         color: isDark ? theme.colorScheme.surface : Colors.black.withValues(alpha: 0.05),
+    //         child: Stack(
+    //           alignment: Alignment.center,
+    //           children: [
+    //            BackGrid(accentColor: accent),
+    //             Icon(
+    //               isInWishlist ? Icons.favorite_rounded : Icons.favorite_outline_rounded,
+    //               color: isInWishlist ? Colors.redAccent : accent,
+    //               size: 26,
+    //               shadows: [
+    //                 if (isInWishlist)
+    //                   Shadow(color: Colors.redAccent.withValues(alpha: 0.5), blurRadius: 8),
+    //               ],
+    //             ),
 
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
 

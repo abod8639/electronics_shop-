@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
+import 'package:electronics_shop/core/utils/functions/cache_manager.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/features/wishlist/presentation/widget/build_delete_button.dart';
 import 'package:electronics_shop/features/wishlist/presentation/widget/build_product_details.dart';
@@ -58,12 +60,13 @@ class WishlistItemCard extends StatelessWidget {
                       height: 80,
                       child: Hero(
                         tag: 'wishlist_product_${product.id}',
-                        child: Image.network(
-                          product.imageUrls.isNotEmpty
+                        child: CachedNetworkImage(
+                          cacheManager: CustomCacheManager.instance,
+                          imageUrl: product.imageUrls.isNotEmpty
                               ? product.imageUrls.first.medium
                               : '',
                           fit: BoxFit.cover,
-                          errorBuilder: (_, _, _) => const Icon(Icons.image, size: 40),
+                          errorWidget: (_, _, _) => const Icon(Icons.image, size: 40),
                         ),
                       ),
                     ),

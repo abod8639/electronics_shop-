@@ -1,3 +1,4 @@
+import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/core/utils/responsive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -112,7 +113,7 @@ class ProductGridList extends ConsumerWidget {
                             .read(homeControllerProvider.notifier)
                             .selectedSectionIndex,
                       ),
-                  icon: const Icon(Icons.refresh),
+                  icon: const Icon(Icons.refresh ,color: AppColors.cyan, ),
                   label: const Text('إعادة محاولة'),
                 ),
               ],

@@ -123,7 +123,7 @@ class ShortcutItem extends ConsumerWidget {
                                 size: _iconInnerSize,
                               ),
                             ],
-                          ),
+                          ), 
                         ),
                       ),
                     ],

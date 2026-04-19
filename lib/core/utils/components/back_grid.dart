@@ -18,7 +18,7 @@ class BackGrid extends StatelessWidget {
           color: accentColor,
           divisions: 1,
           subdivisions: 1,
-          interval: 30,
+          interval: 20,
         ),
       ),
     );

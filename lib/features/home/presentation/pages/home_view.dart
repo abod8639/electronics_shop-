@@ -1,4 +1,5 @@
 // import 'package:electronics_shop/l10n/generated/app_localizations.dart';
+import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:flutter/material.dart' hide SearchBar;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/core/utils/functions/app_guard.dart';
@@ -30,6 +31,7 @@ class HomeView extends ConsumerWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1200),
             child: RefreshIndicator(
+              color: AppColors.cyan,
               onRefresh: () => AppGuard.runSafeInternet(
                 ref,
                 () => ref.read(homeControllerProvider.notifier).refreshHome(),
