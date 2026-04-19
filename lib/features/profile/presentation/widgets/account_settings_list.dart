@@ -1,3 +1,4 @@
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,13 +7,6 @@ import 'package:electronics_shop/features/profile/presentation/controllers/theme
 import 'package:electronics_shop/features/profile/presentation/controllers/language_controller.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:electronics_shop/routes/routes.dart';
-
-const double _containerMarginHorizontal = 16.0;
-const double _containerBorderRadius = 16.0;
-const double _containerPadding = 20.0;
-const double _shadowOpacity = 0.05;
-const double _shadowBlurRadius = 10.0;
-const double _shadowOffsetY = 4.0;
 
 class AccountSettingsList extends ConsumerWidget {
   const AccountSettingsList({super.key});
@@ -28,88 +22,140 @@ class AccountSettingsList extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: _containerMarginHorizontal,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: isDark
-            ? const Color.fromARGB(133, 30, 30, 30)
-            : AppColors.surfaceLight,
-        borderRadius: BorderRadius.circular(_containerBorderRadius),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withValues(alpha: _shadowOpacity),
-            blurRadius: _shadowBlurRadius,
-            offset: const Offset(0, _shadowOffsetY),
+            color: AppColors.cyan.withValues(alpha: 0.05),
+            blurRadius: 30,
+            spreadRadius: -10,
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(_containerPadding),
-            child: Text(
-              localizations.accountSettings,
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: isDark ? AppColors.white : AppColors.black,
+      child: ClipPath(
+        clipper: CyberpunkCardClipper(),
+        child: Container(
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface.withValues(alpha: 0.8),
+            border: Border.all(
+              color: AppColors.cyan.withValues(alpha: 0.2),
+              width: 0.5,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSectionHeader(context, localizations.accountSettings),
+              _buildSettingItem(
+                context: context,
+                icon: Icons.person_outline,
+                title: localizations.editProfile,
+                subtitle: 'USER_IDENTITY_MOD',
+                onTap: () => context.push(AppRoutes.editUserInfo),
               ),
+              _buildDivider(),
+              _buildSettingItem(
+                context: context,
+                icon: isDarkMode ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
+                title: localizations.theme,
+                subtitle: isDarkMode ? 'SHADOW_PROTOCOL' : 'LUX_EMISSION',
+                trailing: Switch(
+                  value: isDarkMode,
+                  onChanged: (val) => themeNotifier.toggleTheme(),
+                  activeColor: AppColors.cyan,
+                  activeTrackColor: AppColors.cyan.withValues(alpha: 0.2),
+                  inactiveThumbColor: AppColors.grey,
+                  inactiveTrackColor: AppColors.grey.withValues(alpha: 0.1),
+                ),
+                onTap: () => themeNotifier.toggleTheme(),
+              ),
+              _buildDivider(),
+              _buildSettingItem(
+                context: context,
+                icon: Icons.notifications_outlined,
+                title: localizations.notifications,
+                subtitle: 'NEURAL_LINK_ALERTS',
+                onTap: () {},
+              ),
+              _buildDivider(),
+              _buildSettingItem(
+                context: context,
+                icon: Icons.language_outlined,
+                title: localizations.language,
+                subtitle: 'LINGUA_CORE_V2',
+                trailing: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: AppColors.magenta.withValues(alpha: 0.1),
+                    border: Border.all(color: AppColors.magenta.withValues(alpha: 0.5)),
+                  ),
+                  child: Text(
+                    languageNotifier.currentLanguageName.toUpperCase(),
+                    style: const TextStyle(
+                      color: AppColors.magenta,
+                      fontFamily: 'monospace',
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                onTap: () => _showLanguageDialog(context, ref, currentLocale, localizations),
+              ),
+              _buildDivider(),
+              _buildSettingItem(
+                context: context,
+                icon: Icons.help_outline,
+                title: localizations.helpSupport,
+                subtitle: 'TECH_ASSIST_MODULE',
+                onTap: () {},
+              ),
+              _buildDivider(),
+              _buildSettingItem(
+                context: context,
+                icon: Icons.info_outline,
+                title: localizations.about,
+                subtitle: 'SYS_MANIFEST_VER_1_0',
+                isLast: true,
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(BuildContext context, String title) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: AppColors.cyan.withValues(alpha: 0.1)),
+        ),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.settings_applications, color: AppColors.cyan, size: 20),
+          const SizedBox(width: 12),
+          Text(
+            title.toUpperCase(),
+            style: const TextStyle(
+              fontWeight: FontWeight.w900,
+              fontFamily: 'monospace',
+              color: AppColors.cyan,
+              letterSpacing: 2,
+              fontSize: 14,
             ),
           ),
-          _buildSettingItem(
-            icon: Icons.person_outline,
-            title: localizations.editProfile,
-            onTap: () => context.push(AppRoutes.editUserInfo),
-            isDark: isDark,
-          ),
-          _buildDivider(isDark),
-          _buildSettingItem(
-            icon: isDarkMode
-                ? Icons.dark_mode_outlined
-                : Icons.light_mode_outlined,
-            title: localizations.theme,
-            trailing: Switch(
-              value: isDarkMode,
-              onChanged: (val) => themeNotifier.toggleTheme(),
-              activeThumbColor: AppColors.primary,
+          const Spacer(),
+          const Text(
+            'CONFIG_RUNNING',
+            style: TextStyle(
+              fontFamily: 'monospace',
+              fontSize: 8,
+              color: AppColors.cyan,
+              letterSpacing: 1,
             ),
-            onTap: () => themeNotifier.toggleTheme(),
-            isDark: isDark,
-          ),
-          _buildDivider(isDark),
-          _buildSettingItem(
-            icon: Icons.notifications_outlined,
-            title: localizations.notifications,
-            onTap: () {},
-            isDark: isDark,
-          ),
-          _buildDivider(isDark),
-          _buildSettingItem(
-            icon: Icons.language_outlined,
-            title: localizations.language,
-            trailing: Text(
-              languageNotifier.currentLanguageName,
-              style: const TextStyle(color: AppColors.greyDark),
-            ),
-            onTap: () =>
-                _showLanguageDialog(context, ref, currentLocale, localizations),
-            isDark: isDark,
-          ),
-          _buildDivider(isDark),
-          _buildSettingItem(
-            icon: Icons.help_outline,
-            title: localizations.helpSupport,
-            onTap: () {},
-            isDark: isDark,
-          ),
-          _buildDivider(isDark),
-          _buildSettingItem(
-            icon: Icons.info_outline,
-            title: localizations.about,
-            onTap: () {},
-            isLast: true,
-            isDark: isDark,
           ),
         ],
       ),
@@ -124,33 +170,111 @@ class AccountSettingsList extends ConsumerWidget {
   ) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.language),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: ClipPath(
+          clipper: CyberpunkCardClipper(),
+          child: Container(
+            padding: const EdgeInsets.all(2), // Border effect
+            decoration: const BoxDecoration(color: AppColors.cyan),
+            child: ClipPath(
+              clipper: CyberpunkCardClipper(),
+              child: Container(
+                color: Theme.of(context).colorScheme.surface,
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.language, color: AppColors.cyan),
+                        const SizedBox(width: 12),
+                        Text(
+                          l10n.language.toUpperCase(),
+                          style: const TextStyle(
+                            fontFamily: 'monospace',
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.cyan,
+                            letterSpacing: 2,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Container(height: 1, color: AppColors.cyan.withValues(alpha: 0.1)),
+                    const SizedBox(height: 16),
+                    _buildLanguageOption(
+                      context: context,
+                      title: l10n.english.toUpperCase(),
+                      value: 'en',
+                      groupValue: currentLocale.languageCode,
+                      onChanged: () {
+                        ref.read(languageControllerProvider.notifier).changeLanguage(const Locale('en'));
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    _buildLanguageOption(
+                      context: context,
+                      title: l10n.arabic.toUpperCase(),
+                      value: 'ar',
+                      groupValue: currentLocale.languageCode,
+                      onChanged: () {
+                        ref.read(languageControllerProvider.notifier).changeLanguage(const Locale('ar'));
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLanguageOption({
+    required BuildContext context,
+    required String title,
+    required String value,
+    required String groupValue,
+    required VoidCallback onChanged,
+  }) {
+    final isSelected = value == groupValue;
+    return InkWell(
+      onTap: onChanged,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.cyan.withValues(alpha: 0.1) : Colors.transparent,
+          border: Border.all(
+            color: isSelected ? AppColors.cyan : AppColors.cyan.withValues(alpha: 0.1),
+            width: 1,
+          ),
+        ),
+        child: Row(
           children: [
-            RadioListTile<String>(
-              title: Text(l10n.english),
-              value: 'en',
-              groupValue: currentLocale.languageCode,
-              onChanged: (value) {
-                ref
-                    .read(languageControllerProvider.notifier)
-                    .changeLanguage(const Locale('en'));
-                Navigator.pop(context);
-              },
+            Text(
+              title,
+              style: TextStyle(
+                fontFamily: 'monospace',
+                color: isSelected ? AppColors.cyan : Colors.white70,
+                fontWeight: isSelected ? FontWeight.w900 : FontWeight.normal,
+                letterSpacing: 1,
+              ),
             ),
-            RadioListTile<String>(
-              title: Text(l10n.arabic),
-              value: 'ar',
-              groupValue: currentLocale.languageCode,
-              onChanged: (value) {
-                ref
-                    .read(languageControllerProvider.notifier)
-                    .changeLanguage(const Locale('ar'));
-                Navigator.pop(context);
-              },
-            ),
+            const Spacer(),
+            if (isSelected)
+              const Icon(Icons.check_circle_outline, color: AppColors.cyan, size: 18),
+            if (!isSelected)
+              Container(
+                width: 12,
+                height: 12,
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
+                ),
+              ),
           ],
         ),
       ),
@@ -158,54 +282,90 @@ class AccountSettingsList extends ConsumerWidget {
   }
 
   Widget _buildSettingItem({
+    required BuildContext context,
     required IconData icon,
     required String title,
+    String? subtitle,
     Widget? trailing,
     required VoidCallback onTap,
     bool isLast = false,
-    required bool isDark,
   }) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.vertical(
-          bottom: isLast ? const Radius.circular(16) : Radius.zero,
-        ),
-        child: Padding(
+    return Stack(
+      children: [
+        if (onTap != null)
+          Positioned.fill(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onTap,
+                highlightColor: AppColors.cyan.withValues(alpha: 0.1),
+                splashColor: AppColors.cyan.withValues(alpha: 0.05),
+              ),
+            ),
+          ),
+        Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: Row(
             children: [
-              Icon(icon, color: AppColors.primary, size: 24),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: AppColors.cyan.withValues(alpha: 0.05),
+                  border: Border.all(color: AppColors.cyan.withValues(alpha: 0.2)),
+                ),
+                child: Icon(icon, color: AppColors.cyan, size: 18),
+              ),
               const SizedBox(width: 16),
               Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: isDark ? AppColors.white : AppColors.black,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title.toUpperCase(),
+                      style: const TextStyle(
+                        fontFamily: 'monospace',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        letterSpacing: 1.1,
+                      ),
+                    ),
+                    if (subtitle != null)
+                      Text(
+                        subtitle,
+                        style: TextStyle(
+                          fontFamily: 'monospace',
+                          fontSize: 8,
+                          color: AppColors.cyan.withValues(alpha: 0.5),
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                  ],
                 ),
               ),
-              trailing ??
-                  const Icon(Icons.chevron_right, color: AppColors.greyDark),
+              trailing ?? const Icon(Icons.chevron_right, color: AppColors.cyan, size: 16),
             ],
           ),
         ),
-      ),
+        Positioned(
+          left: 0,
+          top: 0,
+          bottom: 0,
+          child: Container(
+            width: 2,
+            color: AppColors.magenta.withValues(alpha: 0.3),
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _buildDivider(bool isDark) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Divider(
-        height: 1,
-        color: isDark
-            ? AppColors.greyDark.withValues(alpha: 0.3)
-            : AppColors.greyMedium.withValues(alpha: 0.3),
-      ),
+  Widget _buildDivider() {
+    return Container(
+      height: 1,
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      color: AppColors.cyan.withValues(alpha: 0.1),
     );
   }
 }
+
+

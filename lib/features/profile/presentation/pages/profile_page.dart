@@ -1,3 +1,5 @@
+import 'package:electronics_shop/core/utils/components/back_grid.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,14 +15,6 @@ import 'package:electronics_shop/features/profile/presentation/widgets/saved_add
 import 'package:electronics_shop/features/profile/presentation/widgets/account_settings_list.dart';
 import 'package:electronics_shop/features/profile/presentation/widgets/login_prompt_card.dart';
 import 'package:electronics_shop/routes/routes.dart';
-
-const double _appBarExpandedHeight = 50.0;
-const double _contentVerticalSpacing = 16.0;
-const double _sectionSpacing = 24.0;
-const double _bottomSpacing = 32.0;
-const double _signOutButtonHorizontalPadding = 32.0;
-const double _signOutButtonVerticalPadding = 14.0;
-const double _signOutButtonBorderRadius = 12.0;
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
@@ -43,12 +37,13 @@ class ProfilePage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: RefreshIndicator(
-        onRefresh: () =>
-            ref.read(profileControllerProvider.notifier).loadUserData(),
+        color: AppColors.cyan,
+        backgroundColor: theme.colorScheme.surface,
+        onRefresh: () => ref.read(profileControllerProvider.notifier).loadUserData(),
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
-            _buildAppBar(theme),
+            _buildAppBar(context, theme),
             SliverToBoxAdapter(
               child: _buildBody(context, ref, currentUser, isLoading, orders),
             ),
@@ -66,9 +61,10 @@ class ProfilePage extends ConsumerWidget {
     List orders,
   ) {
     if (isLoading && orders.isEmpty) {
-      return const SizedBox(
+      return Container(
         height: 400,
-        child: Center(child: CircularProgressIndicator()),
+        alignment: Alignment.center,
+        child: const _TechnicalLoader(),
       );
     }
 
@@ -82,45 +78,47 @@ class ProfilePage extends ConsumerWidget {
           onTap: () => context.push(AppRoutes.editUserInfo),
           child: const ProfileHeader(),
         ),
-        const SizedBox(height: _contentVerticalSpacing),
+        const SizedBox(height: 16),
         const QuickActionsRow(),
-        const SizedBox(height: _sectionSpacing),
+        const SizedBox(height: 24),
         const PurchaseStatsCard(),
-        const SizedBox(height: _sectionSpacing),
+        const SizedBox(height: 24),
         const RecentOrdersList(),
-        const SizedBox(height: _sectionSpacing),
+        const SizedBox(height: 24),
         const SavedAddressesList(),
-        const SizedBox(height: _sectionSpacing),
+        const SizedBox(height: 24),
         const AccountSettingsList(),
-        const SizedBox(height: _sectionSpacing),
+        const SizedBox(height: 24),
         _buildSignOutButton(context, ref),
-        const SizedBox(height: _bottomSpacing),
+        const SizedBox(height: 32),
       ],
     );
   }
 
-  Widget _buildAppBar(ThemeData theme) {
-    final isDark = theme.brightness == Brightness.dark;
-
+  Widget _buildAppBar(BuildContext context, ThemeData theme) {
     return SliverAppBar(
-      expandedHeight: _appBarExpandedHeight,
+      expandedHeight: 60,
       pinned: true,
-      backgroundColor: isDark
-          ? AppColors.surfaceDark.withAlpha(100)
-          : AppColors.primary,
-      flexibleSpace: FlexibleSpaceBar(
-        title: Builder(
-          builder: (context) {
-            return Text(
-              AppLocalizations.of(context)!.myAccount,
-              style: const TextStyle(
-                color: AppColors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      backgroundColor: theme.scaffoldBackgroundColor,
+      title: Text(
+        AppLocalizations.of(context)!.myAccount.toUpperCase(),
+        style: const TextStyle(
+          color: AppColors.cyan,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'monospace',
+          letterSpacing: 2,
         ),
-        centerTitle: true,
+      ),
+      centerTitle: true,
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(1),
+        child: Container(
+          height: 0.5,
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          color: AppColors.cyan.withValues(alpha: 0.3),
+        ),
       ),
     );
   }
@@ -128,24 +126,71 @@ class ProfilePage extends ConsumerWidget {
   Widget _buildSignOutButton(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: OutlinedButton.icon(
-        onPressed: () async {
+      child: GestureDetector(
+        onTap: () async {
           await ref.read(profileControllerProvider.notifier).signOut();
         },
-        icon: const Icon(Icons.logout),
-        label: Text(AppLocalizations.of(context)!.signOut),
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.error,
-          side: const BorderSide(color: AppColors.error, width: 1.5),
-          padding: const EdgeInsets.symmetric(
-            horizontal: _signOutButtonHorizontalPadding,
-            vertical: _signOutButtonVerticalPadding,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(_signOutButtonBorderRadius),
-          ),
+        child: Stack(
+          children: [
+            ClipPath(
+              clipper: CyberpunkShapeClipper(),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.error.withValues(alpha: 0.05),
+                  border: Border.all(color: AppColors.error, width: 1.5),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.logout, color: AppColors.error),
+                    const SizedBox(width: 12),
+                    Text(
+                      AppLocalizations.of(context)!.signOut.toUpperCase(),
+                      style: const TextStyle(
+                        fontFamily: 'monospace',
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.error,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(width: 6, height: 6, color: AppColors.error),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+class _TechnicalLoader extends StatelessWidget {
+  const _TechnicalLoader();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const CircularProgressIndicator(color: AppColors.cyan),
+        const SizedBox(height: 16),
+        Text(
+          "LOADING_PROFILE_DATA...",
+          style: TextStyle(
+            fontFamily: 'monospace',
+            color: AppColors.cyan.withValues(alpha: 0.7),
+            fontSize: 10,
+          ),
+        ),
+      ],
+    );
+  }
+}
+

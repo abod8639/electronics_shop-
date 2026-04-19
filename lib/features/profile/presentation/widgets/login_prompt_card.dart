@@ -1,3 +1,5 @@
+import 'package:electronics_shop/core/utils/components/back_grid.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
@@ -7,123 +9,191 @@ import 'package:electronics_shop/features/profile/presentation/widgets/account_s
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:electronics_shop/routes/routes.dart';
 
-const double _containerMargin = 16.0;
-const double _containerPadding = 32.0;
-const double _containerBorderRadius = 20.0;
-const double _iconBackgroundSize = 20.0;
-const double _iconSize = 60.0;
-const double _titleIconSpacing = 24.0;
-const double _messageSpacing = 12.0;
-const double _buttonsSpacing = 20.0;
-const double _buttonBorderRadius = 12.0;
-const double _googleIconSize = 35.0;
-const double _buttonElevation = 2.0;
-const double _googleButtonPaddingHorizontal = 25.0;
-const double _googleButtonPaddingVertical = 10.0;
-
 class LoginPromptCard extends ConsumerWidget {
   const LoginPromptCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final l10n = AppLocalizations.of(context)!;
+    return Consumer(
+      builder: (context, ref, child) {
+        final theme = Theme.of(context);
+        final isDark = theme.brightness == Brightness.dark;
+        final l10n = AppLocalizations.of(context)!;
 
-    return Container(
-      margin: const EdgeInsets.all(_containerMargin),
-      padding: const EdgeInsets.all(_containerPadding),
-      decoration: BoxDecoration(
-        color: isDark ? const Color.fromARGB(132, 30, 30, 30) : AppColors.white,
-        borderRadius: BorderRadius.circular(_containerBorderRadius),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.black.withValues(alpha: .1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+        return Container(
+          margin: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.cyan.withValues(alpha: .1),
+                blurRadius: 20,
+                spreadRadius: -5,
+                blurStyle: BlurStyle.outer,
+              ),
+            ],
           ),
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: .1),
-            blurRadius: 20,
-            blurStyle: BlurStyle.outer,
-            offset: const Offset(0, 5),
+          child: ClipPath(
+            clipper: CyberpunkCardClipper(),
+            child: Container(
+              padding: const EdgeInsets.all(24.0),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface.withValues(alpha: .9),
+                border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3), width: 0.5),
+              ),
+              child: Stack(
+                children: [
+                   BackGrid(accentColor: AppColors.cyan),
+                  Column(
+                    children: [
+                      // Holographic Icon
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.cyan.withValues(alpha: 0.1),
+                                  blurRadius: 30,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Icon(
+                            Icons.lock_person_outlined,
+                            size: 60,
+                            color: AppColors.cyan,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      
+                      // Title
+                      Text(
+                        l10n.signInToYourAccount.toUpperCase(),
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'monospace',
+                          color: AppColors.cyan,
+                          letterSpacing: 2,
+                          shadows: [
+                            Shadow(color: AppColors.cyan.withValues(alpha: 0.5), blurRadius: 8),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 8),
+                      
+                      // Status Label
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.magenta.withValues(alpha: 0.5)),
+                        ),
+                        child: const Text(
+                          "ACCESS_LEVEL: [RESTRICTED]",
+                          style: TextStyle(
+                            fontFamily: 'monospace',
+                            color: AppColors.magenta,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      
+                      Text(
+                        l10n.loginMessage,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                          fontFamily: 'monospace',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 32),
+                      
+                      // Login Buttons
+                      _buildAuthButton(
+                        context: context,
+                        label: l10n.loginButtonLabel,
+                        icon: Icons.login,
+                        onTap: () => _handleLogin(context, ref),
+                        isPrimary: true,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildAuthButton(
+                        context: context,
+                        label: l10n.signInWithGoogle,
+                        icon: Icons.g_mobiledata_outlined,
+                        onTap: () async {
+                          AppGuard.runSafeInternet(ref, () async {
+                            await ref.read(profileControllerProvider.notifier).signInWithGoogle();
+                          });
+                        },
+                        isPrimary: false,
+                      ),
+                      
+                      const SizedBox(height: 32),
+                      const AccountSettingsList(),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-        ],
-      ),
-      child: Column(
+        );
+      },
+    );
+  }
+
+  Widget _buildAuthButton({
+    required BuildContext context,
+    required String label,
+    required IconData icon,
+    required VoidCallback onTap,
+    required bool isPrimary,
+  }) {
+    final color = isPrimary ? AppColors.cyan : AppColors.magenta;
+    return GestureDetector(
+      onTap: onTap,
+      child: Stack(
         children: [
-          Container(
-            padding: const EdgeInsets.all(_iconBackgroundSize),
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: .1),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.shopping_bag_outlined,
-              size: _iconSize,
-              color: AppColors.primary,
-            ),
-          ),
-          const SizedBox(height: _titleIconSpacing),
-          Text(
-            l10n.signInToYourAccount,
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: isDark ? AppColors.white : AppColors.black,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: _messageSpacing),
-          Text(
-            l10n.loginMessage,
-            style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.grey),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: _buttonsSpacing),
-          ElevatedButton.icon(
-            onPressed: () => _handleLogin(context, ref),
-            icon: const Icon(Icons.login),
-            label: Text(l10n.loginButtonLabel),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: AppColors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(_buttonBorderRadius),
+          ClipPath(
+            clipper: CyberpunkShapeClipper(),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.1),
+                border: Border.all(color: color, width: 1),
               ),
-              elevation: _buttonElevation,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(icon, color: color, size: 20),
+                  const SizedBox(width: 12),
+                  Text(
+                    label.toUpperCase(),
+                    style: TextStyle(
+                      fontFamily: 'monospace',
+                      fontWeight: FontWeight.bold,
+                      color: color,
+                      letterSpacing: 1.5,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: _buttonsSpacing),
-          ElevatedButton.icon(
-            onPressed: () async {
-              AppGuard.runSafeInternet(ref, () async {
-                await ref
-                    .read(profileControllerProvider.notifier)
-                    .signInWithGoogle();
-              });
-            },
-            icon: const Icon(
-              Icons.g_mobiledata_outlined,
-              size: _googleIconSize,
-            ),
-            label: Text(l10n.signInWithGoogle),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: AppColors.white,
-              padding: const EdgeInsets.symmetric(
-                horizontal: _googleButtonPaddingHorizontal,
-                vertical: _googleButtonPaddingVertical,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(_buttonBorderRadius),
-              ),
-              elevation: _buttonElevation,
-            ),
+          Positioned(
+            top: 2,
+            right: 2,
+            child: Container(width: 4, height: 4, color: color),
           ),
-          const SizedBox(height: _buttonsSpacing),
-          const AccountSettingsList(),
-          const SizedBox(height: _buttonsSpacing),
         ],
       ),
     );
@@ -135,3 +205,4 @@ class LoginPromptCard extends ConsumerWidget {
     });
   }
 }
+

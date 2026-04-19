@@ -1,3 +1,5 @@
+import 'package:electronics_shop/core/utils/components/back_grid.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,10 +8,6 @@ import 'package:electronics_shop/features/order/presentation/controllers/orders_
 import 'package:electronics_shop/features/order/presentation/widgets/order_card.dart';
 import 'package:electronics_shop/features/profile/presentation/controllers/language_controller.dart';
 import 'package:electronics_shop/routes/routes.dart';
-
-const int _maxOrdersToDisplay = 3;
-const double _horizontalPadding = 16.0;
-const double _listItemSpacing = 12.0;
 
 class RecentOrdersList extends ConsumerWidget {
   const RecentOrdersList({super.key});
@@ -24,73 +22,68 @@ class RecentOrdersList extends ConsumerWidget {
 
     return ordersState.when(
       data: (orders) {
-        final recentOrders = orders.take(_maxOrdersToDisplay).toList();
+        final recentOrders = orders.take(3).toList();
         if (recentOrders.isEmpty) return const SizedBox.shrink();
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHeader(context, theme, isAr),
-            const SizedBox(height: 4),
+            const SizedBox(height: 8),
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(
-                horizontal: _horizontalPadding,
-                vertical: 8,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemCount: recentOrders.length,
-              separatorBuilder: (context, index) =>
-                  const SizedBox(height: _listItemSpacing),
+              separatorBuilder: (context, index) => const SizedBox(height: 16),
               itemBuilder: (context, index) {
                 final order = recentOrders[index];
                 return OrderCard(
-                  onTap: () =>
-                      context.push(AppRoutes.orderDetails, extra: order),
+                  onTap: () => context.push(AppRoutes.orderDetails, extra: order),
                   order: order,
                   isDark: isDark,
                   isAr: isAr,
                 );
               },
             ),
-            const SizedBox(height: 8),
           ],
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text('Error: $e')),
+      loading: () => const Center(child: CircularProgressIndicator(color: AppColors.cyan)),
+      error: (e, _) => Center(child: Text('PROTOCOL_ERROR: $e', style: const TextStyle(fontFamily: 'monospace', color: AppColors.error))),
     );
   }
 
   Widget _buildHeader(BuildContext context, ThemeData theme, bool isAr) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
               Container(
-                width: 3,
+                width: 4,
                 height: 18,
                 decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(4),
+                  color: AppColors.cyan,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primary.withValues(alpha: .3),
-                      blurRadius: 4,
-                      offset: const Offset(1, 0),
+                      color: AppColors.cyan.withValues(alpha: .5),
+                      blurRadius: 10,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 12),
               Text(
-                isAr ? 'الطلبات الأخيرة' : 'Recent Orders',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.5,
+                (isAr ? 'الطلبات الأخيرة' : 'RECENT_ORDERS').toUpperCase(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'monospace',
+                  letterSpacing: 1.5,
+                  fontSize: 14,
+                  color: AppColors.cyan,
                 ),
               ),
             ],
@@ -98,21 +91,26 @@ class RecentOrdersList extends ConsumerWidget {
           TextButton(
             onPressed: () => context.push(AppRoutes.orderView),
             style: TextButton.styleFrom(
-              foregroundColor: AppColors.primary,
-              textStyle: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 13,
-              ),
+              foregroundColor: AppColors.magenta,
+              padding: EdgeInsets.zero,
               visualDensity: VisualDensity.compact,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(isAr ? 'عرض الكل' : 'View All'),
+                Text(
+                  (isAr ? 'عرض الكل' : 'BROWSE_ALL').toUpperCase(),
+                  style: const TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
+                ),
                 const SizedBox(width: 4),
                 Icon(
-                  isAr ? Icons.arrow_back_ios_new : Icons.arrow_forward_ios,
-                  size: 10,
+                  isAr ? Icons.chevron_left : Icons.chevron_right,
+                  size: 14,
                 ),
               ],
             ),
@@ -122,3 +120,4 @@ class RecentOrdersList extends ConsumerWidget {
     );
   }
 }
+

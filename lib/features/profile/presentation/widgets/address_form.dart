@@ -1,5 +1,7 @@
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/profile/data/models/address_model.dart';
 import 'package:electronics_shop/features/profile/presentation/controllers/address_controller.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
@@ -28,97 +30,168 @@ class _AddressFormState extends ConsumerState<AddressForm> {
     final theme = Theme.of(context);
     final controller = ref.watch(addressControllerProvider.notifier);
     final isLoading = ref.watch(addressControllerProvider.notifier).isLoading;
-    final selectedLabel = ref
-        .watch(addressControllerProvider.notifier)
-        .selectedLabel;
+    final selectedLabel = ref.watch(addressControllerProvider.notifier).selectedLabel;
     final intl10n = AppLocalizations.of(context)!;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
-      child: Form(
-        key: _formKey,
-        child: Column(
+    return Container(
+      color: theme.colorScheme.surface,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(intl10n),
+              const SizedBox(height: 24),
+              _buildLocationScanner(controller, intl10n, isLoading),
+              const SizedBox(height: 24),
+              _buildSectionTitle('IDENTITY_DATACAST'),
+              const SizedBox(height: 12),
+              _buildField(controller.fullNameController, intl10n.fullName.toUpperCase()),
+              const SizedBox(height: 16),
+              _buildField(
+                controller.phoneController,
+                intl10n.phoneNumber.toUpperCase(),
+                keyboardType: TextInputType.phone,
+              ),
+              const SizedBox(height: 24),
+              _buildSectionTitle('COORDS_SPEC'),
+              const SizedBox(height: 12),
+              _buildField(controller.streetController, intl10n.streetAddress.toUpperCase()),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildField(controller.cityController, intl10n.city.toUpperCase()),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildField(controller.stateController, intl10n.state.toUpperCase()),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildField(
+                      controller.postalCodeController,
+                      intl10n.postalCode.toUpperCase(),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildField(
+                      controller.countryController,
+                      intl10n.country.toUpperCase(),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              _buildSectionTitle('TAG_PROTOCOL'),
+              const SizedBox(height: 12),
+              _buildLabelSelector(controller, selectedLabel, context),
+              const SizedBox(height: 32),
+              _buildSubmitButton(controller, isLoading, intl10n),
+              const SizedBox(height: 16),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader(AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           children: [
+            const Icon(Icons.gps_fixed_rounded, color: AppColors.cyan, size: 20),
+            const SizedBox(width: 12),
             Text(
-              widget.address == null
-                  ? intl10n.addNewAddress
-                  : intl10n.editAddress,
-              style: theme.textTheme.headlineSmall,
+              (widget.address == null ? l10n.addNewAddress : l10n.editAddress).toUpperCase(),
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontWeight: FontWeight.w900,
+                fontSize: 18,
+                color: AppColors.cyan,
+                letterSpacing: 1.5,
+              ),
             ),
-            const SizedBox(height: 20),
-            // button to get current location
-            OutlinedButton.icon(
-              onPressed: isLoading
-                  ? null
-                  : () async {
-                      setState(() {}); // Start loading
-                      await controller.getCurrentLocation();
-                      if (context.mounted) {
-                        setState(() {}); // End loading
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(intl10n.addressUpdatedSuccessfully),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
-                      }
-                    },
-              icon: isLoading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.blue,
-                      ),
-                    )
-                  : const Icon(Icons.my_location),
-              label: Text(intl10n.useCurrentLocation),
+          ],
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'NAV_TARGET_V1.2 // SECURE_LINK_ACTIVE',
+          style: TextStyle(
+            fontFamily: 'monospace',
+            fontSize: 8,
+            color: AppColors.cyan.withValues(alpha: 0.5),
+            letterSpacing: 1,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Row(
+      children: [
+        Container(width: 8, height: 2, color: AppColors.magenta),
+        const SizedBox(width: 8),
+        Text(
+          title,
+          style: const TextStyle(
+            fontFamily: 'monospace',
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: AppColors.magenta,
+            letterSpacing: 2,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLocationScanner(AddressController controller, AppLocalizations l10n, bool isLoading) {
+    return GestureDetector(
+      onTap: isLoading
+          ? null
+          : () async {
+              setState(() {});
+              await controller.getCurrentLocation();
+              if (mounted) setState(() {});
+            },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+        decoration: BoxDecoration(
+          color: AppColors.cyan.withValues(alpha: 0.05),
+          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            isLoading
+                ? const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.cyan),
+                  )
+                : const Icon(Icons.radar_rounded, color: AppColors.cyan, size: 20),
+            const SizedBox(width: 12),
+            Text(
+              l10n.useCurrentLocation.toUpperCase(),
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 12,
+                fontWeight: FontWeight.w900,
+                color: AppColors.cyan,
+                letterSpacing: 1,
+              ),
             ),
-            const SizedBox(height: 24),
-            _buildField(controller.fullNameController, intl10n.fullName),
-            const SizedBox(height: 16),
-            _buildField(
-              controller.phoneController,
-              intl10n.phoneNumber,
-              keyboardType: TextInputType.phone,
-            ),
-            const SizedBox(height: 16),
-            _buildField(controller.streetController, intl10n.streetAddress),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildField(controller.cityController, intl10n.city),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildField(controller.stateController, intl10n.state),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildField(
-                    controller.postalCodeController,
-                    intl10n.postalCode,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildField(
-                    controller.countryController,
-                    intl10n.country,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            _buildLabelSelector(controller, selectedLabel, context),
-            const SizedBox(height: 32),
-            _buildSubmitButton(controller, isLoading),
           ],
         ),
       ),
@@ -136,9 +209,28 @@ class _AddressFormState extends ConsumerState<AddressForm> {
         return TextFormField(
           controller: controller,
           keyboardType: keyboardType,
+          style: const TextStyle(fontFamily: 'monospace', fontSize: 13),
           decoration: InputDecoration(
             labelText: label,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            labelStyle: const TextStyle(fontFamily: 'monospace', fontSize: 10, letterSpacing: 1),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.cyan.withValues(alpha: 0.2)),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.cyan),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.error),
+            ),
+            focusedErrorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.error),
+            ),
+            filled: true,
+            fillColor: Colors.black.withValues(alpha: 0.05),
           ),
           validator: (v) => v!.isEmpty ? intl10n.thisFieldIsRequired : null,
         );
@@ -155,18 +247,33 @@ class _AddressFormState extends ConsumerState<AddressForm> {
     return Row(
       children: [intl10n.home, intl10n.work, intl10n.other]
           .map(
-            (label) => Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ChoiceChip(
-                label: Text(label),
-                selected: selectedLabel == label,
-                onSelected: (val) {
-                  if (val) {
-                    setState(() {
-                      controller.selectedLabel = label;
-                    });
-                  }
+            (label) => Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    controller.selectedLabel = label;
+                  });
                 },
+                child: Container(
+                  margin: const EdgeInsets.only(right: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: BoxDecoration(
+                    color: selectedLabel == label ? AppColors.cyan : Colors.transparent,
+                    border: Border.all(
+                      color: selectedLabel == label ? AppColors.cyan : AppColors.cyan.withValues(alpha: 0.2),
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    label.toUpperCase(),
+                    style: TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      color: selectedLabel == label ? Colors.black : AppColors.cyan,
+                    ),
+                  ),
+                ),
               ),
             ),
           )
@@ -174,34 +281,61 @@ class _AddressFormState extends ConsumerState<AddressForm> {
     );
   }
 
-  Widget _buildSubmitButton(AddressController controller, bool isLoading) {
-    final intl10n = AppLocalizations.of(context)!;
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: isLoading
-            ? null
-            : () async {
-                if (_formKey.currentState!.validate()) {
-                  setState(() {}); // Trigger loading state
-                  await controller.saveAddress(widget.address?.id);
-                  if (mounted) {
-                    setState(() {}); // Clear loading state if not popped
-                    Navigator.of(context).pop();
-                  }
+  Widget _buildSubmitButton(AddressController controller, bool isLoading, AppLocalizations l10n) {
+    return GestureDetector(
+      onTap: isLoading
+          ? null
+          : () async {
+              if (_formKey.currentState!.validate()) {
+                setState(() {});
+                await controller.saveAddress(widget.address?.id);
+                if (mounted) {
+                  setState(() {});
+                  Navigator.of(context).pop();
                 }
-              },
-        child: isLoading
-            ? const SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: Colors.white,
-                ),
-              )
-            : Text(widget.address == null ? intl10n.save : intl10n.update),
+              }
+            },
+      child: Stack(
+        children: [
+          ClipPath(
+            clipper: CyberpunkShapeClipper(),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              decoration: BoxDecoration(
+                color: AppColors.cyan,
+                boxShadow: [
+                  BoxShadow(color: AppColors.cyan.withValues(alpha: 0.3), blurRadius: 15),
+                ],
+              ),
+              child: Center(
+                child: isLoading
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black),
+                      )
+                    : Text(
+                        (widget.address == null ? l10n.save : l10n.update).toUpperCase(),
+                        style: const TextStyle(
+                          fontFamily: 'monospace',
+                          fontWeight: FontWeight.w900,
+                          fontSize: 16,
+                          color: Colors.black,
+                          letterSpacing: 2,
+                        ),
+                      ),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Container(width: 8, height: 8, color: Colors.black),
+          ),
+        ],
       ),
     );
   }
 }
+

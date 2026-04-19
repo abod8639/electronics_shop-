@@ -1,20 +1,11 @@
+import 'package:electronics_shop/core/utils/components/back_grid.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/profile/presentation/controllers/profile_controller.dart';
 import 'package:electronics_shop/routes/routes.dart';
-
-const double _rowSpacing = 12.0;
-const double _cardPadding = 16.0;
-const double _cardBorderRadius = 12.0;
-const double _iconSize = 28.0;
-const double _valueFont = 20.0;
-const double _labelFont = 12.0;
-const double _labelSpacing = 8.0;
-const double _valueSpacing = 4.0;
-const double _shadowOpacity = 0.05;
-const double _shadowBlurRadius = 8.0;
 
 class QuickActionsRow extends ConsumerWidget {
   const QuickActionsRow({super.key});
@@ -30,32 +21,32 @@ class QuickActionsRow extends ConsumerWidget {
           Expanded(
             child: _buildQuickActionCard(
               context,
-              icon: Icons.shopping_bag_outlined,
-              label: 'Orders',
-              value: profileNotifier.totalOrders.toString(),
-              color: AppColors.primary,
+              icon: Icons.inventory_2_outlined,
+              label: 'ORDERS',
+              value: profileNotifier.totalOrders.toString().padLeft(2, '0'),
+              color: AppColors.cyan,
               onTap: () {},
             ),
           ),
-          const SizedBox(width: _rowSpacing),
+          const SizedBox(width: 12),
           Expanded(
             child: _buildQuickActionCard(
               context,
               icon: Icons.favorite_outline,
-              label: 'Wishlist',
-              value: profileNotifier.wishlistCount.toString(),
-              color: AppColors.error,
+              label: 'WISHLIST',
+              value: profileNotifier.wishlistCount.toString().padLeft(2, '0'),
+              color: AppColors.magenta,
               onTap: () => context.push(AppRoutes.wishlist),
             ),
           ),
-          const SizedBox(width: _rowSpacing),
+          const SizedBox(width: 12),
           Expanded(
             child: _buildQuickActionCard(
               context,
-              icon: Icons.location_on_outlined,
-              label: 'Addresses',
-              value: profileNotifier.addresses.length.toString(),
-              color: AppColors.success,
+              icon: Icons.terminal_outlined,
+              label: 'ADDR_LOG',
+              value: profileNotifier.addresses.length.toString().padLeft(2, '0'),
+              color: AppColors.cyan,
               onTap: () {},
             ),
           ),
@@ -73,46 +64,64 @@ class QuickActionsRow extends ConsumerWidget {
     required VoidCallback onTap,
   }) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(_cardBorderRadius),
-      child: Container(
-        padding: const EdgeInsets.all(_cardPadding),
-        decoration: BoxDecoration(
-          color: isDark ? AppColors.surfaceDark : AppColors.white,
-          borderRadius: BorderRadius.circular(_cardBorderRadius),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.black.withValues(alpha: _shadowOpacity),
-              blurRadius: _shadowBlurRadius,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Icon(icon, color: color, size: _iconSize),
-            const SizedBox(height: _labelSpacing),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: _valueFont,
-                fontWeight: FontWeight.bold,
-                color: color,
+      child: Stack(
+        children: [
+          ClipPath(
+            clipper: CyberpunkCardClipper(),
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface.withValues(alpha: 0.9),
+                border: Border.all(color: color.withValues(alpha: 0.3), width: 0.5),
+              ),
+              child: Stack(
+                children: [
+                  BackGrid(accentColor: color),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(icon, color: color, size: 24),
+                      const SizedBox(height: 12),
+                      Text(
+                        value,
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: color,
+                          fontFamily: 'monospace',
+                          height: 1,
+                          shadows: [
+                            Shadow(color: color.withValues(alpha: 0.4), blurRadius: 10),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        label,
+                        style: TextStyle(
+                          fontSize: 9,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.w900,
+                          color: color.withValues(alpha: 0.7),
+                          fontFamily: 'monospace',
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: _valueSpacing),
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: _labelFont,
-                color: AppColors.greyDark,
-              ),
-            ),
-          ],
-        ),
+          ),
+          Positioned(
+            right: 4,
+            top: 4,
+            child: Container(width: 3, height: 3, color: color),
+          ),
+        ],
       ),
     );
   }
 }
+

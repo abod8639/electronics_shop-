@@ -140,7 +140,7 @@ class CartItemCard extends ConsumerWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                               decoration: BoxDecoration(
-                                mirror: true, // Just a mental note for style
+                                // mirror: true, // Just a mental note for style
                                 color: AppColors.cyan.withValues(alpha: 0.1),
                                 border: Border.all(color: AppColors.cyan.withValues(alpha: 0.5)),
                               ),
