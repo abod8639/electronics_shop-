@@ -43,7 +43,11 @@ class CategorySectionRow extends ConsumerWidget {
                 },
               ),
             ),
-            ProductRowList(products: products),
+            SliverToBoxAdapter(child: const SizedBox(height: 8)), // Provide a tiny gap for better visual spacing
+            ProductRowList(
+              products: products,
+              heroTagPrefix: 'category_${selection.id}_',
+            ),
           ],
         );
       },

@@ -30,12 +30,14 @@ class ProductDetailsView extends ConsumerWidget {
   final ProductModel? product;
   final String? initialColor;
   final String? initialSize;
+  final String? heroTagPrefix;
 
   const ProductDetailsView({
     super.key,
     this.product,
     this.initialColor,
     this.initialSize,
+    this.heroTagPrefix,
   });
 
   @override
@@ -77,6 +79,7 @@ class ProductDetailsView extends ConsumerWidget {
           SliverToBoxAdapter(
             child: MainImage(
               product: product!,
+              heroTagPrefix: heroTagPrefix,
               onImageTap: (index) => _showImageViewer(context, index),
             ),
           ),

@@ -33,7 +33,7 @@ class SearchOptionsView extends StatelessWidget {
       child: Material(
         elevation: 8.0,
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(12)),
-        color: theme.colorScheme.surface.withOpacity(0.95),
+        color: theme.colorScheme.surface.withValues(alpha: 0.95),
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: 400,
@@ -46,7 +46,7 @@ class SearchOptionsView extends StatelessWidget {
             separatorBuilder:
                 (context, index) => Divider(
                   height: 1,
-                  color: const Color(0xFF00FBFF).withOpacity(0.1),
+                  color: const Color(0xFF00FBFF).withValues(alpha: 0.1),
                   indent: 16,
                   endIndent: 16,
                 ),

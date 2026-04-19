@@ -8,8 +8,9 @@ class ProductRowList extends StatelessWidget {
   static const double _horizontalPadding = 16.0;
   static const double _mainAxisSpacing = 12.0;
   final List<ProductModel> products;
+  final String? heroTagPrefix;
 
-  const ProductRowList({super.key, required this.products});
+  const ProductRowList({super.key, required this.products, this.heroTagPrefix});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +31,15 @@ class ProductRowList extends StatelessWidget {
                 left: index == 0 ? 0 : 0,
                 right: _mainAxisSpacing,
               ),
+              // child: null, // Just a placeholder, we use GestureDetector
+              // Wait, the syntax:
               child: GestureDetector(
-                onTap: () => context.push(AppRoutes.productDetails, extra: product),
+                onTap: () => context.push(
+                  AppRoutes.productDetails,
+                  extra: {'product': product, 'heroTagPrefix': heroTagPrefix},
+                ),
                 child: ProductContainer(
+                  heroTagPrefix: heroTagPrefix,
                   product: product,
                   showName: true,
                   isBackgroundWhite: false,

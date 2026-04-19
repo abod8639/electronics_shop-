@@ -45,8 +45,8 @@ class TotalPriceSection extends ConsumerWidget {
                     vertical: 1.0,
                   ),
                   decoration: BoxDecoration(
-                    color: magentaColor.withOpacity(0.1),
-                    border: Border.all(color: magentaColor.withOpacity(0.5), width: 0.5),
+                    color: magentaColor.withValues(alpha: 0.1),
+                    border: Border.all(color: magentaColor.withValues(alpha: 0.5), width: 0.5),
                   ),
                   child: Text(
                     '[${items.length}]',
@@ -70,7 +70,7 @@ class TotalPriceSection extends ConsumerWidget {
                 fontFamily: 'monospace',
                 shadows: [
                   Shadow(
-                    color: magentaColor.withOpacity(0.5),
+                    color: magentaColor.withValues(alpha: 0.5),
                     blurRadius: 8,
                   ),
                 ],

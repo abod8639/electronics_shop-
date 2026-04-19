@@ -9,6 +9,30 @@ part 'address_controller.g.dart';
 
 const String _defaultLabel = 'Home';
 
+class AddressState {
+  final List<AddressModel> addresses;
+  final bool isLoading;
+  final String selectedLabel;
+
+  AddressState({
+    this.addresses = const [],
+    this.isLoading = false,
+    this.selectedLabel = _defaultLabel,
+  });
+
+  AddressState copyWith({
+    List<AddressModel>? addresses,
+    bool? isLoading,
+    String? selectedLabel,
+  }) {
+    return AddressState(
+      addresses: addresses ?? this.addresses,
+      isLoading: isLoading ?? this.isLoading,
+      selectedLabel: selectedLabel ?? this.selectedLabel,
+    );
+  }
+}
+
 @riverpod
 class AddressController extends _$AddressController {
   final fullNameController = TextEditingController();
@@ -19,23 +43,13 @@ class AddressController extends _$AddressController {
   final postalCodeController = TextEditingController();
   final countryController = TextEditingController();
 
-  String _selectedLabel = _defaultLabel;
-  String get selectedLabel => _selectedLabel;
-  set selectedLabel(String val) {
-    _selectedLabel = val;
-  }
-
   double? _latitude;
   double? _longitude;
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
   @override
-  FutureOr<List<AddressModel>> build() async {
-    // Clear and re-fetch when auth state changes
-    final authState = ref.watch(authControllerProvider);
-    if (authState.value == null) return [];
+  FutureOr<AddressState> build() async {
+    // Watch auth state to reset if needed
+    ref.watch(authControllerProvider);
 
     ref.onDispose(() {
       fullNameController.dispose();
@@ -48,7 +62,21 @@ class AddressController extends _$AddressController {
     });
 
     final repository = ref.watch(addressRepositoryProvider);
-    return repository.getCachedAddresses();
+    final cached = repository.getCachedAddresses();
+    return AddressState(addresses: cached);
+  }
+
+  void _updateState({
+    List<AddressModel>? addresses,
+    bool? isLoading,
+    String? selectedLabel,
+  }) {
+    final current = state.value ?? AddressState();
+    state = AsyncData(current.copyWith(
+      addresses: addresses,
+      isLoading: isLoading,
+      selectedLabel: selectedLabel,
+    ));
   }
 
   Future<void> fetchAddresses() async {
@@ -56,49 +84,43 @@ class AddressController extends _$AddressController {
     final repository = ref.read(addressRepositoryProvider);
     try {
       final fetched = await repository.getAddresses();
-      state = AsyncData(fetched);
+      _updateState(addresses: fetched, isLoading: false);
     } catch (e, st) {
       state = AsyncError(e, st);
     }
   }
 
   Future<void> deleteAddress(int id) async {
-    _isLoading = true;
+    _updateState(isLoading: true);
     try {
       final repository = ref.read(addressRepositoryProvider);
       await repository.deleteAddress(id);
-      final currentAddresses = state.value ?? [];
-      state = AsyncData(
-        currentAddresses.where((addr) => addr.id != id).toList(),
+      final currentAddresses = state.value?.addresses ?? [];
+      _updateState(
+        addresses: currentAddresses.where((addr) => addr.id != id).toList(),
+        isLoading: false,
       );
-    } finally {
-      _isLoading = false;
-
+    } catch (e) {
+      _updateState(isLoading: false);
+      rethrow;
     }
   }
 
   Future<void> setDefaultAddress(int id) async {
-    _isLoading = true;
+    _updateState(isLoading: true);
     try {
       final repository = ref.read(addressRepositoryProvider);
       await repository.setDefaultAddress(id);
       await fetchAddresses();
     } finally {
-      _isLoading = false;
-
+      _updateState(isLoading: false);
     }
-  }
-
-  AddressModel? get defaultAddress {
-    final addresses = state.value ?? [];
-    return addresses.where((addr) => addr.isDefault).firstOrNull ??
-        (addresses.isNotEmpty ? addresses.first : null);
   }
 
   void fillForm(AddressModel? address) {
     if (address == null) {
       clearForm();
-      _selectedLabel = _defaultLabel;
+      _updateState(selectedLabel: _defaultLabel);
       return;
     }
     fullNameController.text = address.fullName ?? '';
@@ -108,9 +130,9 @@ class AddressController extends _$AddressController {
     stateController.text = address.state ?? '';
     postalCodeController.text = address.postalCode ?? '';
     countryController.text = address.country ?? '';
-    _selectedLabel = address.label ?? _defaultLabel;
     _latitude = address.latitude;
     _longitude = address.longitude;
+    _updateState(selectedLabel: address.label ?? _defaultLabel);
   }
 
   Future<void> saveAddress(int? id) async {
@@ -123,13 +145,13 @@ class AddressController extends _$AddressController {
       state: stateController.text,
       postalCode: postalCodeController.text,
       country: countryController.text,
-      label: _selectedLabel,
+      label: state.value?.selectedLabel ?? _defaultLabel,
       isDefault: false,
       latitude: _latitude,
       longitude: _longitude,
     );
 
-    _isLoading = true;
+    _updateState(isLoading: true);
     try {
       final repository = ref.read(addressRepositoryProvider);
       if (id == null) {
@@ -140,13 +162,12 @@ class AddressController extends _$AddressController {
       await fetchAddresses();
       clearForm();
     } finally {
-      _isLoading = false;
-
+      _updateState(isLoading: false);
     }
   }
 
   Future<void> getCurrentLocation() async {
-    _isLoading = true;
+    _updateState(isLoading: true);
     try {
       final service = ref.read(addressServiceProvider);
       final position = await service.getCurrentPosition();
@@ -166,11 +187,13 @@ class AddressController extends _$AddressController {
       } else {
         throw 'لم يتم العثور على تفاصيل العنوان لهذا الموقع';
       }
-    } catch (e) {
-      rethrow;
     } finally {
-      _isLoading = false;
+      _updateState(isLoading: false);
     }
+  }
+
+  void updateLabel(String label) {
+    _updateState(selectedLabel: label);
   }
 
   void clearForm() {

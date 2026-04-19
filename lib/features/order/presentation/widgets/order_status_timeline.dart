@@ -52,7 +52,7 @@ class OrderStatusTimeline extends StatelessWidget {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.5),
+            color: color.withValues(alpha: 0.5),
             blurRadius: 10,
             spreadRadius: 2,
           ),
@@ -88,7 +88,7 @@ class OrderStatusTimeline extends StatelessWidget {
       margin: const EdgeInsets.only(left: 7, top: 4, bottom: 4),
       width: 2,
       height: 20,
-      color: isCompleted ? AppColors.cyan.withOpacity(0.3) : Colors.white10,
+      color: isCompleted ? AppColors.cyan.withValues(alpha: 0.3) : Colors.white10,
     );
   }
 }

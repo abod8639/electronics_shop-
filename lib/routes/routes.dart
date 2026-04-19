@@ -1,3 +1,4 @@
+import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,6 +21,7 @@ import 'package:electronics_shop/features/checkout/presentation/pages/order_succ
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/features/splash/presentation/pages/splash_view.dart';
 import 'package:electronics_shop/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:electronics_shop/features/product/data/repositories/product_repository.dart';
 
 class AppRoutes {
   static const String main = '/';
@@ -106,6 +108,50 @@ final routerProvider = Provider<GoRouter>((ref) {
               product: extra['product'] as ProductModel,
               initialColor: extra['selectedColor'] as String?,
               initialSize: extra['selectedSize'] as String?,
+              heroTagPrefix: extra['heroTagPrefix'] as String?,
+            );
+          } else if (extra is String || extra is int) {
+            // Handle navigation when only productId is available (handles both String and int)
+            final productId = extra.toString();
+            return Consumer(
+              builder: (context, ref, child) {
+                return FutureBuilder<ProductModel>(
+                  // We MUST use .notifier to access methods of a class-based Notifier provider
+                  future: ref.read(productRepositoryProvider.notifier).getProductById(productId),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
+                      return ProductDetailsView(product: snapshot.data!);
+                    } else if (snapshot.hasError) {
+                      return Scaffold(
+                        backgroundColor: Colors.black,
+                        appBar: AppBar(backgroundColor: Colors.transparent),
+                        body: Center(
+                          child: Text(
+                            "ERROR: ${snapshot.error}",
+                            style: const TextStyle(color: AppColors.magenta, fontFamily: 'monospace'),
+                          ),
+                        ),
+                      );
+                    }
+                    return const Scaffold(
+                      backgroundColor: Colors.black,
+                      body: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(color: AppColors.cyan),
+                            SizedBox(height: 16),
+                            Text(
+                              'FETCHING_PRODUCT_DATA...',
+                              style: TextStyle(color: AppColors.cyan, fontFamily: 'monospace', fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
             );
           }
           // Return a safe fallback or error state if data is missing

@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:electronics_shop/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/core/utils/components/back_grid.dart';
 import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:electronics_shop/features/order/data/models/order_model.dart';
 import 'package:electronics_shop/features/order/presentation/widgets/order_status_timeline.dart';
+import 'package:go_router/go_router.dart';
 
 class OrderDetailsView extends StatelessWidget {
   final OrderModel order;
@@ -45,7 +47,7 @@ class OrderDetailsView extends StatelessWidget {
                 ClipPath(
                   clipper: CyberpunkCardClipper(),
                   child: Container(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     padding: const EdgeInsets.all(20),
                     child: OrderStatusTimeline(order: order),
                   ),
@@ -70,7 +72,7 @@ class OrderDetailsView extends StatelessWidget {
     return ClipPath(
       clipper: CyberpunkCardClipper(),
       child: Container(
-        color: AppColors.cyan.withOpacity(0.1),
+        color: AppColors.cyan.withValues(alpha: 0.1),
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
@@ -110,79 +112,194 @@ class OrderDetailsView extends StatelessWidget {
   }
 
   Widget _buildInfoRow(String label, String value) {
-    return Row(
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white54,
-            fontSize: 12,
-            fontFamily: 'monospace',
-          ),
-        ),
-        Spacer(),
-        Expanded(
-          child: Text(
-            value,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(      
+        children: [
+          Text(
+            label,
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.white54,
               fontSize: 12,
-              fontWeight: FontWeight.bold,
               fontFamily: 'monospace',
             ),
           ),
-        ),
-      ],
+          Spacer(),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'monospace',
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildOrderItem(BuildContext context, OrderItemModel item) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        border: Border(left: BorderSide(color: AppColors.cyan, width: 2)),
-        color: Colors.white.withOpacity(0.02),
+        color: AppColors.cyan.withValues(alpha: 0.05),
+        border: Border.all(color: AppColors.cyan.withValues(alpha: 0.2)),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.cyan.withValues(alpha: 0.02),
+            blurRadius: 10,
+            spreadRadius: 1,
+          ),
+        ],
       ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.cyan.withOpacity(0.3)),
-          ),
-          child: CachedNetworkImage(
-            imageUrl: item.imageUrl ?? '',
-            width: 50,
-            height: 50,
-            fit: BoxFit.cover,
-            placeholder: (context, url) => Container(color: Colors.white10),
-            errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.white24),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            debugPrint('DEBUG_TARGET: ProductID(${item.productId})');
+            if (item.productId != 0) {
+              context.push(AppRoutes.productDetails, extra: item.productId);
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('ERR_0x404: PRODUCT_DATA_NOT_FOUND', style: TextStyle(fontFamily: 'monospace')),
+                  backgroundColor: AppColors.error,
+                ),
+              );
+            }
+          },
+          splashColor: AppColors.cyan.withValues(alpha: 0.2),
+          highlightColor: AppColors.cyan.withValues(alpha: 0.1),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              children: [
+                // Product Image with Cyberpunk Frame
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.cyan.withValues(alpha: 0.5)),
+                  ),
+                  child: Stack(
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: item.imageUrl ?? '',
+                        width: 70,
+                        height: 70,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(color: Colors.white10),
+                        errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.white24),
+                      ),
+                      Positioned(
+                        right: 0,
+                        bottom: 0,
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: AppColors.cyan,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 16),
+                
+                // Details
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.productName.toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 14,
+                          letterSpacing: 1,
+                          fontFamily: 'monospace',
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'UNIT_PRICE: ${item.price} Credits',
+                        style: TextStyle(
+                          color: AppColors.cyan.withValues(alpha: 0.7),
+                          fontSize: 10,
+                          fontFamily: 'monospace',
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          _buildMiniBadge('QTY_${item.quantity}', AppColors.cyan),
+                          if (item.selectedSize != null) ...[
+                            const SizedBox(width: 8),
+                            _buildMiniBadge('SIZE_${item.selectedSize}', AppColors.magenta),
+                          ],
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                
+                // Subtotal
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'SUBTOTAL',
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.3),
+                        fontSize: 8,
+                        fontFamily: 'monospace',
+                      ),
+                    ),
+                    Text(
+                      '${item.subtotal}',
+                      style: const TextStyle(
+                        color: AppColors.magenta,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        fontFamily: 'monospace',
+                      ),
+                    ),
+                    const Text(
+                      'CREDITS',
+                      style: TextStyle(
+                        color: AppColors.magenta,
+                        fontSize: 8,
+                        fontFamily: 'monospace',
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-        title: Text(
-          item.productName,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-          ),
-        ),
-        subtitle: Text(
-          'QUANTITY: ${item.quantity}',
-          style: TextStyle(
-            color: Colors.white54,
-            fontSize: 11,
-            fontFamily: 'monospace',
-          ),
-        ),
-        trailing: Text(
-          '${item.price} Credits',
-          style: const TextStyle(
-            color: AppColors.cyan,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'monospace',
-          ),
+      ),
+    );
+  }
+
+  Widget _buildMiniBadge(String text, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: color,
+          fontSize: 8,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'monospace',
         ),
       ),
     );
@@ -192,8 +309,8 @@ class OrderDetailsView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.magenta.withOpacity(0.05),
-        border: Border.all(color: AppColors.magenta.withOpacity(0.2)),
+        color: AppColors.magenta.withValues(alpha: 0.05),
+        border: Border.all(color: AppColors.magenta.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

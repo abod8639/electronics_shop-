@@ -107,7 +107,7 @@ class AppTheme {
       ),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: const Color(0xFF0D0D0D).withOpacity(0.9),
+      backgroundColor: const Color(0xFF0D0D0D).withValues(alpha: 0.9),
       // selectedItemColor: const Color(0xFFBF00FF),
       unselectedItemColor: Colors.grey,
       type: BottomNavigationBarType.fixed,

@@ -106,7 +106,7 @@ class MyBottomNavigationBar extends ConsumerWidget {
     return InkWell(
       onTap: () => ref.read(mainControllerProvider.notifier).changeTabIndex(index),
       highlightColor: Colors.transparent,
-      splashColor: activeColor.withOpacity(0.1),
+      splashColor: activeColor.withValues(alpha: 0.1),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -123,7 +123,7 @@ class MyBottomNavigationBar extends ConsumerWidget {
                   shadows: isSelected
                       ? [
                           Shadow(
-                            color: activeColor.withOpacity(0.8),
+                            color: activeColor.withValues(alpha: 0.8),
                             blurRadius: 10,
                           ),
                         ]

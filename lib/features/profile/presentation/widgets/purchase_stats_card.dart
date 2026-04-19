@@ -27,41 +27,38 @@ class PurchaseStatsCard extends ConsumerWidget {
           ),
         ],
       ),
-      child: ClipPath(
-        clipper: CyberpunkCardClipper(),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface.withValues(alpha: 0.95),
-            border: Border.all(color: AppColors.cyan.withValues(alpha: 0.2), width: 0.5),
-          ),
-          child: Stack(
-            children: [
-              BackGrid(accentColor: AppColors.cyan),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildStatItem(
-                    intl10n.totalSpent.toUpperCase(),
-                    'EG£ ${profileNotifier.totalSpent.toStringAsFixed(0)}',
-                    Icons.account_balance_wallet_outlined,
-                    AppColors.cyan,
-                  ),
-                  Container(
-                    height: 40,
-                    width: 1,
-                    color: AppColors.cyan.withValues(alpha: 0.2),
-                  ),
-                  _buildStatItem(
-                    intl10n.completed.toUpperCase(),
-                    profileNotifier.deliveredOrders.toString().padLeft(2, '0'),
-                    Icons.verified_outlined,
-                    AppColors.cyan,
-                  ),
-                ],
-              ),
-            ],
-          ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface.withValues(alpha: 0.95),
+          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.2), width: 0.5),
+        ),
+        child: Stack(
+          children: [
+            // BackGrid(accentColor: AppColors.cyan),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildStatItem(
+                  intl10n.totalSpent.toUpperCase(),
+                  'EG£ ${profileNotifier.totalSpent.toStringAsFixed(0)}',
+                  Icons.account_balance_wallet_outlined,
+                  AppColors.cyan,
+                ),
+                Container(
+                  height: 40,
+                  width: 1,
+                  color: AppColors.cyan.withValues(alpha: 0.2),
+                ),
+                _buildStatItem(
+                  intl10n.completed.toUpperCase(),
+                  profileNotifier.deliveredOrders.toString().padLeft(2, '0'),
+                  Icons.verified_outlined,
+                  AppColors.cyan,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

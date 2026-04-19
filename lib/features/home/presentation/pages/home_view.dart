@@ -52,37 +52,41 @@ class HomeView extends ConsumerWidget {
                         slivers: [
                           SliverToBoxAdapter(
                             child: SectionTitle(
-                              title:""
-                              //  AppLocalizations.of(context)!.recommended,
+                              title: "" // AppLocalizations.of(context)!.recommended,
                             ),
                           ),
-                          ProductRowList(products: products ),
+                          ProductRowList(
+                            products: products,
+                            heroTagPrefix: 'recommended_',
+                          ),
                         ],
                       ),
                       loading: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
                       error: (err, stack) => const SliverToBoxAdapter(child: SizedBox.shrink()),
-                    ) ,
+                    ),
 
                     // Show various category sections
                     categoriesState.when(
-                      data: (selections ) {
+                      data: (selections) {
                         return SliverMainAxisGroup(
-                          slivers: selections
-                              .asMap()
-                              .entries
-                              .where((e) => e.key > 0)
-                              .map((e) => CategorySectionRow(
-                                    selection: e.value,
-                                    index: e.key,
-                                  ))
-                              .toList(),
+                          slivers: selections.asMap().entries.map((entry) {
+                            if (entry.key == 0) return const SliverToBoxAdapter(child: SizedBox.shrink()); // Skip "All"
+                            return CategorySectionRow(
+                              selection: entry.value,
+                              index: entry.key,
+                            );
+                          }).toList(),
                         );
                       },
                       loading: () => const SliverToBoxAdapter(
-                        child: Center(child: CircularProgressIndicator()),
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: CircularProgressIndicator(color: AppColors.cyan),
+                          ),
+                        ),
                       ),
-                      error: (err, stack) =>
-                          const SliverToBoxAdapter(child: SizedBox.shrink()),
+                      error: (err, stack) => const SliverToBoxAdapter(child: SizedBox.shrink()),
                     ),
                   ] else ...[
                     const ProductGridList(),

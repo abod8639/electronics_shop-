@@ -72,6 +72,7 @@ class _ImageSectionState extends State<ImageSection> {
                           images[index].medium,
                           theme,
                           widget.widget.product.isBackgroundWhite,
+                          index,
                         );
                       },
                     ),
@@ -114,7 +115,7 @@ class _ImageSectionState extends State<ImageSection> {
     );
   }
 
-  Widget buildImage(String url, ThemeData theme, bool isBackgroundWhite) {
+  Widget buildImage(String url, ThemeData theme, bool isBackgroundWhite, int index) {
     return Container(
       margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
@@ -126,7 +127,7 @@ class _ImageSectionState extends State<ImageSection> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Hero(
-          tag: 'product_image_${widget.widget.product.id}',
+          tag: index == 0 ? '${widget.widget.heroTagPrefix ?? ''}product_image_${widget.widget.product.id}' : '${widget.widget.heroTagPrefix ?? ''}product_image_${widget.widget.product.id}_$index',
           child: CachedNetworkImage(
             cacheManager: CustomCacheManager.instance,
             imageUrl: url,

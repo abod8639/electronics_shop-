@@ -46,7 +46,7 @@ Widget buildProductDetails(ProductModel product) {
                   fontFamily: 'monospace',
                   shadows: [
                     Shadow(
-                      color: magentaColor.withOpacity(0.5),
+                      color: magentaColor.withValues(alpha: 0.5),
                       blurRadius: 8,
                     ),
                   ],

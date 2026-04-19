@@ -12,7 +12,7 @@ import 'package:electronics_shop/features/checkout/presentation/widgets/build_pa
 
 Step buildAddressStep(WidgetRef ref, String title) {
   final checkoutState = ref.watch(checkoutControllerProvider);
-  final addresses = ref.watch(addressControllerProvider).value ?? [];
+  final addresses = ref.watch(addressControllerProvider).valueOrNull?.addresses ?? [];
 
   return Step(
     title: Text(

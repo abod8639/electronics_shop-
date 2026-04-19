@@ -62,7 +62,7 @@ class OrderCard extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
-                            Icons.qr_code_2,
+                            Icons.shopping_cart_checkout_sharp,
                             size: 14,
                             color: AppColors.cyan,
                           ),
@@ -73,7 +73,7 @@ class OrderCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                (isAr ? 'ORD_#' : 'ORD_#') + order.id.toString().substring(0, 8).toUpperCase(),
+                                (isAr ? 'ORD_#' : 'ORD_#') + (order.id.length > 8 ? order.id.substring(0, 8).toUpperCase() : order.id.toUpperCase()),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
@@ -82,7 +82,7 @@ class OrderCard extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                DateFormat('yy.MM.dd // HH:mm').format(order.orderDate!),
+                                order.orderDate != null ? DateFormat('yy.MM.dd // HH:mm').format(order.orderDate!) : 'PENDING_TIME',
                                 style: TextStyle(
                                   color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                                   fontFamily: 'monospace',
@@ -120,7 +120,7 @@ class OrderCard extends StatelessWidget {
                         ClipPath(
                           clipper: CyberpunkShapeClipper(),
                           child: AppNetworkImage(
-                            imageUrl: order.items?.first.imageUrl,
+                            imageUrl: order.items != null && order.items!.isNotEmpty ? order.items!.first.imageUrl : null,
                             width: 50,
                             height: 50,
                           ),
@@ -131,7 +131,7 @@ class OrderCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                order.items?.first.productName ?? '',
+                                order.items != null && order.items!.isNotEmpty ? order.items!.first.productName : '',
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'monospace',
@@ -144,8 +144,8 @@ class OrderCard extends StatelessWidget {
                               if ((order.items?.length ?? 0) > 1)
                                 Text(
                                   isAr
-                                      ? '+${order.items!.length - 1} وحدات إضافية'
-                                      : '+${order.items!.length - 1} MORE_ENTITIES',
+                                      ? '+${(order.items?.length ?? 1) - 1} وحدات إضافية'
+                                      : '+${(order.items?.length ?? 1) - 1} MORE_ENTITIES',
                                   style: const TextStyle(
                                     color: AppColors.magenta,
                                     fontFamily: 'monospace',

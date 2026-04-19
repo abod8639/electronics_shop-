@@ -28,9 +28,10 @@ class _AddressFormState extends ConsumerState<AddressForm> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final controller = ref.watch(addressControllerProvider.notifier);
-    final isLoading = ref.watch(addressControllerProvider.notifier).isLoading;
-    final selectedLabel = ref.watch(addressControllerProvider.notifier).selectedLabel;
+    final addressState = ref.watch(addressControllerProvider).value;
+    final controllerNotifier = ref.watch(addressControllerProvider.notifier);
+    final isLoading = addressState?.isLoading ?? false;
+    final selectedLabel = addressState?.selectedLabel ?? 'Home';
     final intl10n = AppLocalizations.of(context)!;
 
     return Container(
@@ -44,30 +45,30 @@ class _AddressFormState extends ConsumerState<AddressForm> {
             children: [
               _buildHeader(intl10n),
               const SizedBox(height: 24),
-              _buildLocationScanner(controller, intl10n, isLoading),
+              _buildLocationScanner(controllerNotifier, intl10n, isLoading),
               const SizedBox(height: 24),
               _buildSectionTitle('IDENTITY_DATACAST'),
               const SizedBox(height: 12),
-              _buildField(controller.fullNameController, intl10n.fullName.toUpperCase()),
+              _buildField(controllerNotifier.fullNameController, intl10n.fullName.toUpperCase()),
               const SizedBox(height: 16),
               _buildField(
-                controller.phoneController,
+                controllerNotifier.phoneController,
                 intl10n.phoneNumber.toUpperCase(),
                 keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: 24),
               _buildSectionTitle('COORDS_SPEC'),
               const SizedBox(height: 12),
-              _buildField(controller.streetController, intl10n.streetAddress.toUpperCase()),
+              _buildField(controllerNotifier.streetController, intl10n.streetAddress.toUpperCase()),
               const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
-                    child: _buildField(controller.cityController, intl10n.city.toUpperCase()),
+                    child: _buildField(controllerNotifier.cityController, intl10n.city.toUpperCase()),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: _buildField(controller.stateController, intl10n.state.toUpperCase()),
+                    child: _buildField(controllerNotifier.stateController, intl10n.state.toUpperCase()),
                   ),
                 ],
               ),
@@ -76,14 +77,14 @@ class _AddressFormState extends ConsumerState<AddressForm> {
                 children: [
                   Expanded(
                     child: _buildField(
-                      controller.postalCodeController,
+                      controllerNotifier.postalCodeController,
                       intl10n.postalCode.toUpperCase(),
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: _buildField(
-                      controller.countryController,
+                      controllerNotifier.countryController,
                       intl10n.country.toUpperCase(),
                     ),
                   ),
@@ -92,9 +93,9 @@ class _AddressFormState extends ConsumerState<AddressForm> {
               const SizedBox(height: 24),
               _buildSectionTitle('TAG_PROTOCOL'),
               const SizedBox(height: 12),
-              _buildLabelSelector(controller, selectedLabel, context),
+              _buildLabelSelector(controllerNotifier, selectedLabel, context),
               const SizedBox(height: 32),
-              _buildSubmitButton(controller, isLoading, intl10n),
+              _buildSubmitButton(controllerNotifier, isLoading, intl10n),
               const SizedBox(height: 16),
             ],
           ),
@@ -188,16 +189,17 @@ class _AddressFormState extends ConsumerState<AddressForm> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            isLoading
-                ? const SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.cyan),
-                  )
-                : const Icon(Icons.radar_rounded, color: AppColors.cyan, size: 20),
+            if (isLoading)
+              const SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.cyan),
+              )
+            else
+              const Icon(Icons.radar_rounded, color: AppColors.cyan, size: 20),
             const SizedBox(width: 12),
             Text(
-              l10n.useCurrentLocation.toUpperCase(),
+              (isLoading ? 'SCANNING_GEO_DATA...' : l10n.useCurrentLocation).toUpperCase(),
               style: const TextStyle(
                 fontFamily: 'monospace',
                 fontSize: 12,
@@ -264,9 +266,7 @@ class _AddressFormState extends ConsumerState<AddressForm> {
             (label) => Expanded(
               child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    controller.selectedLabel = label;
-                  });
+                  controller.updateLabel(label);
                 },
                 child: Container(
                   margin: const EdgeInsets.only(right: 8),

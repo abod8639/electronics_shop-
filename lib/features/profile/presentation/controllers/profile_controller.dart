@@ -31,7 +31,7 @@ class ProfileController extends _$ProfileController {
   List<OrderModel> get orders =>
       ref.watch(ordersControllerProvider).valueOrNull ?? [];
   List<AddressModel> get addresses =>
-      ref.watch(addressControllerProvider).valueOrNull ?? [];
+      ref.watch(addressControllerProvider).valueOrNull?.addresses ?? [];
 
   int get wishlistCount {
     try {

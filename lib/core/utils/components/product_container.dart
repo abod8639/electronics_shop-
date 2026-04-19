@@ -34,6 +34,7 @@ class ProductContainer extends StatefulWidget {
     this.onTap,
     required this.isBackgroundWhite,
     this.query,
+    this.heroTagPrefix,
   });
 
   final void Function()? onTap;
@@ -42,6 +43,7 @@ class ProductContainer extends StatefulWidget {
   final bool isBackgroundWhite;
   final String? query;
   final ValueChanged<int>? onPageChanged;
+  final String? heroTagPrefix;
 
   @override
   State<ProductContainer> createState() => _ProductContainerState();

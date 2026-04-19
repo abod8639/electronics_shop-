@@ -30,7 +30,7 @@ class CyberpunkSearchField extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00FBFF).withOpacity(0.2),
+            color: const Color(0xFF00FBFF).withValues(alpha: 0.2),
             blurRadius: 15,
           ),
         ],

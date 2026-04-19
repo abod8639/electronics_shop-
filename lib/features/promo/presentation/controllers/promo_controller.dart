@@ -18,7 +18,7 @@ Future<List<PromoModel>> promos(PromosRef ref) {
 @riverpod
 class PromoController extends _$PromoController {
   Timer? _timer;
-  late final PageController pageController;
+  late PageController pageController;
   final int initialPage = 10000;
 
   @override

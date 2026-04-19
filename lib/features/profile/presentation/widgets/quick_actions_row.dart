@@ -28,7 +28,7 @@ class QuickActionsRow extends ConsumerWidget {
               onTap: () {},
             ),
           ),
-          const SizedBox(width: 12),
+          // const SizedBox(width: 12),
           Expanded(
             child: _buildQuickActionCard(
               context,
@@ -39,7 +39,7 @@ class QuickActionsRow extends ConsumerWidget {
               onTap: () => context.push(AppRoutes.wishlist),
             ),
           ),
-          const SizedBox(width: 12),
+          // const SizedBox(width: 12),
           Expanded(
             child: _buildQuickActionCard(
               context,
@@ -114,11 +114,11 @@ class QuickActionsRow extends ConsumerWidget {
               ),
             ),
           ),
-          Positioned(
-            right: 4,
-            top: 4,
-            child: Container(width: 3, height: 3, color: color),
-          ),
+          // Positioned(
+          //   right: 4,
+          //   top: 4,
+          //   child: Container(width: 3, height: 3, color: color),
+          // ),
         ],
       ),
     );

@@ -21,16 +21,16 @@ class SavedAddressesList extends ConsumerWidget {
         _buildHeader(context, theme),
         const SizedBox(height: 8),
         addressesState.when(
-          data: (addresses) => addresses.isEmpty
+          data: (state) => state.addresses.isEmpty
               ? _buildEmptyState(theme)
               : ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  itemCount: addresses.length,
+                  itemCount: state.addresses.length,
                   separatorBuilder: (context, index) => const SizedBox(height: 16),
                   itemBuilder: (context, index) {
-                    final address = addresses[index];
+                    final address = state.addresses[index];
                     return AddressCard(address: address);
                   },
                 ),

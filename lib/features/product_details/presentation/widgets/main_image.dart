@@ -9,8 +9,9 @@ import 'package:electronics_shop/features/product_details/presentation/controlle
 class MainImage extends ConsumerStatefulWidget {
   final ProductModel product;
   final Function(int)? onImageTap;
+  final String? heroTagPrefix;
 
-  const MainImage({super.key, required this.product, this.onImageTap});
+  const MainImage({super.key, required this.product, this.onImageTap, this.heroTagPrefix});
 
   @override
   ConsumerState<MainImage> createState() => _MainImageState();
@@ -84,7 +85,7 @@ class _MainImageState extends ConsumerState<MainImage> {
                   : Colors.transparent,
             ),
             child: Hero(
-              tag: 'product_image_${widget.product.id}',
+              tag: index == 0 ? '${widget.heroTagPrefix ?? ''}product_image_${widget.product.id}' : '${widget.heroTagPrefix ?? ''}product_image_${widget.product.id}_$index',
               child: CachedNetworkImage(
                 cacheManager: CustomCacheManager.instance,
                 imageUrl: imageUrl.medium,
