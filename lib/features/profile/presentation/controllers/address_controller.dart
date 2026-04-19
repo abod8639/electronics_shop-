@@ -73,7 +73,7 @@ class AddressController extends _$AddressController {
       );
     } finally {
       _isLoading = false;
-      ref.notifyListeners();
+
     }
   }
 
@@ -85,7 +85,7 @@ class AddressController extends _$AddressController {
       await fetchAddresses();
     } finally {
       _isLoading = false;
-      ref.notifyListeners();
+
     }
   }
 
@@ -99,7 +99,6 @@ class AddressController extends _$AddressController {
     if (address == null) {
       clearForm();
       _selectedLabel = _defaultLabel;
-      ref.notifyListeners();
       return;
     }
     fullNameController.text = address.fullName ?? '';
@@ -131,7 +130,6 @@ class AddressController extends _$AddressController {
     );
 
     _isLoading = true;
-    ref.notifyListeners();
     try {
       final repository = ref.read(addressRepositoryProvider);
       if (id == null) {
@@ -143,7 +141,7 @@ class AddressController extends _$AddressController {
       clearForm();
     } finally {
       _isLoading = false;
-      ref.notifyListeners();
+
     }
   }
 
@@ -165,10 +163,13 @@ class AddressController extends _$AddressController {
         countryController.text = place.country ?? '';
         _latitude = position.latitude;
         _longitude = position.longitude;
+      } else {
+        throw 'لم يتم العثور على تفاصيل العنوان لهذا الموقع';
       }
+    } catch (e) {
+      rethrow;
     } finally {
       _isLoading = false;
-      ref.notifyListeners();
     }
   }
 

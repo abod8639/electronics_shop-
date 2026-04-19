@@ -68,6 +68,8 @@
 		</array>
 		<key>UIStatusBarHidden</key>
 		<true/>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>نحتاج الوصول إلى موقعك لتسهيل إدخال وتحديد عنوان التوصيل بدقة.</string>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 	</dict>

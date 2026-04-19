@@ -161,9 +161,23 @@ class _AddressFormState extends ConsumerState<AddressForm> {
       onTap: isLoading
           ? null
           : () async {
-              setState(() {});
-              await controller.getCurrentLocation();
-              if (mounted) setState(() {});
+              try {
+                final future = controller.getCurrentLocation();
+                setState(() {}); // Show loading
+                await future;
+              } catch (e) {
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(e.toString()),
+                      backgroundColor: AppColors.error,
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                }
+              } finally {
+                if (mounted) setState(() {}); // Refresh with data/hide loading
+              }
             },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),

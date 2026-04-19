@@ -100,23 +100,36 @@ class AddressService {
 
   Future<Position> getCurrentPosition() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) throw 'خدمات الموقع معطلة. يرجى تفعيلها.';
+    if (!serviceEnabled) {
+      await Geolocator.openLocationSettings();
+      throw 'خدمات الموقع معطلة. يرجى تفعيلها والمحاولة مرة أخرى.';
+    }
 
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw 'تم رفض صلاحيات الموقع';
+        throw 'تم رفض صلاحيات الموقع. لا يمكننا تحديد موقعك تلقائياً.';
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      throw 'صلاحيات الموقع مرفوضة بشكل دائم.';
+      throw 'صلاحيات الموقع مرفوضة بشكل دائم. يرجى تفعيلها من إعدادات التطبيق.';
     }
 
-    return await Geolocator.getCurrentPosition(
-      locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
-    );
+    try {
+      return await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+          timeLimit: Duration(seconds: 10),
+        ),
+      );
+    } catch (e) {
+      // Fallback to last known position if current fails or times out
+      final lastKnown = await Geolocator.getLastKnownPosition();
+      if (lastKnown != null) return lastKnown;
+      throw 'تعذر الحصول على موقعك الحالي. تأكد من وجود إشارة GPS.';
+    }
   }
 
   Future<Placemark?> getAddressFromCoordinates(double lat, double lng) async {
