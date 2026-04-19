@@ -64,7 +64,7 @@ class CartItemCard extends ConsumerWidget {
                           : '',
                       width: 80,
                       height: 80,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.scaleDown,
                       errorWidget: (_, _, _) => const Icon(Icons.image, size: 40),
                     ),
                   ),
