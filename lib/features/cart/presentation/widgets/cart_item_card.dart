@@ -85,18 +85,20 @@ class CartItemCard extends ConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 5),
-                        if ( item.selectedSize != null)
+                        if (item.selectedColor != null || item.selectedSize != null)
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                             decoration: BoxDecoration(
-                              color: AppColors.backgroundDark ,
+                              color: AppColors.backgroundDark,
+                              border: Border.all(color: AppColors.magenta.withValues(alpha: 0.3)),
                             ),
                             child: Text(
-                              '${item.selectedColor ?? ""} ${item.selectedSize ?? ""}'.trim(),
+                              '${item.selectedColor ?? ""} ${item.selectedSize ?? ""}'.trim().toUpperCase(),
                               style: theme.textTheme.bodySmall?.copyWith(
-                                color: AppColors.cyan,
+                                color: AppColors.magenta,
                                 fontFamily: 'monospace',
                                 fontWeight: FontWeight.bold,
+                                fontSize: 10,
                               ),
                             ),
                           ),
@@ -105,50 +107,61 @@ class CartItemCard extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              '${item.product.baseEffectivePrice} LE',
-                              style: const TextStyle(
-                                color: AppColors.magenta ,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'monospace',
-                                fontSize: 16,
-                                shadows: [
-                                  Shadow(color: AppColors.magenta, blurRadius: 4),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${item.product.baseEffectivePrice} LE',
+                                  style: const TextStyle(
+                                    color: AppColors.priceColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'monospace',
+                                    fontSize: 16,
+                                    shadows: [
+                                      Shadow(color: AppColors.magenta, blurRadius: 4),
+                                    ],
+                                  ),
+                                ),
+                                if (item.product.basePrice > item.product.baseEffectivePrice)
+                                  Text(
+                                    '${item.product.basePrice}',
+                                    style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                      fontSize: 10,
+                                      fontFamily: 'monospace',
+                                      decoration: TextDecoration.lineThrough,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            const SizedBox(width: 8),
+                            
+                            // Enhanced Quantity Tag
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                mirror: true, // Just a mental note for style
+                                color: AppColors.cyan.withValues(alpha: 0.1),
+                                border: Border.all(color: AppColors.cyan.withValues(alpha: 0.5)),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.apps, size: 10, color: AppColors.cyan),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'QTY:${item.quantity}'.toUpperCase(),
+                                    style: const TextStyle(
+                                      color: AppColors.cyan,
+                                      fontFamily: 'monospace',
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            if (item.product.basePrice > item.product.baseEffectivePrice)
-                              Text(
-                                '${item.product.basePrice}',
-                                style: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontSize: 12,
-                                  fontFamily: 'monospace',
-                                  decoration: TextDecoration.lineThrough,
-                                ),
-                              ),
-
-                                                    //  QuantityControls(product: item.product),
-                                             Container(
-                                              
-                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.5)),
-                          color: AppColors.cyan.withValues(alpha: 0.1),
-                        ),
-                        child: Text(
-                          'QTY: ${item.quantity}',
-                          style: const TextStyle(
-                            color: AppColors.cyan,
-                            fontFamily: 'monospace',
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                           ],
-
                         ),
 
 

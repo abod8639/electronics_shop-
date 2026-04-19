@@ -162,7 +162,7 @@ class _ProductContainerState extends State<ProductContainer>
                                 Text(
                                   'LE ${widget.product.baseEffectivePrice}',
                                   style: TextStyle(
-                                    color: AppColors.magenta,
+                                    color: AppColors.priceColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 13,
                                     fontFamily: 'monospace',

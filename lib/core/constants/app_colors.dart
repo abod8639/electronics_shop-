@@ -31,4 +31,5 @@ class AppColors {
   static const Color surfaceLight = Colors.white;
   static const Color surfaceDark = Color(0xFF131313);
   static const Color surfaceContainerHighest = Color(0xFF262626);
+  static const Color priceColor = Color.fromARGB(230, 255, 0, 247);
 }

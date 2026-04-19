@@ -41,7 +41,7 @@ Widget buildProductDetails(ProductModel product) {
                 '${product.baseEffectivePrice.toStringAsFixed(2)} LE',
                 style: theme.textTheme.titleSmall?.copyWith(
                   fontSize: _priceFontSize,
-                  color: Colors.white,
+                  color: AppColors.priceColor,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'monospace',
                   shadows: [
