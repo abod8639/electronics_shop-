@@ -61,7 +61,7 @@ class _ProductContainerState extends State<ProductContainer>
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: AppColors.cyan.withValues(alpha: 0.01),
+            color: AppColors.greyDark.withValues(alpha: 0.02),
             blurRadius: 10,
             spreadRadius: -2,
           ),
@@ -108,7 +108,7 @@ class _ProductContainerState extends State<ProductContainer>
                 children: [
                   // Image Section
                   Expanded(
-                    flex: 4, 
+                    flex:3, 
                     child: Stack(
                       children: [
                         ImageSection(widget: widget),
@@ -124,7 +124,7 @@ class _ProductContainerState extends State<ProductContainer>
                         //     ),
                         //     child: Text(
                         //       "STATUS: SCAN",
-                        //       style: TextStyle(
+                        //       style: TTitleAndDescriptionextStyle(
                         //         color: Colors.white,
                         //         fontSize: 6,
                         //         fontWeight: FontWeight.bold,

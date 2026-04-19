@@ -22,8 +22,8 @@ import 'package:electronics_shop/features/splash/presentation/pages/splash_view.
 import 'package:electronics_shop/features/auth/presentation/controllers/auth_controller.dart';
 
 class AppRoutes {
-  static const String main = '/main';
-  static const String splash = '/';
+  static const String main = '/';
+  static const String splash = '/splash';
   static const String auth = '/auth';
   static const String signIn = '/signin';
   static const String signUp = '/signup';

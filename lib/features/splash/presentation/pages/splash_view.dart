@@ -65,7 +65,10 @@ class _SplashViewState extends State<SplashView>
           builder: (context, child) {
             return FadeTransition(
               opacity: _fadeAnimation,
-              child: ScaleTransition(scale: _scaleAnimation, child: child),
+              child: ScaleTransition(
+                scale: _scaleAnimation, 
+                child: child
+                ),
             );
           },
           child: Hero(

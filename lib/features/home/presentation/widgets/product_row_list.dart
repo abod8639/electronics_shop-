@@ -1,10 +1,7 @@
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:electronics_shop/features/home/presentation/controllers/home_controller.dart';
 import 'package:electronics_shop/core/utils/components/product_container.dart';
-// import 'package:electronics_shop/core/utils/responsive_helper.dart';
 import 'package:electronics_shop/routes/routes.dart';
 
 class ProductRowList extends StatelessWidget {

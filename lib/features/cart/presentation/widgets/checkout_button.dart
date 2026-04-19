@@ -13,7 +13,6 @@ class CheckoutButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
     final magentaColor = const Color(0xFFFF00F7);
 
@@ -26,7 +25,7 @@ class CheckoutButton extends ConsumerWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: magentaColor.withOpacity(0.3),
+                color: magentaColor.withValues(alpha: .3),
                 blurRadius: 15,
                 spreadRadius: -2,
               ),

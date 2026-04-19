@@ -1,4 +1,5 @@
 import 'package:electronics_shop/core/constants/app_colors.dart';
+import 'package:electronics_shop/core/utils/components/back_grid.dart';
 import 'package:electronics_shop/features/product/data/models/review_model.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/header_with_icon_and_title.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/stars_record.dart';
@@ -113,17 +114,7 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
           ),
           child: Stack(
             children: [
-              Positioned.fill(
-                child: Opacity(
-                  opacity: 0.04,
-                  child: GridPaper(
-                    color: accentColor,
-                    divisions: 1,
-                    subdivisions: 1,
-                    interval: 30,
-                  ),
-                ),
-              ),
+              BackGrid(accentColor: accentColor),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

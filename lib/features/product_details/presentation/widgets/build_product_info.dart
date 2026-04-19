@@ -34,7 +34,7 @@ Widget buildProductInfo(
   BuildContext context,
   WidgetRef ref,
 ) {
-  final theme = Theme.of(context);
+  // final theme = Theme.of(context);W
   final l10n = AppLocalizations.of(context)!;
   final locale = Localizations.localeOf(context).languageCode;
   final infoItems = <Widget>[];

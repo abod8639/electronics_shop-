@@ -55,7 +55,7 @@ Widget buildProductDetails(ProductModel product) {
               if (product.hasDiscount) ...[
                 const SizedBox(width: 8),
                 Text(
-                  '${product.price.toStringAsFixed(2)}',
+                  product.price.toStringAsFixed(2),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: Colors.grey.shade600,
                     decoration: TextDecoration.lineThrough,

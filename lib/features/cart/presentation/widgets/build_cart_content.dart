@@ -12,7 +12,7 @@ class BuildCartContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cartState = ref.watch(cartControllerProvider);
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
 
     return cartState.when(
       data: (items) => Column(

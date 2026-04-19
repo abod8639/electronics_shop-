@@ -17,8 +17,8 @@ class TitleAndDescription extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         HighlightText(
-          text: product.getLocalizedName(locale: locale).length > 40
-              ? '${product.getLocalizedName(locale: locale).substring(0, 40)}...'
+          text: product.getLocalizedName(locale: locale).length > 30
+              ? '${product.getLocalizedName(locale: locale).substring(0, 30)}...'
               : product.getLocalizedName(locale: locale),
           query: query ?? "",
           style: theme.textTheme.titleSmall?.copyWith(

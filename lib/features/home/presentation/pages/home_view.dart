@@ -54,7 +54,7 @@ class HomeView extends ConsumerWidget {
                               //  AppLocalizations.of(context)!.recommended,
                             ),
                           ),
-                          ProductRowList(products: products),
+                          ProductRowList(products: products ),
                         ],
                       ),
                       loading: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
@@ -63,7 +63,7 @@ class HomeView extends ConsumerWidget {
 
                     // Show various category sections
                     categoriesState.when(
-                      data: (selections) {
+                      data: (selections ) {
                         return SliverMainAxisGroup(
                           slivers: selections
                               .asMap()
