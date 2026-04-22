@@ -197,8 +197,20 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.orderDetails,
         builder: (context, state) {
-          final order = state.extra as OrderModel;
-          return OrderDetailsView(order: order);
+          final extra = state.extra;
+          OrderModel? order;
+          if (extra is OrderModel) {
+            order = extra;
+          } else if (extra is Map<String, dynamic>) {
+            order = OrderModel.fromJson(extra);
+          }
+          
+          if (order != null) {
+            return OrderDetailsView(order: order);
+          }
+          return const Scaffold(
+            body: Center(child: Text("ORDER_DATA_MISSING", style: TextStyle(color: AppColors.error, fontFamily: 'monospace'))),
+          );
         },
       ),
     ],

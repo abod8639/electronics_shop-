@@ -29,10 +29,14 @@ class OrdersController extends _$OrdersController {
     return await repository.getUserOrders(limit: limit);
   }
 
+  bool hasFetchedAll = false;
+
   Future<void> fetchAllOrders() async {
+    if (hasFetchedAll) return;
     state = const AsyncLoading();
     try {
       final orders = await _fetchOrders();
+      hasFetchedAll = true;
       state = AsyncData(orders);
     } catch (e, st) {
       state = AsyncError(e, st);

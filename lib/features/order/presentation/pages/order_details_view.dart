@@ -15,7 +15,7 @@ class OrderDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -46,10 +46,15 @@ class OrderDetailsView extends StatelessWidget {
                 _buildSectionHeader('LOGISTICS_STATUS'),
                 ClipPath(
                   clipper: CyberpunkCardClipper(),
-                  child: Container(
-                    color: Colors.white.withValues(alpha: 0.05),
-                    padding: const EdgeInsets.all(20),
-                    child: OrderStatusTimeline(order: order),
+                  child: Stack(
+                    children: [
+                     BackGrid(accentColor: AppColors.cyan),
+                      Container(
+                        color:  AppColors.greyDark.withValues(alpha: 0.1),
+                        padding: const EdgeInsets.all(20),
+                        child: OrderStatusTimeline(order: order),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 24),

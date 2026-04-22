@@ -28,13 +28,28 @@ class OrderStatusTimeline extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        _buildPipelineStep('INITIALIZED', true),
+_buildPipelineStep(
+          label: 'INITIALIZED', 
+          isCompleted: true, 
+          icon: Icons.receipt_long), // تم استلام الطلب
         _buildPipelineDivider(true),
-        _buildPipelineStep('PROCESSING', order.status != 'pending'),
+        
+        _buildPipelineStep(
+          label: 'PROCESSING', 
+          isCompleted: order.status != 'pending', 
+          icon: order.status != 'pending' ? Icons.handyman : Icons.hourglass_empty), // قيد التجهيز
         _buildPipelineDivider(order.status != 'pending'),
-        _buildPipelineStep('DISPATCHED', order.status == 'shipped' || order.status == 'delivered'),
+        
+        _buildPipelineStep(
+          label: 'DISPATCHED', 
+          isCompleted: order.status == 'shipped' || order.status == 'delivered', 
+          icon: Icons.local_shipping_outlined), // الشحن
         _buildPipelineDivider(order.status == 'shipped' || order.status == 'delivered'),
-        _buildPipelineStep('COMPLETED', order.status == 'delivered'),
+        
+        _buildPipelineStep(
+          label: 'COMPLETED', 
+          isCompleted: order.status == 'delivered', 
+          icon: order.status == 'delivered' ? Icons.check_circle : Icons.flag_circle), // التسجيل النهائي
       ],
     );
   }
@@ -61,14 +76,20 @@ class OrderStatusTimeline extends StatelessWidget {
     );
   }
 
-  Widget _buildPipelineStep(String label, bool isCompleted) {
+  Widget _buildPipelineStep({
+    required String label,
+    required bool isCompleted,
+    required IconData icon,
+  }) {
     return Row(
       children: [
         Icon(
           isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
-          size: 16,
+          size: 20,
           color: isCompleted ? AppColors.cyan : Colors.white24,
         ),
+        const SizedBox(width: 12),
+        Icon(icon, size: 16, color: isCompleted ? AppColors.cyan : Colors.white24),
         const SizedBox(width: 12),
         Text(
           label,

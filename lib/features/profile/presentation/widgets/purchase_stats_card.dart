@@ -1,5 +1,3 @@
-import 'package:electronics_shop/core/utils/components/back_grid.dart';
-import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';

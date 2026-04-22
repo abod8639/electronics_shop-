@@ -55,7 +55,7 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
           localizations.editProfile.toUpperCase(),

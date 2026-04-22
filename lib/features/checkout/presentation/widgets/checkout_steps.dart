@@ -110,7 +110,8 @@ Step buildPaymentStep(WidgetRef ref, String title) {
   return Step(
     title: Text(
       title,
-      style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
+      style: const TextStyle(
+        fontFamily: 'monospace', fontWeight: FontWeight.bold),
     ),
     content: Column(
       children: [

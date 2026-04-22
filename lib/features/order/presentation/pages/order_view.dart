@@ -16,9 +16,9 @@ class OrderView extends ConsumerWidget {
     final ordersState = ref.watch(ordersControllerProvider);
     final ordersNotifier = ref.watch(ordersControllerProvider.notifier);
 
-    // Fetch orders if not already fetched
+    // Fetch orders if not already fetched securely
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (ordersState is! AsyncLoading && (ordersState.value?.length ?? 0) <= 3) {
+      if (!ordersNotifier.hasFetchedAll && ordersState is! AsyncLoading) {
         ordersNotifier.fetchAllOrders();
       }
     });
@@ -28,7 +28,7 @@ class OrderView extends ConsumerWidget {
     final isAr = locale.languageCode == 'ar';
 
     return Scaffold(
-      backgroundColor: isDark ? Colors.black : Colors.grey[50],
+      backgroundColor:Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           const BackGrid(accentColor: AppColors.cyan,),

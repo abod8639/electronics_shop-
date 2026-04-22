@@ -128,7 +128,7 @@ class _OrderSuccessViewState extends State<OrderSuccessView>
                       context,
                       label: 'TRACK TRANSMISSION',
                       color: AppColors.cyan,
-                      onPressed: () => context.pushReplacement(AppRoutes.orderDetails),
+                      onPressed: () => context.pushReplacement(AppRoutes.orderView),
                     ),
                     const SizedBox(height: 16),
                     _buildCyberButton(

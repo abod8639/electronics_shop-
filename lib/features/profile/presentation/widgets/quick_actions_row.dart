@@ -101,7 +101,7 @@ class QuickActionsRow extends ConsumerWidget {
                       Text(
                         label,
                         style: TextStyle(
-                          fontSize: 9,
+                          fontSize: 16,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w900,
                           color: color.withValues(alpha: 0.7),

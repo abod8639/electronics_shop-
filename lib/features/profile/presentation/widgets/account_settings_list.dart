@@ -61,7 +61,7 @@ class AccountSettingsList extends ConsumerWidget {
                 trailing: Switch(
                   value: isDarkMode,
                   onChanged: (val) => themeNotifier.toggleTheme(),
-                  activeColor: AppColors.cyan,
+                  activeThumbColor: AppColors.cyan,
                   activeTrackColor: AppColors.cyan.withValues(alpha: 0.2),
                   inactiveThumbColor: AppColors.grey,
                   inactiveTrackColor: AppColors.grey.withValues(alpha: 0.1),

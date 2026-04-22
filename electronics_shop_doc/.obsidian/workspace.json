@@ -1,0 +1,207 @@
+{
+  "main": {
+    "id": "f391df3979929ba4",
+    "type": "split",
+    "children": [
+      {
+        "id": "77d7f8dc751025f5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5c935a5a7e5c6986",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "بدون عنوان.canvas",
+                "viewState": {
+                  "x": 1214.014806554082,
+                  "y": 177.36387583924048,
+                  "zoom": -1.1894289555539523
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "بدون عنوان"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ac40aa3dc2ed1808",
+    "type": "split",
+    "children": [
+      {
+        "id": "b8c7710bef3c3ce9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "09e4f580fb8cc684",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "مستكشف الملفات"
+            }
+          },
+          {
+            "id": "4134855f2638f26d",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "البحث"
+            }
+          },
+          {
+            "id": "7e7514198b3aa3cd",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "الإشارات المرجعية"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "e90bba7f55253faa",
+    "type": "split",
+    "children": [
+      {
+        "id": "76262b6c3a13f6db",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8fa8d1faf09613f7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "بدون عنوان.canvas",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "روابط خلفية لـ بدون عنوان"
+            }
+          },
+          {
+            "id": "8f28b889965b8b37",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "بدون عنوان.canvas",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "الروابط الصادرة من بدون عنوان"
+            }
+          },
+          {
+            "id": "58ea7d5837933f72",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "وسوم"
+            }
+          },
+          {
+            "id": "0a3f93a23050060f",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "جميع الخصائص"
+            }
+          },
+          {
+            "id": "c5f4d6b3301e5634",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "بدون عنوان.canvas",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "المخطط التفصيلي لـ بدون عنوان"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:إفتح الانتقال السريع": false,
+      "graph:إفتح العرض البياني": false,
+      "canvas:إنشاء لوحة بصرية جديدة": false,
+      "daily-notes:إفتح ملاحظة اليوم": false,
+      "templates:أدرج قالب": false,
+      "command-palette:إفتح لوحة الأوامر": false,
+      "bases:إنشاء قاعدة جديدة": false
+    }
+  },
+  "active": "5c935a5a7e5c6986",
+  "lastOpenFiles": [
+    "Screenshot_1776645804.png",
+    "Screenshot_1776645436.png",
+    "Screenshot_1776644027.png",
+    "Screenshot_1776642942.png",
+    "Screenshot_1776643983.png",
+    "Screenshot_1776642757.png",
+    "Screenshot_1776642736.png",
+    "Screenshot_1776642586.png",
+    "Screenshot_1776642531.png",
+    "Screenshot_1776642426.png",
+    "Screenshot_1776642420.png",
+    "بدون عنوان.canvas",
+    "مرحبًا.md",
+    "create a link.md"
+  ]
+}
