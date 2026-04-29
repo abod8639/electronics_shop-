@@ -139,7 +139,7 @@ class ShortcutItem extends ConsumerWidget {
                             fontSize: _labelFontSize,
                             letterSpacing: 1.1,
                             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                            color: isSelected ? AppColors.cyan : theme.colorScheme.onSurfaceVariant,
+                            color: isSelected ? AppColors.cyan : theme.colorScheme.onSurface,
                             fontFamily: 'monospace',
                           ),
                           textAlign: TextAlign.center,

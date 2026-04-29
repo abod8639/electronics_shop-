@@ -1,4 +1,6 @@
 import 'package:electronics_shop/core/constants/app_colors.dart';
+import 'package:electronics_shop/features/support/presentation/pages/help_page.dart';
+import 'package:electronics_shop/features/support/presentation/pages/supports_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -40,6 +42,9 @@ class AppRoutes {
   static const String editUserInfo = '/edit_user_info';
   static const String orderView = '/order_view';
   static const String orderDetails = '/order_details';
+  static const String support = '/supports';
+  static const String help = '/help';
+
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -212,6 +217,14 @@ final routerProvider = Provider<GoRouter>((ref) {
             body: Center(child: Text("ORDER_DATA_MISSING", style: TextStyle(color: AppColors.error, fontFamily: 'monospace'))),
           );
         },
+      ),
+      GoRoute(
+        path: AppRoutes.support,
+        builder: (context, state) => const SupportsPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.help,
+        builder: (context, state) => const HelpView(),
       ),
     ],
   );

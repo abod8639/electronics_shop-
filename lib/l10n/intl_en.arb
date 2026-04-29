@@ -134,5 +134,19 @@
   "contactUs": "Contact Us",
   "priceOnRequest": "Price on Request",
   "category": "Category",
-  "cartTitle": "Cart"
+  "cartTitle": "Cart",
+  "howCanWeHelp": "How can we help?",
+  "frequentlyAskedQuestions": "Frequently Asked Questions",
+  "popularTopics": "Popular Topics",
+  "contactSupport": "Contact Support",
+  "liveChat": "Live Chat",
+  "sendEmail": "Send Email",
+  "callUs": "Call Us",
+  "myTickets": "My Tickets",
+  "shippingReturns": "Shipping & Returns",
+  "paymentsBilling": "Payments & Billing",
+  "orderStatus": "Order Status",
+  "accountSecurity": "Account & Security",
+  "viewAllFAQ": "View All FAQ",
+  "searchHelp": "Search for help..."
 }

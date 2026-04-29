@@ -1,11 +1,11 @@
 ---
 description: >
-  Comprehensive development guide for the Stronger Muscles Dashboard Flutter application.
+  Comprehensive development guide for the electronics shop Flutter application.
   Use this skill whenever working on this project, including: creating new features,
   writing Controllers, Services, or Repositories, designing Widgets, connecting to the API,
-  managing state with GetX, local storage with Hive/GetStorage, or any question about
+  managing state with riverpod, local storage with Hive/GetStorage, or any question about
   the project structure or architecture. This skill should automatically apply when
-  discussing Flutter with GetX, Clean Architecture, or when referencing folders like
+  discussing Flutter with riverpod, Clean Architecture, or when referencing folders like
   lib/features, lib/core, or lib/data. Also triggers for any task involving Dio interceptors,
   feature bindings, use cases, or domain entities in a Flutter project.
 ---

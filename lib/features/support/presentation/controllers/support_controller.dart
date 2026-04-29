@@ -1,10 +1,10 @@
-import 'package:get/get.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/support_entity.dart';
 import '../../domain/usecases/get_supports_usecase.dart';
 import '../../domain/usecases/get_support_by_id_usecase.dart';
 import '../../domain/usecases/create_support_usecase.dart';
 
-class SupportController extends GetxController {
+class SupportController extends StateNotifier<AsyncValue<List<SupportEntity>>> {
   final GetSupportsUsecase getSupportsUsecase;
   final GetSupportByIdUsecase getSupportByIdUsecase;
   final CreateSupportUsecase createSupportUsecase;
@@ -13,20 +13,30 @@ class SupportController extends GetxController {
     required this.getSupportsUsecase,
     required this.getSupportByIdUsecase,
     required this.createSupportUsecase,
-  });
-
-  final RxList<SupportEntity> items = <SupportEntity>[].obs;
-  final RxBool isLoading = false.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
+  }) : super(const AsyncValue.loading()) {
     fetchAll();
   }
 
   Future<void> fetchAll() async {
-    isLoading.value = true;
-    items.value = await getSupportsUsecase();
-    isLoading.value = false;
+    try {
+      state = const AsyncValue.loading();
+      final results = await getSupportsUsecase();
+      
+      // For demo purposes, we'll add some dummy data if the list is empty
+      if (results.isEmpty) {
+        state = const AsyncValue.data([
+          SupportEntity(id: 'TK-8821', name: 'Issue with display brightness'),
+          SupportEntity(id: 'TK-8822', name: 'Refund request for Order #1234'),
+        ]);
+      } else {
+        state = AsyncValue.data(results);
+      }
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+    }
+  }
+
+  Future<void> createTicket(String name) async {
+    // Implementation for creating a new ticket
   }
 }

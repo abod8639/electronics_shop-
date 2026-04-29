@@ -413,4 +413,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cartTitle => 'Cart';
+
+  @override
+  String get howCanWeHelp => 'How can we help?';
+
+  @override
+  String get frequentlyAskedQuestions => 'Frequently Asked Questions';
+
+  @override
+  String get popularTopics => 'Popular Topics';
+
+  @override
+  String get contactSupport => 'Contact Support';
+
+  @override
+  String get liveChat => 'Live Chat';
+
+  @override
+  String get sendEmail => 'Send Email';
+
+  @override
+  String get callUs => 'Call Us';
+
+  @override
+  String get myTickets => 'My Tickets';
+
+  @override
+  String get shippingReturns => 'Shipping & Returns';
+
+  @override
+  String get paymentsBilling => 'Payments & Billing';
+
+  @override
+  String get orderStatus => 'Order Status';
+
+  @override
+  String get accountSecurity => 'Account & Security';
+
+  @override
+  String get viewAllFAQ => 'View All FAQ';
+
+  @override
+  String get searchHelp => 'Search for help...';
 }

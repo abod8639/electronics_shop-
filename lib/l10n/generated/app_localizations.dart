@@ -901,6 +901,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cart'**
   String get cartTitle;
+
+  /// No description provided for @howCanWeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'How can we help?'**
+  String get howCanWeHelp;
+
+  /// No description provided for @frequentlyAskedQuestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequently Asked Questions'**
+  String get frequentlyAskedQuestions;
+
+  /// No description provided for @popularTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular Topics'**
+  String get popularTopics;
+
+  /// No description provided for @contactSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Support'**
+  String get contactSupport;
+
+  /// No description provided for @liveChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Chat'**
+  String get liveChat;
+
+  /// No description provided for @sendEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Email'**
+  String get sendEmail;
+
+  /// No description provided for @callUs.
+  ///
+  /// In en, this message translates to:
+  /// **'Call Us'**
+  String get callUs;
+
+  /// No description provided for @myTickets.
+  ///
+  /// In en, this message translates to:
+  /// **'My Tickets'**
+  String get myTickets;
+
+  /// No description provided for @shippingReturns.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping & Returns'**
+  String get shippingReturns;
+
+  /// No description provided for @paymentsBilling.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments & Billing'**
+  String get paymentsBilling;
+
+  /// No description provided for @orderStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Status'**
+  String get orderStatus;
+
+  /// No description provided for @accountSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Account & Security'**
+  String get accountSecurity;
+
+  /// No description provided for @viewAllFAQ.
+  ///
+  /// In en, this message translates to:
+  /// **'View All FAQ'**
+  String get viewAllFAQ;
+
+  /// No description provided for @searchHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for help...'**
+  String get searchHelp;
 }
 
 class _AppLocalizationsDelegate

@@ -4,10 +4,10 @@ import 'package:electronics_shop/features/home/presentation/controllers/categori
 import 'package:electronics_shop/features/home/presentation/widgets/shortcut_item.dart';
 
 class CategoriesShortcutsRow extends ConsumerWidget {
-  static const double _horizontalPadding = 12.0;
+  static const double _horizontalPadding = 3.0;
   static const double _verticalPadding = 8.0;
   static const double _rowHeight = 110;
-  static const double _spacing = 8.0;
+  static const double _spacing = 1.0;
 
   const CategoriesShortcutsRow({super.key});
 
@@ -18,7 +18,7 @@ class CategoriesShortcutsRow extends ConsumerWidget {
     return sectionsState.when(
       data: (selections) => Padding(
         padding: const EdgeInsets.only(
-          left: _horizontalPadding-10,
+          left: _horizontalPadding-3,
           right: _horizontalPadding,
           top: _verticalPadding,
           bottom: _verticalPadding,

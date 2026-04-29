@@ -133,5 +133,19 @@
   "contactUs": "اتصل بنا",
   "priceOnRequest": "السعر عند الطلب",
   "category": "التصنيف",
-  "cartTitle": "السلة"
+  "cartTitle": "السلة",
+  "howCanWeHelp": "كيف يمكننا مساعدتك؟",
+  "frequentlyAskedQuestions": "الأسئلة الشائعة",
+  "popularTopics": "المواضيع الشائعة",
+  "contactSupport": "الاتصال بالدعم",
+  "liveChat": "المحادثة المباشرة",
+  "sendEmail": "إرسال بريد إلكتروني",
+  "callUs": "اتصل بنا",
+  "myTickets": "تذاكري",
+  "shippingReturns": "الشحن والإرجاع",
+  "paymentsBilling": "المدفوعات والفواتير",
+  "orderStatus": "حالة الطلب",
+  "accountSecurity": "الحساب والأمان",
+  "viewAllFAQ": "عرض جميع الأسئلة الشائعة",
+  "searchHelp": "ابحث عن مساعدة..."
 }

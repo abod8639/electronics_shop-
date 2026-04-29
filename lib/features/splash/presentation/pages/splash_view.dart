@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:electronics_shop/features/splash/presentation/controllers/splash_controller.dart';
 import 'package:electronics_shop/routes/routes.dart';
 
-class SplashView extends StatefulWidget {
+class SplashView extends ConsumerStatefulWidget {
   const SplashView({super.key});
 
   @override
-  State<SplashView> createState() => _SplashViewState();
+  ConsumerState<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView>
+class _SplashViewState extends ConsumerState<SplashView>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
@@ -20,7 +20,8 @@ class _SplashViewState extends State<SplashView>
   @override
   void initState() {
     super.initState();
-    Get.put(SplashController());
+    // Initialize the splash controller provider
+    ref.read(splashControllerProvider);
 
     _controller = AnimationController(
       vsync: this,

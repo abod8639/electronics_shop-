@@ -106,7 +106,9 @@ class AccountSettingsList extends ConsumerWidget {
                 icon: Icons.help_outline,
                 title: localizations.helpSupport,
                 subtitle: 'TECH_ASSIST_MODULE',
-                onTap: () {},
+                onTap: () {
+                  context.push(AppRoutes.support);
+                },
               ),
               _buildDivider(),
               _buildSettingItem(

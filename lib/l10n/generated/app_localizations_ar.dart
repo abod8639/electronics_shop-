@@ -412,4 +412,46 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cartTitle => 'السلة';
+
+  @override
+  String get howCanWeHelp => 'كيف يمكننا مساعدتك؟';
+
+  @override
+  String get frequentlyAskedQuestions => 'الأسئلة الشائعة';
+
+  @override
+  String get popularTopics => 'المواضيع الشائعة';
+
+  @override
+  String get contactSupport => 'الاتصال بالدعم';
+
+  @override
+  String get liveChat => 'المحادثة المباشرة';
+
+  @override
+  String get sendEmail => 'إرسال بريد إلكتروني';
+
+  @override
+  String get callUs => 'اتصل بنا';
+
+  @override
+  String get myTickets => 'تذاكري';
+
+  @override
+  String get shippingReturns => 'الشحن والإرجاع';
+
+  @override
+  String get paymentsBilling => 'المدفوعات والفواتير';
+
+  @override
+  String get orderStatus => 'حالة الطلب';
+
+  @override
+  String get accountSecurity => 'الحساب والأمان';
+
+  @override
+  String get viewAllFAQ => 'عرض جميع الأسئلة الشائعة';
+
+  @override
+  String get searchHelp => 'ابحث عن مساعدة...';
 }
