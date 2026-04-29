@@ -68,12 +68,22 @@ class _ImageSectionState extends State<ImageSection> {
                         }
                       },
                       itemBuilder: (context, index) {
-                        return buildImage(
+                        final imageWidget = buildImage(
                           images[index].medium,
                           theme,
                           widget.widget.product.isBackgroundWhite,
                           index,
                         );
+
+                        // Only wrap the currently selected image with Hero
+                        if (index == _selectedImageIndex) {
+                          return Hero(
+                            tag: '${widget.widget.heroTagPrefix ?? ''}product_image_${widget.widget.product.id}',
+                            child: imageWidget,
+                          );
+                        }
+
+                        return imageWidget;
                       },
                     ),
             ),
@@ -126,9 +136,7 @@ class _ImageSectionState extends State<ImageSection> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: Hero(
-          tag: index == 0 ? '${widget.widget.heroTagPrefix ?? ''}product_image_${widget.widget.product.id}' : '${widget.widget.heroTagPrefix ?? ''}product_image_${widget.widget.product.id}_$index',
-          child: CachedNetworkImage(
+        child: CachedNetworkImage(
             cacheManager: CustomCacheManager.instance,
             imageUrl: url,
             fit: BoxFit.scaleDown,
@@ -136,7 +144,7 @@ class _ImageSectionState extends State<ImageSection> {
             errorWidget: (context, url, error) => buildErrorWidget(theme),
           ),
         ),
-      ),
+      
     );
   }
 

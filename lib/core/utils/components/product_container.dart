@@ -94,17 +94,17 @@ class _ProductContainerState extends State<ProductContainer>
           child: Stack(
             children: [
               // Digital grid background 
-              // Positioned.fill(
-              //   child: Opacity(
-              //     opacity: 0.04,
-              //     child: GridPaper(
-              //       color: AppColors.cyan,
-              //       divisions: 1,
-              //       subdivisions: 1,
-              //       interval: 25,
-              //     ),
-              //   ),
-              // ),
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0.04,
+                  child: GridPaper(
+                    color: AppColors.cyan,
+                    divisions: 1,
+                    subdivisions: 1,
+                    interval: 25,
+                  ),
+                ),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -66,6 +66,8 @@ class _MainImageState extends ConsumerState<MainImage> {
   }
 
   Widget _buildImageSlider(BuildContext context) {
+    final detailsState = ref.watch(productDetailsControllerProvider(widget.product));
+    
     return PageView.builder(
       allowImplicitScrolling: true,
       controller: _pageController,
@@ -76,7 +78,7 @@ class _MainImageState extends ConsumerState<MainImage> {
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         final imageUrl = widget.product.imageUrls[index];
-        return GestureDetector(
+        final imageWidget = GestureDetector(
           onTap: () => widget.onImageTap?.call(index),
           child: Container(
             decoration: BoxDecoration(
@@ -84,20 +86,27 @@ class _MainImageState extends ConsumerState<MainImage> {
                   ? Colors.white
                   : Colors.transparent,
             ),
-            child: Hero(
-              tag: index == 0 ? '${widget.heroTagPrefix ?? ''}product_image_${widget.product.id}' : '${widget.heroTagPrefix ?? ''}product_image_${widget.product.id}_$index',
-              child: CachedNetworkImage(
-                cacheManager: CustomCacheManager.instance,
-                imageUrl: imageUrl.medium,
-                fit: BoxFit.scaleDown,
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator.adaptive()),
-                errorWidget: (context, url, error) =>
-                    _buildErrorWidget(context),
-              ),
+            child: CachedNetworkImage(
+              cacheManager: CustomCacheManager.instance,
+              imageUrl: imageUrl.medium,
+              fit: BoxFit.scaleDown,
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator.adaptive()),
+              errorWidget: (context, url, error) =>
+                  _buildErrorWidget(context),
             ),
           ),
         );
+
+        // Only wrap the currently selected image with Hero
+        if (index == detailsState.selectedImageIndex) {
+          return Hero(
+            tag: '${widget.heroTagPrefix ?? ''}product_image_${widget.product.id}',
+            child: imageWidget,
+          );
+        }
+
+        return imageWidget;
       },
     );
   }
