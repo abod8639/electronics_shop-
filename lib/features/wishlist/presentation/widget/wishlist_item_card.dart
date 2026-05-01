@@ -33,7 +33,6 @@ class WishlistItemCard extends StatelessWidget {
             color: AppColors.cyan.withValues(alpha: .15),
             blurRadius: 15,
             spreadRadius: -5,
-            // blurStyle: BlurStyle.outer,
           ),
         ],
       ),

@@ -61,16 +61,16 @@ class PromoBanner extends ConsumerWidget {
             curve: Curves.easeInOut,
             margin: const EdgeInsets.symmetric(horizontal: 4),
             height: 6,
-            width: isSelected ? 24 : 8,
+            width: isSelected ? 20 : 8,
             decoration: BoxDecoration(
               color: isSelected
-                  ? AppColors.primary
-                  : AppColors.primary.withValues(alpha: 0.2),
+                  ? AppColors.cyan.withValues(alpha: 1)
+                  : AppColors.cyan.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
                   color: isSelected
-                      ? AppColors.primary.withValues(alpha: 0.4)
+                      ? AppColors.cyan.withValues(alpha: 0.4)
                       : Colors.transparent,
                   blurRadius: isSelected ? 10 : 0,
                   spreadRadius: isSelected ? 1 : 0,
