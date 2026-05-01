@@ -5,43 +5,6 @@ import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/core/utils/functions/cache_manager.dart';
 import 'package:electronics_shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:electronics_shop/features/checkout/presentation/controllers/checkout_controller.dart';
-import 'package:electronics_shop/features/checkout/presentation/widgets/build_payment_option.dart';
-
-Step buildPaymentStep(WidgetRef ref, String title) {
-  final checkoutState = ref.watch(checkoutControllerProvider);
-  return Step(
-    title: Text(
-      title,
-      style: const TextStyle(
-        fontFamily: 'monospace',
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    content: Column(
-      children: [
-        buildPaymentOption(
-          ref: ref,
-          value: 'cash',
-          title: 'CREDIT_LIQUID_CASH',
-          icon: Icons.money,
-        ),
-        const SizedBox(height: 12),
-        buildPaymentOption(
-          ref: ref,
-          value: 'card',
-          title: 'SECURE_TRANS_CARD',
-          icon: Icons.credit_card,
-          subtitle: '[ENC_PENDING]',
-          enabled: false,
-        ),
-      ],
-    ),
-    isActive: checkoutState.currentStep >= 1,
-    state: checkoutState.currentStep > 1
-        ? StepState.complete
-        : StepState.editing,
-  );
-}
 
 Step buildReviewStep(WidgetRef ref, String title) {
   final checkoutState = ref.watch(checkoutControllerProvider);
