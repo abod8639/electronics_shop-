@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:electronics_shop/features/home/presentation/controllers/home_controller.dart';
 import 'package:electronics_shop/core/utils/components/product_container.dart';
-// import 'package:electronics_shop/core/utils/responsive_helper.dart';
 import 'package:electronics_shop/routes/routes.dart';
 
 class ProductGridList extends ConsumerWidget {
@@ -45,6 +44,10 @@ class ProductGridList extends ConsumerWidget {
                   ),
                 ],
               ),
+
+
+
+
             ),
           );
         }
@@ -110,8 +113,8 @@ class ProductGridList extends ConsumerWidget {
                       .read(homeControllerProvider.notifier)
                       .fetchProductsForSection(
                         ref
-                            .read(homeControllerProvider.notifier)
-                            .selectedSectionIndex,
+                        .read(homeControllerProvider.notifier)
+                        .selectedSectionIndex,
                       ),
                   icon: const Icon(Icons.refresh ,color: AppColors.cyan, ),
                   label: const Text('إعادة محاولة'),

@@ -21,8 +21,8 @@ class BuildCheckoutSection extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color:  AppColors.cyan.withValues(alpha: .1),
-            blurRadius: 20,
-            spreadRadius: -5,
+            blurRadius: 10,
+            spreadRadius: -15,
             blurStyle: BlurStyle.outer,
           ),
         ],
