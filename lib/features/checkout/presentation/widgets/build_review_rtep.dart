@@ -1,10 +1,12 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/core/utils/functions/cache_manager.dart';
 import 'package:electronics_shop/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:electronics_shop/features/checkout/presentation/controllers/checkout_controller.dart';
+import 'package:electronics_shop/features/checkout/presentation/widgets/manifest_row.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Step buildReviewStep(WidgetRef ref, String title) {
   final checkoutState = ref.watch(checkoutControllerProvider);
@@ -145,7 +147,7 @@ Step buildReviewStep(WidgetRef ref, String title) {
         ),
         const SizedBox(height: 24),
         if (checkoutState.selectedAddress != null) ...[
-          const _ManifestRow(label: 'DESTINATION_NODE', value: 'VERIFIED'),
+          const ManifestRow(label: 'DESTINATION_NODE', value: 'VERIFIED'),
           Text(
             checkoutState.selectedAddress!.fullAddress.toUpperCase(),
             style: const TextStyle(
@@ -156,7 +158,7 @@ Step buildReviewStep(WidgetRef ref, String title) {
           ),
           const SizedBox(height: 12),
         ],
-        const _ManifestRow(label: 'PAYMENT_PROTOCOL', value: 'AUTHORIZED'),
+        const ManifestRow(label: 'PAYMENT_PROTOCOL', value: 'AUTHORIZED'),
         Text(
           checkoutState.selectedPaymentMethod == 'cash'
               ? 'CREDIT_LIQUID_CASH'
@@ -208,47 +210,4 @@ Step buildReviewStep(WidgetRef ref, String title) {
     isActive: checkoutState.currentStep >= 2,
     state: StepState.editing,
   );
-}
-
-class _ManifestRow extends StatelessWidget {
-  final String label;
-  final String value;
-  const _ManifestRow({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4.0),
-      child: Row(
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontFamily: 'monospace',
-              fontSize: 12,
-              color: AppColors.cyan,
-            ),
-          ),
-          const SizedBox(width: 8),
-          const Expanded(
-            child: Opacity(
-              opacity: 0.2,
-              child: Divider(color: AppColors.cyan, height: 1),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            value,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontFamily: 'monospace',
-              fontSize: 12,
-              color: AppColors.cyan,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

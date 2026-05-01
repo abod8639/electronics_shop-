@@ -3,12 +3,12 @@ import 'package:electronics_shop/core/utils/components/base_app_bar.dart';
 import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:electronics_shop/features/checkout/presentation/widgets/build_address_step.dart';
 import 'package:electronics_shop/features/checkout/presentation/widgets/build_payment_step.dart';
+import 'package:electronics_shop/features/checkout/presentation/widgets/build_review_rtep.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/core/utils/functions/app_guard.dart';
 import 'package:electronics_shop/features/checkout/presentation/controllers/checkout_controller.dart';
-import 'package:electronics_shop/features/checkout/presentation/widgets/checkout_steps.dart';
 
 const String _checkoutTitle = 'SECURE_CHECKOUT_PROTOCOL';
 const String _nextButtonText = 'NEXT_PROTOCOL';
