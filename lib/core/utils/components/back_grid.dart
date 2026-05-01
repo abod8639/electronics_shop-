@@ -1,11 +1,7 @@
-
 import 'package:flutter/material.dart';
 
 class BackGrid extends StatelessWidget {
-  const BackGrid({
-    super.key,
-    required this.accentColor,
-  });
+  const BackGrid({super.key, required this.accentColor});
 
   final Color accentColor;
 

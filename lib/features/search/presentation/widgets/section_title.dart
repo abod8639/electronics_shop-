@@ -9,14 +9,18 @@ class SectionTitle extends StatelessWidget {
   final VoidCallback? onSeeAllPressed;
   final String? buttonTitle;
 
-  const SectionTitle({super.key, required this.title, this.onSeeAllPressed, this.buttonTitle});
+  const SectionTitle({
+    super.key,
+    required this.title,
+    this.onSeeAllPressed,
+    this.buttonTitle,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cyan = AppColors.cyan;
     final magenta = AppColors.magenta;
-
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -36,7 +40,10 @@ class SectionTitle extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: cyan,
                     boxShadow: [
-                      BoxShadow(color: cyan.withValues(alpha: .5), blurRadius: 4),
+                      BoxShadow(
+                        color: cyan.withValues(alpha: .5),
+                        blurRadius: 4,
+                      ),
                     ],
                   ),
                 ),
@@ -66,7 +73,8 @@ class SectionTitle extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    (buttonTitle ?? AppLocalizations.of(context)!.seeAll).toUpperCase(),
+                    (buttonTitle ?? AppLocalizations.of(context)!.seeAll)
+                        .toUpperCase(),
                     style: TextStyle(
                       color: magenta,
                       fontSize: 10,
@@ -86,6 +94,5 @@ class SectionTitle extends StatelessWidget {
         ],
       ),
     );
-
   }
 }

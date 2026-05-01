@@ -12,12 +12,16 @@ import 'package:electronics_shop/features/checkout/presentation/widgets/build_pa
 
 Step buildAddressStep(WidgetRef ref, String title) {
   final checkoutState = ref.watch(checkoutControllerProvider);
-  final addresses = ref.watch(addressControllerProvider).valueOrNull?.addresses ?? [];
+  final addresses =
+      ref.watch(addressControllerProvider).valueOrNull?.addresses ?? [];
 
   return Step(
     title: Text(
       title,
-      style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
+      style: const TextStyle(
+        fontFamily: 'monospace',
+        fontWeight: FontWeight.bold,
+      ),
     ),
     content: Column(
       children: [
@@ -26,22 +30,31 @@ Step buildAddressStep(WidgetRef ref, String title) {
             padding: EdgeInsets.all(16.0),
             child: Text(
               '[ERROR]: NO_ADDRESS_FOUND. PLEASE_INITIALIZE_LOCATION_IN_PROFILE.',
-              style: TextStyle(color: AppColors.magenta, fontFamily: 'monospace', fontSize: 12),
+              style: TextStyle(
+                color: AppColors.magenta,
+                fontFamily: 'monospace',
+                fontSize: 12,
+              ),
             ),
           )
         else
           Column(
             children: addresses.map((address) {
-              final bool isSelected = checkoutState.selectedAddress?.id == address.id;
+              final bool isSelected =
+                  checkoutState.selectedAddress?.id == address.id;
               return Container(
                 margin: const EdgeInsets.only(bottom: 12),
                 child: ClipPath(
                   clipper: CyberpunkCardClipper(),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: isSelected ? AppColors.cyan.withValues(alpha: 0.05) : Colors.black12,
+                      color: isSelected
+                          ? AppColors.cyan.withValues(alpha: 0.05)
+                          : Colors.black12,
                       border: Border.all(
-                        color: isSelected ? AppColors.cyan : AppColors.cyan.withValues(alpha: 0.2),
+                        color: isSelected
+                            ? AppColors.cyan
+                            : AppColors.cyan.withValues(alpha: 0.2),
                         width: isSelected ? 1.5 : 0.5,
                       ),
                     ),
@@ -62,7 +75,10 @@ Step buildAddressStep(WidgetRef ref, String title) {
                       ),
                       subtitle: Text(
                         address.fullAddress.toUpperCase(),
-                        style: const TextStyle(fontFamily: 'monospace', fontSize: 11),
+                        style: const TextStyle(
+                          fontFamily: 'monospace',
+                          fontSize: 11,
+                        ),
                       ),
                       activeColor: AppColors.cyan,
                     ),
@@ -101,7 +117,9 @@ Step buildAddressStep(WidgetRef ref, String title) {
       ],
     ),
     isActive: checkoutState.currentStep >= 0,
-    state: checkoutState.currentStep > 0 ? StepState.complete : StepState.editing,
+    state: checkoutState.currentStep > 0
+        ? StepState.complete
+        : StepState.editing,
   );
 }
 
@@ -111,7 +129,9 @@ Step buildPaymentStep(WidgetRef ref, String title) {
     title: Text(
       title,
       style: const TextStyle(
-        fontFamily: 'monospace', fontWeight: FontWeight.bold),
+        fontFamily: 'monospace',
+        fontWeight: FontWeight.bold,
+      ),
     ),
     content: Column(
       children: [
@@ -133,7 +153,9 @@ Step buildPaymentStep(WidgetRef ref, String title) {
       ],
     ),
     isActive: checkoutState.currentStep >= 1,
-    state: checkoutState.currentStep > 1 ? StepState.complete : StepState.editing,
+    state: checkoutState.currentStep > 1
+        ? StepState.complete
+        : StepState.editing,
   );
 }
 
@@ -145,16 +167,17 @@ Step buildReviewStep(WidgetRef ref, String title) {
   return Step(
     title: Text(
       title,
-      style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
+      style: const TextStyle(
+        fontFamily: 'monospace',
+        fontWeight: FontWeight.bold,
+      ),
     ),
     content: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: const BoxDecoration(
-            color: AppColors.cyan,
-          ),
+          decoration: const BoxDecoration(color: AppColors.cyan),
           child: const Text(
             'TRANSACTION_MANIFEST',
             style: TextStyle(
@@ -176,14 +199,21 @@ Step buildReviewStep(WidgetRef ref, String title) {
               return Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
-                  border: Border(left: BorderSide(color: AppColors.cyan.withValues(alpha: 0.5), width: 2)),
+                  border: Border(
+                    left: BorderSide(
+                      color: AppColors.cyan.withValues(alpha: 0.5),
+                      width: 2,
+                    ),
+                  ),
                   color: AppColors.cyan.withValues(alpha: 0.03),
                 ),
                 child: ListTile(
                   dense: true,
                   leading: Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
+                      border: Border.all(
+                        color: AppColors.cyan.withValues(alpha: 0.3),
+                      ),
                     ),
                     child: CachedNetworkImage(
                       cacheManager: CustomCacheManager.instance,
@@ -193,27 +223,47 @@ Step buildReviewStep(WidgetRef ref, String title) {
                       width: 40,
                       height: 40,
                       fit: BoxFit.cover,
-                      errorWidget: (_, _, _) => const Icon(Icons.image, size: 20),
+                      errorWidget: (_, _, _) =>
+                          const Icon(Icons.image, size: 20),
                     ),
                   ),
                   title: Text(
                     item.product.getLocalizedName(locale: 'en').toUpperCase(),
-                    style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold, fontSize: 13),
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
                   ),
                   subtitle: Text(
                     'UNIT_QTY: ${item.quantity} | PRICE: LE ${item.product.baseEffectivePrice}',
-                    style: const TextStyle(fontFamily: 'monospace', fontSize: 10),
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 10,
+                    ),
                   ),
                   trailing: Text(
                     'LE ${(item.product.baseEffectivePrice * item.quantity).toStringAsFixed(2)}',
-                    style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold, color: AppColors.cyan),
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.cyan,
+                    ),
                   ),
                 ),
               );
             },
           ),
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.cyan)),
-          error: (e, _) => Text('[ERROR]: $e', style: const TextStyle(color: AppColors.magenta, fontFamily: 'monospace')),
+          loading: () => const Center(
+            child: CircularProgressIndicator(color: AppColors.cyan),
+          ),
+          error: (e, _) => Text(
+            '[ERROR]: $e',
+            style: const TextStyle(
+              color: AppColors.magenta,
+              fontFamily: 'monospace',
+            ),
+          ),
         ),
         const SizedBox(height: 12),
         Container(
@@ -227,7 +277,11 @@ Step buildReviewStep(WidgetRef ref, String title) {
             children: [
               const Text(
                 'TOTAL_CREDITS',
-                style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'monospace', color: AppColors.magenta),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'monospace',
+                  color: AppColors.magenta,
+                ),
               ),
               Text(
                 'LE ${cartNotifier.totalPrice.toStringAsFixed(2)}',
@@ -247,7 +301,11 @@ Step buildReviewStep(WidgetRef ref, String title) {
           const _ManifestRow(label: 'DESTINATION_NODE', value: 'VERIFIED'),
           Text(
             checkoutState.selectedAddress!.fullAddress.toUpperCase(),
-            style: const TextStyle(fontFamily: 'monospace', fontSize: 12, color: Colors.white70),
+            style: const TextStyle(
+              fontFamily: 'monospace',
+              fontSize: 12,
+              color: Colors.white70,
+            ),
           ),
           const SizedBox(height: 12),
         ],
@@ -256,23 +314,44 @@ Step buildReviewStep(WidgetRef ref, String title) {
           checkoutState.selectedPaymentMethod == 'cash'
               ? 'CREDIT_LIQUID_CASH'
               : 'SECURE_TRANS_CARD',
-          style: const TextStyle(fontFamily: 'monospace', fontSize: 12, color: Colors.white70),
+          style: const TextStyle(
+            fontFamily: 'monospace',
+            fontSize: 12,
+            color: Colors.white70,
+          ),
         ),
         const SizedBox(height: 24),
         const Text(
           'PROTOCOL_NOTES:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'monospace', fontSize: 12, color: AppColors.cyan),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: 'monospace',
+            fontSize: 12,
+            color: AppColors.cyan,
+          ),
         ),
         const SizedBox(height: 8),
         TextField(
           controller: cartNotifier.notesController,
           style: const TextStyle(fontFamily: 'monospace', fontSize: 13),
           decoration: InputDecoration(
-            border: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.cyan)),
-            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.cyan.withValues(alpha: 0.3))),
-            focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.cyan)),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.cyan),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.cyan.withValues(alpha: 0.3),
+              ),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.cyan),
+            ),
             hintText: 'INPUT_EXTRA_NOTES_HERE...',
-            hintStyle: TextStyle(color: Colors.white24, fontFamily: 'monospace', fontSize: 11),
+            hintStyle: TextStyle(
+              color: Colors.white24,
+              fontFamily: 'monospace',
+              fontSize: 11,
+            ),
             fillColor: Colors.black26,
             filled: true,
           ),
@@ -297,18 +376,32 @@ class _ManifestRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'monospace', fontSize: 12, color: AppColors.cyan),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'monospace',
+              fontSize: 12,
+              color: AppColors.cyan,
+            ),
           ),
           const SizedBox(width: 8),
-          const Expanded(child: Opacity(opacity: 0.2, child: Divider(color: AppColors.cyan, height: 1))),
+          const Expanded(
+            child: Opacity(
+              opacity: 0.2,
+              child: Divider(color: AppColors.cyan, height: 1),
+            ),
+          ),
           const SizedBox(width: 8),
           Text(
             value,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'monospace', fontSize: 12, color: AppColors.cyan),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'monospace',
+              fontSize: 12,
+              color: AppColors.cyan,
+            ),
           ),
         ],
       ),
     );
   }
 }
-

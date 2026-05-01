@@ -43,11 +43,7 @@ class CyberpunkButton extends StatelessWidget {
                   top: const BorderSide(color: Color(0xFFFF00F7), width: 1),
                 ),
               ),
-              child: IconButton(
-                icon: icon,
-                onPressed: onTap,
-                tooltip: tooltip,
-              ),
+              child: IconButton(icon: icon, onPressed: onTap, tooltip: tooltip),
             ),
           ),
         ),

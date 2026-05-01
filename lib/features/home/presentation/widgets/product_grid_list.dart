@@ -44,10 +44,6 @@ class ProductGridList extends ConsumerWidget {
                   ),
                 ],
               ),
-
-
-
-
             ),
           );
         }
@@ -113,10 +109,10 @@ class ProductGridList extends ConsumerWidget {
                       .read(homeControllerProvider.notifier)
                       .fetchProductsForSection(
                         ref
-                        .read(homeControllerProvider.notifier)
-                        .selectedSectionIndex,
+                            .read(homeControllerProvider.notifier)
+                            .selectedSectionIndex,
                       ),
-                  icon: const Icon(Icons.refresh ,color: AppColors.cyan, ),
+                  icon: const Icon(Icons.refresh, color: AppColors.cyan),
                   label: const Text('إعادة محاولة'),
                 ),
               ],

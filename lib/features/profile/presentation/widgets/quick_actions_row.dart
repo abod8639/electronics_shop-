@@ -45,7 +45,10 @@ class QuickActionsRow extends ConsumerWidget {
               context,
               icon: Icons.terminal_outlined,
               label: 'ADDR_LOG',
-              value: profileNotifier.addresses.length.toString().padLeft(2, '0'),
+              value: profileNotifier.addresses.length.toString().padLeft(
+                2,
+                '0',
+              ),
               color: AppColors.cyan,
               onTap: () {},
             ),
@@ -74,7 +77,10 @@ class QuickActionsRow extends ConsumerWidget {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface.withValues(alpha: 0.9),
-                border: Border.all(color: color.withValues(alpha: 0.3), width: 0.5),
+                border: Border.all(
+                  color: color.withValues(alpha: 0.3),
+                  width: 0.5,
+                ),
               ),
               child: Stack(
                 children: [
@@ -93,7 +99,10 @@ class QuickActionsRow extends ConsumerWidget {
                           fontFamily: 'monospace',
                           height: 1,
                           shadows: [
-                            Shadow(color: color.withValues(alpha: 0.4), blurRadius: 10),
+                            Shadow(
+                              color: color.withValues(alpha: 0.4),
+                              blurRadius: 10,
+                            ),
                           ],
                         ),
                       ),
@@ -124,4 +133,3 @@ class QuickActionsRow extends ConsumerWidget {
     );
   }
 }
-

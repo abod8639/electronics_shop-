@@ -45,7 +45,10 @@ class OrderCard extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: theme.colorScheme.surface.withValues(alpha: 0.9),
-              border: Border.all(color: AppColors.cyan.withValues(alpha: 0.2), width: 0.5),
+              border: Border.all(
+                color: AppColors.cyan.withValues(alpha: 0.2),
+                width: 0.5,
+              ),
             ),
             child: Stack(
               children: [
@@ -73,7 +76,10 @@ class OrderCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                (isAr ? 'ORD_#' : 'ORD_#') + (order.id.length > 8 ? order.id.substring(0, 8).toUpperCase() : order.id.toUpperCase()),
+                                (isAr ? 'ORD_#' : 'ORD_#') +
+                                    (order.id.length > 8
+                                        ? order.id.substring(0, 8).toUpperCase()
+                                        : order.id.toUpperCase()),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
@@ -82,9 +88,15 @@ class OrderCard extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                order.orderDate != null ? DateFormat('yy.MM.dd // HH:mm').format(order.orderDate!) : 'PENDING_TIME',
+                                order.orderDate != null
+                                    ? DateFormat(
+                                        'yy.MM.dd // HH:mm',
+                                      ).format(order.orderDate!)
+                                    : 'PENDING_TIME',
                                 style: TextStyle(
-                                  color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                                  color: theme.colorScheme.onSurface.withValues(
+                                    alpha: 0.5,
+                                  ),
                                   fontFamily: 'monospace',
                                   fontSize: 9,
                                 ),
@@ -93,7 +105,10 @@ class OrderCard extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: statusColor.withValues(alpha: 0.1),
                             border: Border.all(color: statusColor, width: 0.5),
@@ -112,7 +127,11 @@ class OrderCard extends StatelessWidget {
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
-                      child: Divider(height: 1, thickness: 0.3, color: AppColors.cyan),
+                      child: Divider(
+                        height: 1,
+                        thickness: 0.3,
+                        color: AppColors.cyan,
+                      ),
                     ),
                     // Bottom row: image + product name + price
                     Row(
@@ -120,7 +139,10 @@ class OrderCard extends StatelessWidget {
                         ClipPath(
                           clipper: CyberpunkShapeClipper(),
                           child: AppNetworkImage(
-                            imageUrl: order.items != null && order.items!.isNotEmpty ? order.items!.first.imageUrl : null,
+                            imageUrl:
+                                order.items != null && order.items!.isNotEmpty
+                                ? order.items!.first.imageUrl
+                                : null,
                             width: 50,
                             height: 50,
                           ),
@@ -131,7 +153,9 @@ class OrderCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                order.items != null && order.items!.isNotEmpty ? order.items!.first.productName : '',
+                                order.items != null && order.items!.isNotEmpty
+                                    ? order.items!.first.productName
+                                    : '',
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'monospace',
@@ -167,7 +191,10 @@ class OrderCard extends StatelessWidget {
                                 fontFamily: 'monospace',
                                 fontSize: 16,
                                 shadows: [
-                                  Shadow(color: AppColors.magenta, blurRadius: 4),
+                                  Shadow(
+                                    color: AppColors.magenta,
+                                    blurRadius: 4,
+                                  ),
                                 ],
                               ),
                             ),
@@ -207,20 +234,19 @@ class OrderCard extends StatelessWidget {
           'color': AppColors.cyan,
         };
       case 'shipped':
-        return {'text': isAr ? 'تم الشحن' : 'Shipped', 'color': Colors.blueAccent};
+        return {
+          'text': isAr ? 'تم الشحن' : 'Shipped',
+          'color': Colors.blueAccent,
+        };
       case 'delivered':
         return {
           'text': isAr ? 'تم التوصيل' : 'Delivered',
           'color': Colors.greenAccent,
         };
       case 'cancelled':
-        return {
-          'text': isAr ? 'ملغي' : 'Cancelled',
-          'color': AppColors.error,
-        };
+        return {'text': isAr ? 'ملغي' : 'Cancelled', 'color': AppColors.error};
       default:
         return {'text': status.toUpperCase(), 'color': AppColors.greyDark};
     }
   }
 }
-

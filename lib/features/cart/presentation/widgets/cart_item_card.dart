@@ -23,7 +23,6 @@ class CartItemCard extends ConsumerWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
         boxShadow: [
-          
           BoxShadow(
             color: AppColors.cyan.withValues(alpha: .15),
             blurRadius: 15,
@@ -36,9 +35,11 @@ class CartItemCard extends ConsumerWidget {
         clipper: CyberpunkShapeClipper(),
         child: Container(
           decoration: BoxDecoration(
-
             color: theme.colorScheme.surface.withValues(alpha: .9),
-            border: Border.all(color: AppColors.cyan.withValues(alpha: .5), width: 0.5),
+            border: Border.all(
+              color: AppColors.cyan.withValues(alpha: .5),
+              width: 0.5,
+            ),
           ),
           child: InkWell(
             onTap: () => context.push(
@@ -55,7 +56,9 @@ class CartItemCard extends ConsumerWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.cyan.withValues(alpha: .3)),
+                      border: Border.all(
+                        color: AppColors.cyan.withValues(alpha: .3),
+                      ),
                     ),
                     child: CachedNetworkImage(
                       cacheManager: CustomCacheManager.instance,
@@ -65,7 +68,8 @@ class CartItemCard extends ConsumerWidget {
                       width: 80,
                       height: 80,
                       fit: BoxFit.scaleDown,
-                      errorWidget: (_, _, _) => const Icon(Icons.image, size: 40),
+                      errorWidget: (_, _, _) =>
+                          const Icon(Icons.image, size: 40),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -74,7 +78,9 @@ class CartItemCard extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          item.product.getLocalizedName(locale: locale).toUpperCase(),
+                          item.product
+                              .getLocalizedName(locale: locale)
+                              .toUpperCase(),
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             fontFamily: 'monospace',
@@ -85,15 +91,23 @@ class CartItemCard extends ConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 5),
-                        if (item.selectedColor != null || item.selectedSize != null)
+                        if (item.selectedColor != null ||
+                            item.selectedSize != null)
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.backgroundDark,
-                              border: Border.all(color: AppColors.magenta.withValues(alpha: 0.3)),
+                              border: Border.all(
+                                color: AppColors.magenta.withValues(alpha: 0.3),
+                              ),
                             ),
                             child: Text(
-                              '${item.selectedColor ?? ""} ${item.selectedSize ?? ""}'.trim().toUpperCase(),
+                              '${item.selectedColor ?? ""} ${item.selectedSize ?? ""}'
+                                  .trim()
+                                  .toUpperCase(),
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: AppColors.magenta,
                                 fontFamily: 'monospace',
@@ -118,11 +132,15 @@ class CartItemCard extends ConsumerWidget {
                                     fontFamily: 'monospace',
                                     fontSize: 16,
                                     shadows: [
-                                      Shadow(color: AppColors.magenta, blurRadius: 4),
+                                      Shadow(
+                                        color: AppColors.magenta,
+                                        blurRadius: 4,
+                                      ),
                                     ],
                                   ),
                                 ),
-                                if (item.product.basePrice > item.product.baseEffectivePrice)
+                                if (item.product.basePrice >
+                                    item.product.baseEffectivePrice)
                                   Text(
                                     '${item.product.basePrice}',
                                     style: TextStyle(
@@ -135,19 +153,28 @@ class CartItemCard extends ConsumerWidget {
                               ],
                             ),
                             const SizedBox(width: 8),
-                            
+
                             // Enhanced Quantity Tag
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 // mirror: true, // Just a mental note for style
                                 color: AppColors.cyan.withValues(alpha: 0.1),
-                                border: Border.all(color: AppColors.cyan.withValues(alpha: 0.5)),
+                                border: Border.all(
+                                  color: AppColors.cyan.withValues(alpha: 0.5),
+                                ),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Icon(Icons.apps, size: 10, color: AppColors.cyan),
+                                  const Icon(
+                                    Icons.apps,
+                                    size: 10,
+                                    color: AppColors.cyan,
+                                  ),
                                   const SizedBox(width: 4),
                                   Text(
                                     'QTY:${item.quantity}'.toUpperCase(),
@@ -163,21 +190,19 @@ class CartItemCard extends ConsumerWidget {
                             ),
                           ],
                         ),
-
-
                       ],
                     ),
                   ),
                   const SizedBox(width: 8),
 
                   const SizedBox(width: 8),
-                  
-                  
 
                   if (item.selectedColor != null) ...[
                     Builder(
                       builder: (context) {
-                        final details = electronicsColorsData[item.selectedColor!.toLowerCase()];
+                        final details =
+                            electronicsColorsData[item.selectedColor!
+                                .toLowerCase()];
                         return ColorVariantImage(
                           shadow: true,
                           isSelected: false,

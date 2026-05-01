@@ -46,7 +46,10 @@ class TotalPriceSection extends ConsumerWidget {
                   ),
                   decoration: BoxDecoration(
                     color: magentaColor.withValues(alpha: 0.1),
-                    border: Border.all(color: magentaColor.withValues(alpha: 0.5), width: 0.5),
+                    border: Border.all(
+                      color: magentaColor.withValues(alpha: 0.5),
+                      width: 0.5,
+                    ),
                   ),
                   child: Text(
                     '[${items.length}]',

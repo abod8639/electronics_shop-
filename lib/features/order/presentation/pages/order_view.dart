@@ -28,10 +28,10 @@ class OrderView extends ConsumerWidget {
     final isAr = locale.languageCode == 'ar';
 
     return Scaffold(
-      backgroundColor:Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
-          const BackGrid(accentColor: AppColors.cyan,),
+          const BackGrid(accentColor: AppColors.cyan),
           SafeArea(
             child: CustomScrollView(
               slivers: [
@@ -74,23 +74,29 @@ class OrderView extends ConsumerWidget {
                           ),
                         )
                       : SliverPadding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 20,
+                          ),
                           sliver: SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) {
-                                final order = orders[index];
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 16),
-                                  child: OrderCard(
-                                    onTap: () => context.push(AppRoutes.orderDetails, extra: order),
-                                    order: order,
-                                    isDark: isDark,
-                                    isAr: isAr,
+                            delegate: SliverChildBuilderDelegate((
+                              context,
+                              index,
+                            ) {
+                              final order = orders[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: OrderCard(
+                                  onTap: () => context.push(
+                                    AppRoutes.orderDetails,
+                                    extra: order,
                                   ),
-                                );
-                              },
-                              childCount: orders.length,
-                            ),
+                                  order: order,
+                                  isDark: isDark,
+                                  isAr: isAr,
+                                ),
+                              );
+                            }, childCount: orders.length),
                           ),
                         ),
                   loading: () => const SliverFillRemaining(

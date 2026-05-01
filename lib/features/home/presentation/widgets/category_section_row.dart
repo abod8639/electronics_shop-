@@ -8,10 +8,11 @@ import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final categoryProductsProvider = FutureProvider.family<List<ProductModel>, String?>((ref, categoryId) async {
-  final repo = ref.watch(productRepositoryProvider.notifier);
-  return repo.getProducts(categoryId: categoryId);
-});
+final categoryProductsProvider =
+    FutureProvider.family<List<ProductModel>, String?>((ref, categoryId) async {
+      final repo = ref.watch(productRepositoryProvider.notifier);
+      return repo.getProducts(categoryId: categoryId);
+    });
 
 class CategorySectionRow extends ConsumerWidget {
   final SelectionsModel selection;
@@ -25,25 +26,31 @@ class CategorySectionRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (selection.id.isEmpty) return const SliverToBoxAdapter(child: SizedBox.shrink());
+    if (selection.id.isEmpty)
+      return const SliverToBoxAdapter(child: SizedBox.shrink());
 
     final productsAsync = ref.watch(categoryProductsProvider(selection.id));
-    
+
     return productsAsync.when(
       data: (products) {
-        if (products.isEmpty) return const SliverToBoxAdapter(child: SizedBox.shrink());
-        
+        if (products.isEmpty)
+          return const SliverToBoxAdapter(child: SizedBox.shrink());
+
         return SliverMainAxisGroup(
           slivers: [
             SliverToBoxAdapter(
               child: SectionTitle(
                 title: _getLocalizedLabel(context, selection.label),
                 onSeeAllPressed: () {
-                  ref.read(categoriesSectionsControllerProvider.notifier).updateIndex(index);
+                  ref
+                      .read(categoriesSectionsControllerProvider.notifier)
+                      .updateIndex(index);
                 },
               ),
             ),
-            SliverToBoxAdapter(child: const SizedBox(height: 8)), // Provide a tiny gap for better visual spacing
+            SliverToBoxAdapter(
+              child: const SizedBox(height: 8),
+            ), // Provide a tiny gap for better visual spacing
             ProductRowList(
               products: products,
               heroTagPrefix: 'category_${selection.id}_',
@@ -66,16 +73,26 @@ class CategorySectionRow extends ConsumerWidget {
     if (l10n == null) return key;
 
     switch (key) {
-      case 'categoryHome': return l10n.categoryHome;
-      case 'phons': return l10n.categoryPhones;
-      case 'Watch': return l10n.categoryWatches;
-      case 'Laptops': return l10n.categoryLaptops;
-      case 'audio': return l10n.categoryAudio;
-      case 'screens': return l10n.categoryScreens;
-      case 'cameras': return l10n.categoryCameras;
-      case 'gaming': return l10n.categoryGaming;
-      case 'accessories': return l10n.categoryAccessories;
-      default: return key;
+      case 'categoryHome':
+        return l10n.categoryHome;
+      case 'phons':
+        return l10n.categoryPhones;
+      case 'Watch':
+        return l10n.categoryWatches;
+      case 'Laptops':
+        return l10n.categoryLaptops;
+      case 'audio':
+        return l10n.categoryAudio;
+      case 'screens':
+        return l10n.categoryScreens;
+      case 'cameras':
+        return l10n.categoryCameras;
+      case 'gaming':
+        return l10n.categoryGaming;
+      case 'accessories':
+        return l10n.categoryAccessories;
+      default:
+        return key;
     }
   }
 }

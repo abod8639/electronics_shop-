@@ -37,11 +37,14 @@ class LoginPromptCard extends ConsumerWidget {
               padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface.withValues(alpha: .9),
-                border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3), width: 0.5),
+                border: Border.all(
+                  color: AppColors.cyan.withValues(alpha: 0.3),
+                  width: 0.5,
+                ),
               ),
               child: Stack(
                 children: [
-                   BackGrid(accentColor: AppColors.cyan),
+                  BackGrid(accentColor: AppColors.cyan),
                   Column(
                     children: [
                       // Holographic Icon
@@ -69,7 +72,7 @@ class LoginPromptCard extends ConsumerWidget {
                         ],
                       ),
                       const SizedBox(height: 24),
-                      
+
                       // Title
                       Text(
                         l10n.signInToYourAccount.toUpperCase(),
@@ -79,18 +82,26 @@ class LoginPromptCard extends ConsumerWidget {
                           color: AppColors.cyan,
                           letterSpacing: 2,
                           shadows: [
-                            Shadow(color: AppColors.cyan.withValues(alpha: 0.5), blurRadius: 8),
+                            Shadow(
+                              color: AppColors.cyan.withValues(alpha: 0.5),
+                              blurRadius: 8,
+                            ),
                           ],
                         ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 8),
-                      
+
                       // Status Label
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.magenta.withValues(alpha: 0.5)),
+                          border: Border.all(
+                            color: AppColors.magenta.withValues(alpha: 0.5),
+                          ),
                         ),
                         child: const Text(
                           "ACCESS_LEVEL: [RESTRICTED]",
@@ -103,17 +114,19 @@ class LoginPromptCard extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      
+
                       Text(
                         l10n.loginMessage,
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.6,
+                          ),
                           fontFamily: 'monospace',
                         ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 32),
-                      
+
                       // Login Buttons
                       _buildAuthButton(
                         context: context,
@@ -129,12 +142,14 @@ class LoginPromptCard extends ConsumerWidget {
                         icon: Icons.g_mobiledata_outlined,
                         onTap: () async {
                           AppGuard.runSafeInternet(ref, () async {
-                            await ref.read(profileControllerProvider.notifier).signInWithGoogle();
+                            await ref
+                                .read(profileControllerProvider.notifier)
+                                .signInWithGoogle();
                           });
                         },
                         isPrimary: false,
                       ),
-                      
+
                       const SizedBox(height: 32),
                       const AccountSettingsList(),
                       const SizedBox(height: 16),
@@ -204,4 +219,3 @@ class LoginPromptCard extends ConsumerWidget {
     });
   }
 }
-

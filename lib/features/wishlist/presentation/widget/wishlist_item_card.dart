@@ -41,7 +41,10 @@ class WishlistItemCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: theme.colorScheme.surface.withValues(alpha: .9),
-            border: Border.all(color: AppColors.cyan.withValues(alpha: .5), width: 0.5),
+            border: Border.all(
+              color: AppColors.cyan.withValues(alpha: .5),
+              width: 0.5,
+            ),
           ),
           child: InkWell(
             onTap: () => context.push(AppRoutes.productDetails, extra: product),
@@ -52,7 +55,9 @@ class WishlistItemCard extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.cyan.withValues(alpha: .3)),
+                      border: Border.all(
+                        color: AppColors.cyan.withValues(alpha: .3),
+                      ),
                     ),
                     child: SizedBox(
                       width: 80,
@@ -65,7 +70,8 @@ class WishlistItemCard extends StatelessWidget {
                               ? product.imageUrls.first.medium
                               : '',
                           fit: BoxFit.cover,
-                          errorWidget: (_, _, _) => const Icon(Icons.image, size: 40),
+                          errorWidget: (_, _, _) =>
+                              const Icon(Icons.image, size: 40),
                         ),
                       ),
                     ),

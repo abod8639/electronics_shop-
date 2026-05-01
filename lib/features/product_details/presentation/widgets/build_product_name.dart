@@ -17,7 +17,6 @@ Widget buildProductName(ProductModel product) {
           color: theme.colorScheme.onSurface,
         ),
       );
-
     },
   );
 }

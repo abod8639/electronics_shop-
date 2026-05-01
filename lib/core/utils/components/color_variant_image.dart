@@ -115,12 +115,14 @@ class ColorVariantImage extends StatelessWidget {
             clipper: CyberpunkColorClipper(),
             child: Container(
               color: baseColor,
-              child: isSelected 
+              child: isSelected
                   ? Center(
                       child: Icon(
-                        Icons.check, 
-                        size: 20, 
-                        color: baseColor.computeLuminance() > 0.5 ? Colors.black : Colors.white
+                        Icons.check,
+                        size: 20,
+                        color: baseColor.computeLuminance() > 0.5
+                            ? Colors.black
+                            : Colors.white,
                       ),
                     )
                   : null,
@@ -131,4 +133,3 @@ class ColorVariantImage extends StatelessWidget {
     );
   }
 }
-

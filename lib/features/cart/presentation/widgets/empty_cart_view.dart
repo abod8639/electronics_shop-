@@ -16,7 +16,7 @@ class EmptyCartView extends StatelessWidget {
       children: [
         // Background Grid for empty state
         const BackGrid(accentColor: AppColors.cyan),
-        
+
         Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -68,7 +68,7 @@ class EmptyCartView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 40),
-                
+
                 // Monospace Title
                 Text(
                   AppLocalizations.of(context)!.yourCartIsEmpty.toUpperCase(),
@@ -87,12 +87,17 @@ class EmptyCartView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                
+
                 // Technical status text
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.magenta.withValues(alpha: 0.3)),
+                    border: Border.all(
+                      color: AppColors.magenta.withValues(alpha: 0.3),
+                    ),
                   ),
                   child: Text(
                     "STATUS: [NO_ITEMS_DETECTED]",
@@ -103,7 +108,7 @@ class EmptyCartView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                
+
                 Text(
                   AppLocalizations.of(context)!.addProductsToGetStarted,
                   textAlign: TextAlign.center,
@@ -113,7 +118,7 @@ class EmptyCartView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 48),
-                
+
                 // Start Shopping Button
                 GestureDetector(
                   onTap: onGoShopping,
@@ -122,7 +127,10 @@ class EmptyCartView extends StatelessWidget {
                       ClipPath(
                         clipper: CyberpunkCardClipper(),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 40,
+                            vertical: 16,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.cyan.withValues(alpha: 0.1),
                             border: Border.all(color: AppColors.cyan, width: 1),
@@ -130,10 +138,16 @@ class EmptyCartView extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(Icons.bolt, color: AppColors.cyan, size: 20),
+                              const Icon(
+                                Icons.bolt,
+                                color: AppColors.cyan,
+                                size: 20,
+                              ),
                               const SizedBox(width: 8),
                               Text(
-                                AppLocalizations.of(context)!.startShopping.toUpperCase(),
+                                AppLocalizations.of(
+                                  context,
+                                )!.startShopping.toUpperCase(),
                                 style: theme.textTheme.labelLarge?.copyWith(
                                   fontFamily: 'monospace',
                                   fontWeight: FontWeight.bold,
@@ -149,12 +163,20 @@ class EmptyCartView extends StatelessWidget {
                       Positioned(
                         top: 2,
                         left: 2,
-                        child: Container(width: 4, height: 4, color: AppColors.cyan),
+                        child: Container(
+                          width: 4,
+                          height: 4,
+                          color: AppColors.cyan,
+                        ),
                       ),
                       Positioned(
                         bottom: 2,
                         right: 2,
-                        child: Container(width: 4, height: 4, color: AppColors.cyan),
+                        child: Container(
+                          width: 4,
+                          height: 4,
+                          color: AppColors.cyan,
+                        ),
                       ),
                     ],
                   ),
@@ -167,4 +189,3 @@ class EmptyCartView extends StatelessWidget {
     );
   }
 }
-

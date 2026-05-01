@@ -80,7 +80,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
           previous is AsyncLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('AUTH_SUCCESS // ACCESS_GRANTED', style: TextStyle(fontFamily: 'monospace')),
+            content: Text(
+              'AUTH_SUCCESS // ACCESS_GRANTED',
+              style: TextStyle(fontFamily: 'monospace'),
+            ),
             backgroundColor: Colors.green,
             behavior: SnackBarBehavior.floating,
           ),
@@ -109,8 +112,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       child: Container(
                         padding: const EdgeInsets.all(24.0),
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.surface.withValues(alpha: 0.9),
-                          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
+                          color: theme.colorScheme.surface.withValues(
+                            alpha: 0.9,
+                          ),
+                          border: Border.all(
+                            color: AppColors.cyan.withValues(alpha: 0.3),
+                          ),
                         ),
                         child: Form(
                           key: _formKey,
@@ -125,8 +132,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                                 icon: const Icon(Icons.alternate_email_rounded),
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) return localizations.enterEmail;
-                                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return localizations.validEmail;
+                                  if (value == null || value.isEmpty)
+                                    return localizations.enterEmail;
+                                  if (!RegExp(
+                                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                                  ).hasMatch(value))
+                                    return localizations.validEmail;
                                   return null;
                                 },
                               ),
@@ -136,16 +147,24 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                                 label: localizations.password,
                                 icon: IconButton(
                                   icon: Icon(
-                                    color: _passwordVisible ? AppColors.cyan : AppColors.magenta,
-                                    _passwordVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                                    color: _passwordVisible
+                                        ? AppColors.cyan
+                                        : AppColors.magenta,
+                                    _passwordVisible
+                                        ? Icons.visibility_off_outlined
+                                        : Icons.visibility_outlined,
                                   ),
-                                  onPressed: () => setState(() => _passwordVisible = !_passwordVisible),
+                                  onPressed: () => setState(
+                                    () => _passwordVisible = !_passwordVisible,
+                                  ),
                                 ),
                                 isPassword: _passwordVisible,
                                 textInputAction: TextInputAction.done,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) return localizations.enterPassword;
-                                  if (value.length < 6) return localizations.passwordLength;
+                                  if (value == null || value.isEmpty)
+                                    return localizations.enterPassword;
+                                  if (value.length < 6)
+                                    return localizations.passwordLength;
                                   return null;
                                 },
                               ),
@@ -166,7 +185,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                                 ),
                               ),
                               const SizedBox(height: 24),
-                              _buildSubmitButton(authState.isLoading, localizations),
+                              _buildSubmitButton(
+                                authState.isLoading,
+                                localizations,
+                              ),
                               const SizedBox(height: 24),
                               _buildDivider(localizations),
                               const SizedBox(height: 24),
@@ -187,7 +209,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
             top: 10,
             left: 10,
             child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.cyan),
+              icon: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: AppColors.cyan,
+              ),
               onPressed: () => context.pop(),
             ),
           ),
@@ -269,7 +294,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
               decoration: BoxDecoration(
                 color: AppColors.cyan,
                 boxShadow: [
-                  BoxShadow(color: AppColors.cyan.withValues(alpha: 0.3), blurRadius: 15),
+                  BoxShadow(
+                    color: AppColors.cyan.withValues(alpha: 0.3),
+                    blurRadius: 15,
+                  ),
                 ],
               ),
               child: Center(
@@ -277,7 +305,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     ? const SizedBox(
                         width: 20,
                         height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.black,
+                        ),
                       )
                     : Text(
                         l10n.login.toUpperCase(),
@@ -314,7 +345,11 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.g_mobiledata_rounded, color: AppColors.magenta, size: 28),
+            const Icon(
+              Icons.g_mobiledata_rounded,
+              color: AppColors.magenta,
+              size: 28,
+            ),
             const SizedBox(width: 12),
             Text(
               l10n.signInWithGoogle.toUpperCase(),
@@ -335,7 +370,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   Widget _buildDivider(AppLocalizations l10n) {
     return Row(
       children: [
-        Expanded(child: Container(height: 1, color: AppColors.cyan.withValues(alpha: 0.1))),
+        Expanded(
+          child: Container(
+            height: 1,
+            color: AppColors.cyan.withValues(alpha: 0.1),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
@@ -347,7 +387,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
             ),
           ),
         ),
-        Expanded(child: Container(height: 1, color: AppColors.cyan.withValues(alpha: 0.1))),
+        Expanded(
+          child: Container(
+            height: 1,
+            color: AppColors.cyan.withValues(alpha: 0.1),
+          ),
+        ),
       ],
     );
   }
@@ -381,4 +426,3 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     );
   }
 }
-

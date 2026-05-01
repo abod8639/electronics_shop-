@@ -72,11 +72,13 @@ class AddressController extends _$AddressController {
     String? selectedLabel,
   }) {
     final current = state.value ?? AddressState();
-    state = AsyncData(current.copyWith(
-      addresses: addresses,
-      isLoading: isLoading,
-      selectedLabel: selectedLabel,
-    ));
+    state = AsyncData(
+      current.copyWith(
+        addresses: addresses,
+        isLoading: isLoading,
+        selectedLabel: selectedLabel,
+      ),
+    );
   }
 
   Future<void> fetchAddresses() async {

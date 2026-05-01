@@ -50,7 +50,7 @@ class AppTheme {
       selectedItemColor: AppColors.primary,
       unselectedItemColor: AppColors.grey,
     ),
-    
+
     // pageTransitionsTheme: const PageTransitionsTheme(
 
     //   builders: {

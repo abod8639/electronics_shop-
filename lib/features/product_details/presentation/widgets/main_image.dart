@@ -11,7 +11,12 @@ class MainImage extends ConsumerStatefulWidget {
   final Function(int)? onImageTap;
   final String? heroTagPrefix;
 
-  const MainImage({super.key, required this.product, this.onImageTap, this.heroTagPrefix});
+  const MainImage({
+    super.key,
+    required this.product,
+    this.onImageTap,
+    this.heroTagPrefix,
+  });
 
   @override
   ConsumerState<MainImage> createState() => _MainImageState();
@@ -66,8 +71,10 @@ class _MainImageState extends ConsumerState<MainImage> {
   }
 
   Widget _buildImageSlider(BuildContext context) {
-    final detailsState = ref.watch(productDetailsControllerProvider(widget.product));
-    
+    final detailsState = ref.watch(
+      productDetailsControllerProvider(widget.product),
+    );
+
     return PageView.builder(
       allowImplicitScrolling: true,
       controller: _pageController,
@@ -92,8 +99,7 @@ class _MainImageState extends ConsumerState<MainImage> {
               fit: BoxFit.scaleDown,
               placeholder: (context, url) =>
                   const Center(child: CircularProgressIndicator.adaptive()),
-              errorWidget: (context, url, error) =>
-                  _buildErrorWidget(context),
+              errorWidget: (context, url, error) => _buildErrorWidget(context),
             ),
           ),
         );
@@ -101,7 +107,8 @@ class _MainImageState extends ConsumerState<MainImage> {
         // Only wrap the currently selected image with Hero
         if (index == detailsState.selectedImageIndex) {
           return Hero(
-            tag: '${widget.heroTagPrefix ?? ''}product_image_${widget.product.id}',
+            tag:
+                '${widget.heroTagPrefix ?? ''}product_image_${widget.product.id}',
             child: imageWidget,
           );
         }

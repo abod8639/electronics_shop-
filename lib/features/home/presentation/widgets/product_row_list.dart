@@ -14,7 +14,8 @@ class ProductRowList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (products.isEmpty) return const SliverToBoxAdapter(child: SizedBox.shrink());
+    if (products.isEmpty)
+      return const SliverToBoxAdapter(child: SizedBox.shrink());
 
     return SliverToBoxAdapter(
       child: SizedBox(
@@ -52,4 +53,3 @@ class ProductRowList extends StatelessWidget {
     );
   }
 }
-

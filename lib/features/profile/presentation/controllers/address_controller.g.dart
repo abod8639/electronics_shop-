@@ -12,14 +12,14 @@ String _$addressControllerHash() => r'5c0536e095a36339bccd8b8361a6d1467c511fb5';
 @ProviderFor(AddressController)
 final addressControllerProvider =
     AutoDisposeAsyncNotifierProvider<AddressController, AddressState>.internal(
-  AddressController.new,
-  name: r'addressControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$addressControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      AddressController.new,
+      name: r'addressControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$addressControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$AddressController = AutoDisposeAsyncNotifier<AddressState>;
 // ignore_for_file: type=lint

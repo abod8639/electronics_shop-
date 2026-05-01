@@ -78,7 +78,8 @@ class _ImageSectionState extends State<ImageSection> {
                         // Only wrap the currently selected image with Hero
                         if (index == _selectedImageIndex) {
                           return Hero(
-                            tag: '${widget.widget.heroTagPrefix ?? ''}product_image_${widget.widget.product.id}',
+                            tag:
+                                '${widget.widget.heroTagPrefix ?? ''}product_image_${widget.widget.product.id}',
                             child: imageWidget,
                           );
                         }
@@ -125,7 +126,12 @@ class _ImageSectionState extends State<ImageSection> {
     );
   }
 
-  Widget buildImage(String url, ThemeData theme, bool isBackgroundWhite, int index) {
+  Widget buildImage(
+    String url,
+    ThemeData theme,
+    bool isBackgroundWhite,
+    int index,
+  ) {
     return Container(
       margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
@@ -137,14 +143,13 @@ class _ImageSectionState extends State<ImageSection> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: CachedNetworkImage(
-            cacheManager: CustomCacheManager.instance,
-            imageUrl: url,
-            fit: BoxFit.scaleDown,
-            placeholder: (context, url) => buildShimmerEffect(theme),
-            errorWidget: (context, url, error) => buildErrorWidget(theme),
-          ),
+          cacheManager: CustomCacheManager.instance,
+          imageUrl: url,
+          fit: BoxFit.scaleDown,
+          placeholder: (context, url) => buildShimmerEffect(theme),
+          errorWidget: (context, url, error) => buildErrorWidget(theme),
         ),
-      
+      ),
     );
   }
 

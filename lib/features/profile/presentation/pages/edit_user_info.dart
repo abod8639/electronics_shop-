@@ -89,7 +89,9 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
                         color: theme.colorScheme.surface.withValues(alpha: 0.9),
-                        border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
+                        border: Border.all(
+                          color: AppColors.cyan.withValues(alpha: 0.3),
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,7 +104,8 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
                             hint: localizations.fullName,
                             icon: Icons.person_search_rounded,
                             validator: (value) {
-                              if (value == null || value.isEmpty) return localizations.enterName;
+                              if (value == null || value.isEmpty)
+                                return localizations.enterName;
                               return null;
                             },
                           ),
@@ -114,8 +117,12 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
                             icon: Icons.alternate_email_rounded,
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
-                              if (value == null || value.isEmpty) return localizations.enterEmail;
-                              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return localizations.validEmail;
+                              if (value == null || value.isEmpty)
+                                return localizations.enterEmail;
+                              if (!RegExp(
+                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                              ).hasMatch(value))
+                                return localizations.validEmail;
                               return null;
                             },
                           ),
@@ -127,7 +134,10 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
                             icon: Icons.phone_android_rounded,
                             keyboardType: TextInputType.phone,
                             validator: (value) {
-                              if (value != null && value.isNotEmpty && value.length < 10) return 'INVALID_NUM_FORMAT';
+                              if (value != null &&
+                                  value.isNotEmpty &&
+                                  value.length < 10)
+                                return 'INVALID_NUM_FORMAT';
                               return null;
                             },
                           ),
@@ -157,7 +167,10 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
             height: 140,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.magenta.withValues(alpha: 0.2), width: 1),
+              border: Border.all(
+                color: AppColors.magenta.withValues(alpha: 0.2),
+                width: 1,
+              ),
             ),
           ),
           // Rotating-like border
@@ -168,17 +181,28 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
               shape: BoxShape.circle,
               border: Border.all(color: AppColors.magenta, width: 2),
               boxShadow: [
-                BoxShadow(color: AppColors.magenta.withValues(alpha: 0.3), blurRadius: 15, spreadRadius: 2),
+                BoxShadow(
+                  color: AppColors.magenta.withValues(alpha: 0.3),
+                  blurRadius: 15,
+                  spreadRadius: 2,
+                ),
               ],
             ),
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Container(
-                decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.black),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black,
+                ),
                 child: ClipOval(
                   child: photoUrl != null
                       ? Image.network(photoUrl, fit: BoxFit.cover)
-                      : const Icon(Icons.person, size: 60, color: AppColors.magenta),
+                      : const Icon(
+                          Icons.person,
+                          size: 60,
+                          color: AppColors.magenta,
+                        ),
                 ),
               ),
             ),
@@ -190,15 +214,25 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('BIO_UPDATE_PENDING: Coming Soon', style: TextStyle(fontFamily: 'monospace')),
+                    content: Text(
+                      'BIO_UPDATE_PENDING: Coming Soon',
+                      style: TextStyle(fontFamily: 'monospace'),
+                    ),
                     backgroundColor: AppColors.magenta,
                   ),
                 );
               },
               child: Container(
                 padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(color: AppColors.magenta, shape: BoxShape.circle),
-                child: const Icon(Icons.sync_rounded, color: Colors.black, size: 20),
+                decoration: const BoxDecoration(
+                  color: AppColors.magenta,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.sync_rounded,
+                  color: Colors.black,
+                  size: 20,
+                ),
               ),
             ),
           ),
@@ -277,23 +311,39 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
           controller: controller,
           keyboardType: keyboardType,
           validator: validator,
-          style: const TextStyle(fontFamily: 'monospace', color: Colors.white, fontSize: 14),
+          style: const TextStyle(
+            fontFamily: 'monospace',
+            color: Colors.white,
+            fontSize: 14,
+          ),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.2), fontSize: 12),
+            hintStyle: TextStyle(
+              color: Colors.white.withValues(alpha: 0.2),
+              fontSize: 12,
+            ),
             prefixIcon: Icon(icon, color: AppColors.cyan, size: 18),
             filled: true,
             fillColor: AppColors.cyan.withValues(alpha: 0.05),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.zero,
-              borderSide: BorderSide(color: AppColors.cyan.withValues(alpha: 0.3)),
+              borderSide: BorderSide(
+                color: AppColors.cyan.withValues(alpha: 0.3),
+              ),
             ),
             focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.zero,
               borderSide: BorderSide(color: AppColors.cyan, width: 1.5),
             ),
-            errorStyle: const TextStyle(fontFamily: 'monospace', fontSize: 10, color: AppColors.error),
+            errorStyle: const TextStyle(
+              fontFamily: 'monospace',
+              fontSize: 10,
+              color: AppColors.error,
+            ),
           ),
         ),
       ],
@@ -323,20 +373,34 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  decoration: const BoxDecoration(
-                    color: AppColors.cyan,
-                  ),
+                  decoration: const BoxDecoration(color: AppColors.cyan),
                   child: Center(
                     child: isLoading
-                        ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black))
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.black,
+                            ),
+                          )
                         : const Text(
                             "COMMIT_CHANGES",
-                            style: TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.w900, color: Colors.black, letterSpacing: 2),
+                            style: TextStyle(
+                              fontFamily: 'monospace',
+                              fontWeight: FontWeight.w900,
+                              color: Colors.black,
+                              letterSpacing: 2,
+                            ),
                           ),
                   ),
                 ),
               ),
-              Positioned(right: 0, bottom: 0, child: Container(width: 8, height: 8, color: Colors.black)),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(width: 8, height: 8, color: Colors.black),
+              ),
             ],
           ),
         ),
@@ -357,4 +421,3 @@ class _EditUserInfoViewState extends ConsumerState<EditUserInfoView> {
     );
   }
 }
-

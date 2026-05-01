@@ -26,9 +26,13 @@ class SavedAddressesList extends ConsumerWidget {
               : ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   itemCount: state.addresses.length,
-                  separatorBuilder: (context, index) => const SizedBox(height: 16),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 16),
                   itemBuilder: (context, index) {
                     final address = state.addresses[index];
                     return AddressCard(address: address);
@@ -36,14 +40,19 @@ class SavedAddressesList extends ConsumerWidget {
                 ),
           loading: () => const Padding(
             padding: EdgeInsets.all(32.0),
-            child: Center(child: CircularProgressIndicator(color: AppColors.cyan)),
+            child: Center(
+              child: CircularProgressIndicator(color: AppColors.cyan),
+            ),
           ),
           error: (e, _) => Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 'NAV_DATA_ERROR: $e',
-                style: const TextStyle(fontFamily: 'monospace', color: AppColors.error),
+                style: const TextStyle(
+                  fontFamily: 'monospace',
+                  color: AppColors.error,
+                ),
               ),
             ),
           ),
@@ -61,11 +70,7 @@ class SavedAddressesList extends ConsumerWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: 4,
-                height: 18,
-                color: AppColors.cyan,
-              ),
+              Container(width: 4, height: 18, color: AppColors.cyan),
               const SizedBox(width: 12),
               Text(
                 intl10n.savedAddresses.toUpperCase(),
@@ -86,7 +91,10 @@ class SavedAddressesList extends ConsumerWidget {
                 ClipPath(
                   clipper: CyberpunkShapeClipper(),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.cyan.withValues(alpha: 0.1),
                       border: Border.all(color: AppColors.cyan, width: 1),
@@ -149,4 +157,3 @@ class SavedAddressesList extends ConsumerWidget {
     );
   }
 }
-

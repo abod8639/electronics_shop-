@@ -45,7 +45,7 @@ class HomeView extends ConsumerWidget {
                   const SliverToBoxAdapter(child: CategoriesShortcutsRow()),
                   if (selectedCategoryIndex == 0) ...[
                     const SliverToBoxAdapter(child: PromoBanner()),
-                    
+
                     // Recommended/Most Popular section from HomeController
                     // ref.watch(homeControllerProvider).when(
                     //   data: (products) => SliverMainAxisGroup(
@@ -70,7 +70,10 @@ class HomeView extends ConsumerWidget {
                       data: (selections) {
                         return SliverMainAxisGroup(
                           slivers: selections.asMap().entries.map((entry) {
-                            if (entry.key == 0) return const SliverToBoxAdapter(child: SizedBox.shrink()); // Skip "All"
+                            if (entry.key == 0)
+                              return const SliverToBoxAdapter(
+                                child: SizedBox.shrink(),
+                              ); // Skip "All"
                             return CategorySectionRow(
                               selection: entry.value,
                               index: entry.key,
@@ -82,11 +85,14 @@ class HomeView extends ConsumerWidget {
                         child: Center(
                           child: Padding(
                             padding: EdgeInsets.all(20.0),
-                            child: CircularProgressIndicator(color: AppColors.cyan),
+                            child: CircularProgressIndicator(
+                              color: AppColors.cyan,
+                            ),
                           ),
                         ),
                       ),
-                      error: (err, stack) => const SliverToBoxAdapter(child: SizedBox.shrink()),
+                      error: (err, stack) =>
+                          const SliverToBoxAdapter(child: SizedBox.shrink()),
                     ),
                   ] else ...[
                     const ProductGridList(),
@@ -104,4 +110,3 @@ class HomeView extends ConsumerWidget {
     );
   }
 }
-

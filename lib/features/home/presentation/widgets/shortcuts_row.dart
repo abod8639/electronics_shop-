@@ -18,7 +18,7 @@ class CategoriesShortcutsRow extends ConsumerWidget {
     return sectionsState.when(
       data: (selections) => Padding(
         padding: const EdgeInsets.only(
-          left: _horizontalPadding-3,
+          left: _horizontalPadding - 3,
           right: _horizontalPadding,
           top: _verticalPadding,
           bottom: _verticalPadding,

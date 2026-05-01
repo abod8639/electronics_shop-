@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -38,7 +37,8 @@ class RecentOrdersList extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final order = recentOrders[index];
                 return OrderCard(
-                  onTap: () => context.push(AppRoutes.orderDetails, extra: order),
+                  onTap: () =>
+                      context.push(AppRoutes.orderDetails, extra: order),
                   order: order,
                   isDark: isDark,
                   isAr: isAr,
@@ -48,8 +48,17 @@ class RecentOrdersList extends ConsumerWidget {
           ],
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator(color: AppColors.cyan)),
-      error: (e, _) => Center(child: Text('PROTOCOL_ERROR: $e', style: const TextStyle(fontFamily: 'monospace', color: AppColors.error))),
+      loading: () =>
+          const Center(child: CircularProgressIndicator(color: AppColors.cyan)),
+      error: (e, _) => Center(
+        child: Text(
+          'PROTOCOL_ERROR: $e',
+          style: const TextStyle(
+            fontFamily: 'monospace',
+            color: AppColors.error,
+          ),
+        ),
+      ),
     );
   }
 
@@ -107,10 +116,7 @@ class RecentOrdersList extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 4),
-                Icon(
-                  isAr ? Icons.chevron_left : Icons.chevron_right,
-                  size: 14,
-                ),
+                Icon(isAr ? Icons.chevron_left : Icons.chevron_right, size: 14),
               ],
             ),
           ),
@@ -119,4 +125,3 @@ class RecentOrdersList extends ConsumerWidget {
     );
   }
 }
-

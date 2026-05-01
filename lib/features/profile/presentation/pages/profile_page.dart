@@ -38,7 +38,8 @@ class ProfilePage extends ConsumerWidget {
       body: RefreshIndicator(
         color: AppColors.cyan,
         backgroundColor: theme.colorScheme.surface,
-        onRefresh: () => ref.read(profileControllerProvider.notifier).loadUserData(),
+        onRefresh: () =>
+            ref.read(profileControllerProvider.notifier).loadUserData(),
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
@@ -192,4 +193,3 @@ class _TechnicalLoader extends StatelessWidget {
     );
   }
 }
-

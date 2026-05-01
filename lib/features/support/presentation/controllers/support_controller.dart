@@ -21,7 +21,7 @@ class SupportController extends StateNotifier<AsyncValue<List<SupportEntity>>> {
     try {
       state = const AsyncValue.loading();
       final results = await getSupportsUsecase();
-      
+
       // For demo purposes, we'll add some dummy data if the list is empty
       if (results.isEmpty) {
         state = const AsyncValue.data([

@@ -22,7 +22,7 @@ AppBar baseAppBar(BuildContext context, String title) {
     bottom: PreferredSize(
       preferredSize: const Size.fromHeight(1.0),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, ),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Container(
           color: AppColors.cyan.withValues(alpha: 0.3),
           height: 0.5,
@@ -31,4 +31,3 @@ AppBar baseAppBar(BuildContext context, String title) {
     ),
   );
 }
-

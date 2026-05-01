@@ -193,7 +193,6 @@ class ProductSearchController extends _$ProductSearchController {
     }
   }
 
-
   /// Advanced Local Filter: Multi-language & Multi-token Search
   List<ProductModel> _prioritizedLocalFilter(
     String query,
@@ -202,7 +201,10 @@ class ProductSearchController extends _$ProductSearchController {
   ) {
     final lowerQuery = query.toLowerCase().trim();
     // Split the query into individual words (tokens)
-    final searchTerms = lowerQuery.split(RegExp(r'\s+')).where((t) => t.isNotEmpty).toList();
+    final searchTerms = lowerQuery
+        .split(RegExp(r'\s+'))
+        .where((t) => t.isNotEmpty)
+        .toList();
     if (searchTerms.isEmpty) return [];
 
     final List<ProductModel> exact = [];
@@ -229,7 +231,8 @@ class ProductSearchController extends _$ProductSearchController {
       }
 
       // Combine text to check for tokens
-      final fullText = "$nameAr $nameEn $brand $categoryAr $categoryEn ${tags.join(" ")}";
+      final fullText =
+          "$nameAr $nameEn $brand $categoryAr $categoryEn ${tags.join(" ")}";
 
       bool matchesAll = true;
       bool matchesAny = false;
@@ -266,7 +269,7 @@ class ProductSearchController extends _$ProductSearchController {
     addProducts(exact);
     // Priority 2: Matches that contain ALL query words (e.g., "samsung" AND "galaxy")
     addProducts(containsAllTokens);
-    
+
     // Priority 3: Matches that contain ANY of the words, only if combined results are few
     if (combined.length < 5) {
       addProducts(containsAnyToken);
@@ -358,6 +361,4 @@ class ProductSearchController extends _$ProductSearchController {
     );
     state = AsyncData(filtered);
   }
-
-
 }

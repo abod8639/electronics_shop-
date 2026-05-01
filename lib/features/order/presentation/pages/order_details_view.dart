@@ -41,16 +41,16 @@ class OrderDetailsView extends StatelessWidget {
                 // Top Info Section
                 _buildOrderManifestHeader(context),
                 const SizedBox(height: 24),
-                
+
                 // Status Section
                 _buildSectionHeader('LOGISTICS_STATUS'),
                 ClipPath(
                   clipper: CyberpunkCardClipper(),
                   child: Stack(
                     children: [
-                     BackGrid(accentColor: AppColors.cyan),
+                      BackGrid(accentColor: AppColors.cyan),
                       Container(
-                        color:  AppColors.greyDark.withValues(alpha: 0.1),
+                        color: AppColors.greyDark.withValues(alpha: 0.1),
                         padding: const EdgeInsets.all(20),
                         child: OrderStatusTimeline(order: order),
                       ),
@@ -58,11 +58,13 @@ class OrderDetailsView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                
+
                 // Items Section
                 _buildSectionHeader('HARDWARE_ITEMS'),
-                ...(order.items ?? []).map((item) => _buildOrderItem(context, item)),
-                
+                ...(order.items ?? []).map(
+                  (item) => _buildOrderItem(context, item),
+                ),
+
                 const SizedBox(height: 32),
                 _buildTotalFooter(context),
               ],
@@ -96,11 +98,7 @@ class OrderDetailsView extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12.0, left: 4),
       child: Row(
         children: [
-          Container(
-            width: 4,
-            height: 20,
-            color: AppColors.magenta,
-          ),
+          Container(width: 4, height: 20, color: AppColors.magenta),
           const SizedBox(width: 8),
           Text(
             title,
@@ -119,7 +117,7 @@ class OrderDetailsView extends StatelessWidget {
   Widget _buildInfoRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(      
+      child: Row(
         children: [
           Text(
             label,
@@ -170,7 +168,10 @@ class OrderDetailsView extends StatelessWidget {
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('ERR_0x404: PRODUCT_DATA_NOT_FOUND', style: TextStyle(fontFamily: 'monospace')),
+                  content: Text(
+                    'ERR_0x404: PRODUCT_DATA_NOT_FOUND',
+                    style: TextStyle(fontFamily: 'monospace'),
+                  ),
                   backgroundColor: AppColors.error,
                 ),
               );
@@ -187,7 +188,9 @@ class OrderDetailsView extends StatelessWidget {
                   width: 70,
                   height: 70,
                   decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.cyan.withValues(alpha: 0.5)),
+                    border: Border.all(
+                      color: AppColors.cyan.withValues(alpha: 0.5),
+                    ),
                   ),
                   child: Stack(
                     children: [
@@ -196,8 +199,10 @@ class OrderDetailsView extends StatelessWidget {
                         width: 70,
                         height: 70,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) => Container(color: Colors.white10),
-                        errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.white24),
+                        placeholder: (context, url) =>
+                            Container(color: Colors.white10),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error, color: Colors.white24),
                       ),
                       Positioned(
                         right: 0,
@@ -212,7 +217,7 @@ class OrderDetailsView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 16),
-                
+
                 // Details
                 Expanded(
                   child: Column(
@@ -240,17 +245,23 @@ class OrderDetailsView extends StatelessWidget {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          _buildMiniBadge('QTY_${item.quantity}', AppColors.cyan),
+                          _buildMiniBadge(
+                            'QTY_${item.quantity}',
+                            AppColors.cyan,
+                          ),
                           if (item.selectedSize != null) ...[
                             const SizedBox(width: 8),
-                            _buildMiniBadge('SIZE_${item.selectedSize}', AppColors.magenta),
+                            _buildMiniBadge(
+                              'SIZE_${item.selectedSize}',
+                              AppColors.magenta,
+                            ),
                           ],
                         ],
                       ),
                     ],
                   ),
                 ),
-                
+
                 // Subtotal
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,

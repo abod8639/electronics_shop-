@@ -12,7 +12,6 @@ class SearchOptionsView extends StatelessWidget {
   final AutocompleteOnSelected<Object> onSelected;
   final String query;
 
-
   const SearchOptionsView({
     super.key,
     required this.constraints,
@@ -23,7 +22,6 @@ class SearchOptionsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
     final locale = l10n.localeName;
@@ -43,13 +41,12 @@ class SearchOptionsView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8),
             shrinkWrap: true,
             itemCount: options.length,
-            separatorBuilder:
-                (context, index) => Divider(
-                  height: 1,
-                  color: const Color(0xFF00FBFF).withValues(alpha: 0.1),
-                  indent: 16,
-                  endIndent: 16,
-                ),
+            separatorBuilder: (context, index) => Divider(
+              height: 1,
+              color: const Color(0xFF00FBFF).withValues(alpha: 0.1),
+              indent: 16,
+              endIndent: 16,
+            ),
             itemBuilder: (context, index) {
               final option = options.elementAt(index);
 

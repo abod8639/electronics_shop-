@@ -49,7 +49,6 @@ class ShortcutItem extends ConsumerWidget {
         final item = selections[index];
 
         return Semantics(
-          
           label: '${getLocalizedLabel(context, item.label)} category',
           selected: isSelected,
           button: true,
@@ -72,7 +71,9 @@ class ShortcutItem extends ConsumerWidget {
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
-                                color: isSelected ? AppColors.cyan.withValues(alpha: .3) : Colors.black,
+                                color: isSelected
+                                    ? AppColors.cyan.withValues(alpha: .3)
+                                    : Colors.black,
                                 blurRadius: 8,
                                 spreadRadius: .5,
                               ),
@@ -87,17 +88,22 @@ class ShortcutItem extends ConsumerWidget {
                           width: _iconSize,
                           height: _iconSize,
                           decoration: BoxDecoration(
-                            color: isSelected 
-                              ? theme.colorScheme.surface 
-                              : theme.colorScheme.surfaceContainerHighest.withValues(alpha: .5),
+                            color: isSelected
+                                ? theme.colorScheme.surface
+                                : theme.colorScheme.surfaceContainerHighest
+                                      .withValues(alpha: .5),
                             border: Border(
                               left: BorderSide(
-                                color: isSelected ? AppColors.cyan : AppColors.cyan.withValues(alpha: .3), 
-                                width: isSelected ? 3 : 1
+                                color: isSelected
+                                    ? AppColors.cyan
+                                    : AppColors.cyan.withValues(alpha: .3),
+                                width: isSelected ? 3 : 1,
                               ),
                               bottom: BorderSide(
-                                color: isSelected ? AppColors.cyan : AppColors.cyan.withValues(alpha: .3), 
-                                width: isSelected ? 1 : 1.5
+                                color: isSelected
+                                    ? AppColors.cyan
+                                    : AppColors.cyan.withValues(alpha: .3),
+                                width: isSelected ? 1 : 1.5,
                               ),
                             ),
                           ),
@@ -116,14 +122,16 @@ class ShortcutItem extends ConsumerWidget {
                                   ),
                                 ),
                               ),
-            
+
                               Icon(
                                 item.icon,
-                                color: isSelected ? AppColors.cyan : theme.colorScheme.onSurfaceVariant,
+                                color: isSelected
+                                    ? AppColors.cyan
+                                    : theme.colorScheme.onSurfaceVariant,
                                 size: _iconInnerSize,
                               ),
                             ],
-                          ), 
+                          ),
                         ),
                       ),
                     ],
@@ -138,8 +146,12 @@ class ShortcutItem extends ConsumerWidget {
                           style: TextStyle(
                             fontSize: _labelFontSize,
                             letterSpacing: 1.1,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                            color: isSelected ? AppColors.cyan : theme.colorScheme.onSurface,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                            color: isSelected
+                                ? AppColors.cyan
+                                : theme.colorScheme.onSurface,
                             fontFamily: 'monospace',
                           ),
                           textAlign: TextAlign.center,
@@ -193,7 +205,6 @@ class ShortcutItem extends ConsumerWidget {
     }
   }
 }
-
 
 // Widget _buildImage(
 //   String? imageUrl,

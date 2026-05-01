@@ -8,11 +8,7 @@ class SupportList extends ConsumerWidget {
   final bool shrinkWrap;
   final ScrollPhysics? physics;
 
-  const SupportList({
-    super.key,
-    this.shrinkWrap = false,
-    this.physics,
-  });
+  const SupportList({super.key, this.shrinkWrap = false, this.physics});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,9 +36,8 @@ class SupportList extends ConsumerWidget {
           itemBuilder: (_, i) => SupportCard(entity: items[i]),
         );
       },
-      loading: () => const Center(
-        child: CircularProgressIndicator(color: AppColors.cyan),
-      ),
+      loading: () =>
+          const Center(child: CircularProgressIndicator(color: AppColors.cyan)),
       error: (err, stack) => Center(
         child: Text(
           'ERROR_FETCHING_TICKETS',

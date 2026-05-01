@@ -44,14 +44,17 @@ class _OrderSuccessViewState extends State<OrderSuccessView>
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 40.0,
+                ),
                 child: Column(
                   mainAxisAlignment: MainToCenter,
                   children: [
                     // Glitchy Success Icon
                     _buildAnimatedIcon(),
                     const SizedBox(height: 32),
-                    
+
                     // Main Title
                     Text(
                       'TRANSACTION_SECURED',
@@ -97,21 +100,37 @@ class _OrderSuccessViewState extends State<OrderSuccessView>
                         child: ClipPath(
                           clipper: CyberpunkCardClipper(),
                           child: Container(
-                            color: isDark ? Colors.black.withValues(alpha: 0.9) : Colors.white,
+                            color: isDark
+                                ? Colors.black.withValues(alpha: 0.9)
+                                : Colors.white,
                             padding: const EdgeInsets.all(24),
                             child: Column(
                               children: [
-                                _buildDetailRow('STATUS', 'SUCCESS_VERIFIED', AppColors.cyan),
+                                _buildDetailRow(
+                                  'STATUS',
+                                  'SUCCESS_VERIFIED',
+                                  AppColors.cyan,
+                                ),
                                 const Divider(color: Colors.white10),
-                                _buildDetailRow('TIMELINE', 'INSTANT_PROCESSING', Colors.white70),
-                                _buildDetailRow('NETWORK', 'SECURE_NODE_09', Colors.white70),
+                                _buildDetailRow(
+                                  'TIMELINE',
+                                  'INSTANT_PROCESSING',
+                                  Colors.white70,
+                                ),
+                                _buildDetailRow(
+                                  'NETWORK',
+                                  'SECURE_NODE_09',
+                                  Colors.white70,
+                                ),
                                 const SizedBox(height: 16),
                                 Text(
                                   'Your order has been broadcast to our logistics centers. Deployment of hardware is imminent.',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: 'monospace',
-                                    color: isDark ? Colors.white54 : Colors.black54,
+                                    color: isDark
+                                        ? Colors.white54
+                                        : Colors.black54,
                                     fontSize: 12,
                                   ),
                                 ),
@@ -128,7 +147,8 @@ class _OrderSuccessViewState extends State<OrderSuccessView>
                       context,
                       label: 'TRACK TRANSMISSION',
                       color: AppColors.cyan,
-                      onPressed: () => context.pushReplacement(AppRoutes.orderView),
+                      onPressed: () =>
+                          context.pushReplacement(AppRoutes.orderView),
                     ),
                     const SizedBox(height: 16),
                     _buildCyberButton(
@@ -172,11 +192,7 @@ class _OrderSuccessViewState extends State<OrderSuccessView>
                 color: AppColors.cyan.withValues(alpha: 0.3),
               ),
             ),
-            const Icon(
-              Icons.check_circle,
-              size: 100,
-              color: AppColors.cyan,
-            ),
+            const Icon(Icons.check_circle, size: 100, color: AppColors.cyan),
           ],
         );
       },
@@ -211,9 +227,10 @@ class _OrderSuccessViewState extends State<OrderSuccessView>
     );
   }
 
-  Widget _buildCyberButton(BuildContext context, {
-    required String label, 
-    required Color color, 
+  Widget _buildCyberButton(
+    BuildContext context, {
+    required String label,
+    required Color color,
     required VoidCallback onPressed,
     bool isOutlined = false,
   }) {
@@ -269,16 +286,16 @@ class CyberButtonPainter extends CustomPainter {
     canvas.drawPath(path, paint);
 
     if (!isOutlined) {
-        // Shine line
-        final shinePaint = Paint()
-          ..color = Colors.white.withValues(alpha: 0.2)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1;
-        
-        final shinePath = Path();
-        shinePath.moveTo(cut + 5, 5);
-        shinePath.lineTo(size.width - 5, 5);
-        canvas.drawPath(shinePath, shinePaint);
+      // Shine line
+      final shinePaint = Paint()
+        ..color = Colors.white.withValues(alpha: 0.2)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1;
+
+      final shinePath = Path();
+      shinePath.moveTo(cut + 5, 5);
+      shinePath.lineTo(size.width - 5, 5);
+      canvas.drawPath(shinePath, shinePaint);
     }
   }
 

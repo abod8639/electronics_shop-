@@ -15,12 +15,12 @@ class BuildCheckoutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      padding: const EdgeInsets.only(bottom: 12,left: 20,right: 20 ),
+      padding: const EdgeInsets.only(bottom: 12, left: 20, right: 20),
       decoration: BoxDecoration(
-      color: Colors.transparent,
+        color: Colors.transparent,
         boxShadow: [
           BoxShadow(
-            color:  AppColors.cyan.withValues(alpha: .1),
+            color: AppColors.cyan.withValues(alpha: .1),
             blurRadius: 10,
             spreadRadius: -15,
             blurStyle: BlurStyle.outer,
@@ -30,20 +30,18 @@ class BuildCheckoutSection extends StatelessWidget {
       child: ClipPath(
         clipper: CyberpunkShapeClipper(),
         child: Container(
-
           padding: const EdgeInsets.symmetric(
             horizontal: _checkoutHorizontalPadding,
             vertical: _checkoutVerticalPadding,
           ),
           decoration: BoxDecoration(
-                // color: Colors.transparent,
-           
+            // color: Colors.transparent,
             color: theme.colorScheme.surface.withValues(alpha: .95),
             border: Border(
-              top: BorderSide(color:    AppColors.cyan , width: 1.5),
-              left: BorderSide(color:   AppColors.cyan , width: 0.5),
-              right: BorderSide(color:  AppColors.cyan , width: 0.5),
-              bottom: BorderSide(color: AppColors.cyan , width: 0.5),
+              top: BorderSide(color: AppColors.cyan, width: 1.5),
+              left: BorderSide(color: AppColors.cyan, width: 0.5),
+              right: BorderSide(color: AppColors.cyan, width: 0.5),
+              bottom: BorderSide(color: AppColors.cyan, width: 0.5),
             ),
           ),
           child: const SafeArea(

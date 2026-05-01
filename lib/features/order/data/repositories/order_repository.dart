@@ -35,7 +35,11 @@ class OrderRepository {
         data = body;
       }
 
-      return data.map<OrderModel>((json) => OrderModel.fromJson(json as Map<String, dynamic>)).toList();
+      return data
+          .map<OrderModel>(
+            (json) => OrderModel.fromJson(json as Map<String, dynamic>),
+          )
+          .toList();
     } on Failure catch (e) {
       throw Failure(message: e.message);
     } catch (e) {

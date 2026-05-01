@@ -38,11 +38,7 @@ class SupportCategoryCard extends StatelessWidget {
                 color: AppColors.cyan.withValues(alpha: 0.05),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                icon,
-                color: AppColors.cyan,
-                size: 24,
-              ),
+              child: Icon(icon, color: AppColors.cyan, size: 24),
             ),
             const SizedBox(height: 12),
             Text(

@@ -44,7 +44,6 @@ class AppRoutes {
   static const String orderDetails = '/order_details';
   static const String support = '/supports';
   static const String help = '/help';
-
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -122,9 +121,12 @@ final routerProvider = Provider<GoRouter>((ref) {
               builder: (context, ref, child) {
                 return FutureBuilder<ProductModel>(
                   // We MUST use .notifier to access methods of a class-based Notifier provider
-                  future: ref.read(productRepositoryProvider.notifier).getProductById(productId),
+                  future: ref
+                      .read(productRepositoryProvider.notifier)
+                      .getProductById(productId),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
                       return ProductDetailsView(product: snapshot.data!);
                     } else if (snapshot.hasError) {
                       return Scaffold(
@@ -133,7 +135,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                         body: Center(
                           child: Text(
                             "ERROR: ${snapshot.error}",
-                            style: const TextStyle(color: AppColors.magenta, fontFamily: 'monospace'),
+                            style: const TextStyle(
+                              color: AppColors.magenta,
+                              fontFamily: 'monospace',
+                            ),
                           ),
                         ),
                       );
@@ -148,7 +153,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                             SizedBox(height: 16),
                             Text(
                               'FETCHING_PRODUCT_DATA...',
-                              style: TextStyle(color: AppColors.cyan, fontFamily: 'monospace', fontSize: 12),
+                              style: TextStyle(
+                                color: AppColors.cyan,
+                                fontFamily: 'monospace',
+                                fontSize: 12,
+                              ),
                             ),
                           ],
                         ),
@@ -209,12 +218,20 @@ final routerProvider = Provider<GoRouter>((ref) {
           } else if (extra is Map<String, dynamic>) {
             order = OrderModel.fromJson(extra);
           }
-          
+
           if (order != null) {
             return OrderDetailsView(order: order);
           }
           return const Scaffold(
-            body: Center(child: Text("ORDER_DATA_MISSING", style: TextStyle(color: AppColors.error, fontFamily: 'monospace'))),
+            body: Center(
+              child: Text(
+                "ORDER_DATA_MISSING",
+                style: TextStyle(
+                  color: AppColors.error,
+                  fontFamily: 'monospace',
+                ),
+              ),
+            ),
           );
         },
       ),

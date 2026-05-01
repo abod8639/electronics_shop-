@@ -7,8 +7,6 @@ import 'package:electronics_shop/features/product_details/presentation/widgets/s
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-
-
 class ExpandableDescriptionCard extends StatefulWidget {
   final String? title;
   final Widget? icon;
@@ -45,7 +43,7 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-       duration: _animationDuration,
+      duration: _animationDuration,
       vsync: this,
     );
     _iconRotation = Tween<double>(begin: 0, end: 0.5).animate(
@@ -92,8 +90,14 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
           decoration: BoxDecoration(
             color: isDark ? theme.colorScheme.surface : Colors.white,
             border: Border(
-              left: BorderSide(color: accentColor.withValues(alpha: .5), width: 3),
-              bottom: BorderSide(color: accentColor.withValues(alpha: .3), width: 1),
+              left: BorderSide(
+                color: accentColor.withValues(alpha: .5),
+                width: 3,
+              ),
+              bottom: BorderSide(
+                color: accentColor.withValues(alpha: .3),
+                width: 1,
+              ),
             ),
           ),
           child: Stack(
@@ -114,11 +118,16 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
                       children: [
                         if (widget.description != null) ...[
                           _buildDescriptionText(theme, widget.description!),
-                          if (_shouldShowExpandButton(context, theme, widget.description!))
+                          if (_shouldShowExpandButton(
+                            context,
+                            theme,
+                            widget.description!,
+                          ))
                             _buildToggleButton(theme, l10n, accentColor),
                         ],
                         if (widget.child != null) widget.child!,
-                        if (widget.reviews != null && widget.reviews!.isNotEmpty) ...[
+                        if (widget.reviews != null &&
+                            widget.reviews!.isNotEmpty) ...[
                           const SizedBox(height: 16),
                           StarsRecord(reviews: widget.reviews!),
                         ],
@@ -158,7 +167,11 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
     );
   }
 
-  Widget _buildToggleButton(ThemeData theme, AppLocalizations l10n, Color accentColor) {
+  Widget _buildToggleButton(
+    ThemeData theme,
+    AppLocalizations l10n,
+    Color accentColor,
+  ) {
     final magenta = AppColors.magenta;
     return Padding(
       padding: const EdgeInsets.only(top: 12),
@@ -199,7 +212,11 @@ class _ExpandableDescriptionCardState extends State<ExpandableDescriptionCard>
     );
   }
 
-  bool _shouldShowExpandButton(BuildContext context, ThemeData theme, String text) {
+  bool _shouldShowExpandButton(
+    BuildContext context,
+    ThemeData theme,
+    String text,
+  ) {
     final textPainter = TextPainter(
       text: TextSpan(
         text: text,

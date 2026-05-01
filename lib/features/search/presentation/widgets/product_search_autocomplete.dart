@@ -54,46 +54,42 @@ class _ProductSearchAutocompleteState
     final history = ref.watch(searchHistoryProvider);
 
     return LayoutBuilder(
-      builder:
-          (context, constraints) => RawAutocomplete<Object>(
-            focusNode: _focusNode,
-            textEditingController: _textController,
-            optionsBuilder:
-                (value) => ProductSearchService.getSuggestions(
-                  query: value.text,
-                  products: products,
-                  history: history,
-                  locale: l10n.localeName,
-                ),
-            onSelected:
-                (selection) => _handleSelection(selection, l10n.localeName),
-            fieldViewBuilder: (ctx, ctrl, node, onFieldSubmitted) {
-              return CyberpunkSearchField(
-                controller: ctrl,
-                focusNode: node,
-                readOnly: widget.readOnly,
-                autofocus: widget.autofocus,
-                onTap: widget.onTap,
-                onSubmitted: (val) {
-                  ref.read(searchHistoryProvider.notifier).add(val);
-                  onFieldSubmitted();
-                },
-                onChanged: (val) {
-                  ref
-                      .read(productSearchControllerProvider.notifier)
-                      .onSearchChanged(val);
-                  setState(() {}); // لتحديث زر المسح (Clear)
-                },
-              );
+      builder: (context, constraints) => RawAutocomplete<Object>(
+        focusNode: _focusNode,
+        textEditingController: _textController,
+        optionsBuilder: (value) => ProductSearchService.getSuggestions(
+          query: value.text,
+          products: products,
+          history: history,
+          locale: l10n.localeName,
+        ),
+        onSelected: (selection) => _handleSelection(selection, l10n.localeName),
+        fieldViewBuilder: (ctx, ctrl, node, onFieldSubmitted) {
+          return CyberpunkSearchField(
+            controller: ctrl,
+            focusNode: node,
+            readOnly: widget.readOnly,
+            autofocus: widget.autofocus,
+            onTap: widget.onTap,
+            onSubmitted: (val) {
+              ref.read(searchHistoryProvider.notifier).add(val);
+              onFieldSubmitted();
             },
-            optionsViewBuilder:
-                (context, onSelected, options) => SearchOptionsView(
-                  constraints: constraints,
-                  options: options,
-                  onSelected: onSelected,
-                  query: _textController.text,
-                ),
-          ),
+            onChanged: (val) {
+              ref
+                  .read(productSearchControllerProvider.notifier)
+                  .onSearchChanged(val);
+              setState(() {}); // لتحديث زر المسح (Clear)
+            },
+          );
+        },
+        optionsViewBuilder: (context, onSelected, options) => SearchOptionsView(
+          constraints: constraints,
+          options: options,
+          onSelected: onSelected,
+          query: _textController.text,
+        ),
+      ),
     );
   }
 

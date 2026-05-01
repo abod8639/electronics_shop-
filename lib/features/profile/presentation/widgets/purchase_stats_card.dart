@@ -12,7 +12,7 @@ class PurchaseStatsCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final profileNotifier = ref.watch(profileControllerProvider.notifier);
     final intl10n = AppLocalizations.of(context)!;
-    
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -29,7 +29,10 @@ class PurchaseStatsCard extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
         decoration: BoxDecoration(
           color: theme.colorScheme.surface.withValues(alpha: 0.95),
-          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.2), width: 0.5),
+          border: Border.all(
+            color: AppColors.cyan.withValues(alpha: 0.2),
+            width: 0.5,
+          ),
         ),
         child: Stack(
           children: [
@@ -62,7 +65,12 @@ class PurchaseStatsCard extends ConsumerWidget {
     );
   }
 
-  Widget _buildStatItem(String label, String value, IconData icon, Color color) {
+  Widget _buildStatItem(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -101,4 +109,3 @@ class PurchaseStatsCard extends ConsumerWidget {
     );
   }
 }
-

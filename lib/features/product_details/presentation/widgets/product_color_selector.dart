@@ -50,7 +50,12 @@ class ProductColorSelector extends StatelessWidget {
                 margin: const EdgeInsets.only(right: 8),
                 decoration: BoxDecoration(
                   color: AppColors.cyan,
-                  boxShadow: [BoxShadow(color: AppColors.cyan.withValues(alpha: .5), blurRadius: 4)],
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.cyan.withValues(alpha: .5),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
               ),
               Text(
@@ -94,6 +99,5 @@ class ProductColorSelector extends StatelessWidget {
         ),
       ],
     );
-
   }
 }

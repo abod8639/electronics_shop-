@@ -25,6 +25,6 @@ class SupportRepositoryImpl implements SupportRepository {
       remoteDatasource.getSupportById(id);
 
   @override
-  Future<void> createSupport(SupportEntity entity) =>
-      remoteDatasource.createSupport(SupportModel(id: entity.id, name: entity.name));
+  Future<void> createSupport(SupportEntity entity) => remoteDatasource
+      .createSupport(SupportModel(id: entity.id, name: entity.name));
 }

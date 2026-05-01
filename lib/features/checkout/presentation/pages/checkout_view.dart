@@ -28,7 +28,7 @@ class CheckoutView extends ConsumerWidget {
     return Scaffold(
       appBar: baseAppBar(
         context,
-         _checkoutTitle,
+        _checkoutTitle,
         // context: context,
         // title: _checkoutTitle,
       ),
@@ -143,7 +143,10 @@ class CheckoutView extends ConsumerWidget {
                       letterSpacing: 2,
                       fontSize: 12,
                       shadows: [
-                        Shadow(color: color.withValues(alpha: 0.5), blurRadius: 4),
+                        Shadow(
+                          color: color.withValues(alpha: 0.5),
+                          blurRadius: 4,
+                        ),
                       ],
                     ),
                   ),
@@ -161,4 +164,3 @@ class CheckoutView extends ConsumerWidget {
     );
   }
 }
-

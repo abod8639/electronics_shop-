@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
-
-
 Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
   final dynamic technicalSpecs = product.technicalSpecifications;
-  if (technicalSpecs == null || technicalSpecs is! Map || technicalSpecs.isEmpty) {
+  if (technicalSpecs == null ||
+      technicalSpecs is! Map ||
+      technicalSpecs.isEmpty) {
     return const SizedBox.shrink();
   }
 
@@ -19,67 +19,70 @@ Widget buildTechnicalSpecsSection(ProductModel product, bool isDark) {
       // final theme = Theme.of(context);
       final cyan = const Color(0xFF00FBFF);
 
-      return  ExpandableDescriptionCard(
-        icon: Icon( Icons.token_outlined, ),
+      return ExpandableDescriptionCard(
+        icon: Icon(Icons.token_outlined),
         title: l10n.technicalSpecifications.toUpperCase(),
         child: Column(
-        children: specs.entries.indexed.map<Widget>((item) {
-          final index = item.$1;
-          final entry = item.$2;
-          final isLast = index == specs.length - 1;
-      
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _getSpecIcon(entry.key, cyan),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      flex: 4,
-                      child: Text(
-                        entry.key.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontFamily: 'monospace',
-                          letterSpacing: 0.5,
-                          color: cyan.withValues(alpha: .8),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      flex: 6,
-                      child: Text(
-                        entry.value.toString(),
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontFamily: 'monospace',
-                          color: isDark ? Colors.white : Colors.black87,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (!isLast)
+          children: specs.entries.indexed.map<Widget>((item) {
+            final index = item.$1;
+            final entry = item.$2;
+            final isLast = index == specs.length - 1;
+
+            return Column(
+              children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Opacity(
-                    opacity: 0.1,
-                    child: Divider(color: cyan, height: 1),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 0,
+                    vertical: 16,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _getSpecIcon(entry.key, cyan),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        flex: 4,
+                        child: Text(
+                          entry.key.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontFamily: 'monospace',
+                            letterSpacing: 0.5,
+                            color: cyan.withValues(alpha: .8),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        flex: 6,
+                        child: Text(
+                          entry.value.toString(),
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontFamily: 'monospace',
+                            color: isDark ? Colors.white : Colors.black87,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-            ],
-          );
-        }).toList(),
-                )
+                if (!isLast)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Opacity(
+                      opacity: 0.1,
+                      child: Divider(color: cyan, height: 1),
+                    ),
+                  ),
+              ],
+            );
+          }).toList(),
+        ),
       );
     },
   );
@@ -90,11 +93,15 @@ Widget _getSpecIcon(String key, Color cyan) {
   IconData iconData = Icons.info_outline;
   Color iconColor = cyan;
 
-  if (lowerKey.contains('cpu') || lowerKey.contains('processor') || lowerKey.contains('chip')) {
+  if (lowerKey.contains('cpu') ||
+      lowerKey.contains('processor') ||
+      lowerKey.contains('chip')) {
     iconData = Icons.memory_rounded;
   } else if (lowerKey.contains('ram') || lowerKey.contains('memory')) {
     iconData = Icons.speed_rounded;
-  } else if (lowerKey.contains('storage') || lowerKey.contains('ssd') || lowerKey.contains('hdd')) {
+  } else if (lowerKey.contains('storage') ||
+      lowerKey.contains('ssd') ||
+      lowerKey.contains('hdd')) {
     iconData = Icons.storage_rounded;
   } else if (lowerKey.contains('battery')) {
     iconData = Icons.battery_charging_full_rounded;
@@ -108,7 +115,7 @@ Widget _getSpecIcon(String key, Color cyan) {
     iconData = Icons.computer_rounded;
   }
 
-  return  Icon(iconData, size: 25, color: iconColor);
+  return Icon(iconData, size: 25, color: iconColor);
 }
 
 class CyberpunkIconClipper extends CustomClipper<Path> {
@@ -127,4 +134,3 @@ class CyberpunkIconClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-

@@ -33,14 +33,17 @@ class ProfileHeader extends ConsumerWidget {
           padding: const EdgeInsets.all(20.0),
           decoration: BoxDecoration(
             color: theme.colorScheme.surface.withValues(alpha: 0.9),
-            border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3), width: 0.5),
+            border: Border.all(
+              color: AppColors.cyan.withValues(alpha: 0.3),
+              width: 0.5,
+            ),
           ),
           child: Stack(
             children: [
               BackGrid(accentColor: AppColors.cyan),
               Row(
                 children: [
-                   // Avatar with neon glow
+                  // Avatar with neon glow
                   Stack(
                     alignment: Alignment.center,
                     children: [
@@ -59,11 +62,16 @@ class ProfileHeader extends ConsumerWidget {
                           ],
                         ),
                         child: ClipOval(
-                          child: user.photoUrl != null && user.photoUrl!.isNotEmpty
+                          child:
+                              user.photoUrl != null && user.photoUrl!.isNotEmpty
                               ? Image.network(user.photoUrl!, fit: BoxFit.cover)
                               : Container(
                                   color: AppColors.cyan.withValues(alpha: 0.1),
-                                  child: const Icon(Icons.person, color: AppColors.cyan, size: 40),
+                                  child: const Icon(
+                                    Icons.person,
+                                    color: AppColors.cyan,
+                                    size: 40,
+                                  ),
                                 ),
                         ),
                       ),
@@ -76,9 +84,17 @@ class ProfileHeader extends ConsumerWidget {
                           decoration: BoxDecoration(
                             color: Colors.greenAccent,
                             shape: BoxShape.circle,
-                            border: Border.all(color: theme.colorScheme.surface, width: 2),
+                            border: Border.all(
+                              color: theme.colorScheme.surface,
+                              width: 2,
+                            ),
                             boxShadow: [
-                              BoxShadow(color: Colors.greenAccent.withValues(alpha: 0.5), blurRadius: 4),
+                              BoxShadow(
+                                color: Colors.greenAccent.withValues(
+                                  alpha: 0.5,
+                                ),
+                                blurRadius: 4,
+                              ),
                             ],
                           ),
                         ),
@@ -123,9 +139,14 @@ class ProfileHeader extends ConsumerWidget {
                         const SizedBox(height: 8),
                         // Technical badge
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.cyan.withValues(alpha: 0.5)),
+                            border: Border.all(
+                              color: AppColors.cyan.withValues(alpha: 0.5),
+                            ),
                           ),
                           child: const Text(
                             "STATUS: VERIFIED // SECURE_AUTH",
@@ -149,4 +170,3 @@ class ProfileHeader extends ConsumerWidget {
     );
   }
 }
-

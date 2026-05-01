@@ -95,10 +95,7 @@ class SupportsPage extends ConsumerWidget {
       children: [
         Text(
           l10n.howCanWeHelp,
-          style: AppTextStyles.h2.copyWith(
-            color: AppColors.white,
-            height: 1.2,
-          ),
+          style: AppTextStyles.h2.copyWith(color: AppColors.white, height: 1.2),
         ),
         const SizedBox(height: 8),
         Container(
@@ -136,11 +133,15 @@ class SupportsPage extends ConsumerWidget {
           prefixIcon: const Icon(Icons.search, color: AppColors.cyan),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: AppColors.cyan.withValues(alpha: 0.1)),
+            borderSide: BorderSide(
+              color: AppColors.cyan.withValues(alpha: 0.1),
+            ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: AppColors.cyan.withValues(alpha: 0.1)),
+            borderSide: BorderSide(
+              color: AppColors.cyan.withValues(alpha: 0.1),
+            ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
@@ -148,8 +149,10 @@ class SupportsPage extends ConsumerWidget {
           ),
           filled: true,
           fillColor: AppColors.surfaceDark,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 16,
+          ),
         ),
       ),
     );
@@ -219,10 +222,16 @@ class SupportsPage extends ConsumerWidget {
     return Row(
       children: [
         _buildContactCard(
-            Icons.chat_bubble_outline, l10n.liveChat, AppColors.cyan),
+          Icons.chat_bubble_outline,
+          l10n.liveChat,
+          AppColors.cyan,
+        ),
         const SizedBox(width: 12),
         _buildContactCard(
-            Icons.email_outlined, l10n.sendEmail, AppColors.magenta),
+          Icons.email_outlined,
+          l10n.sendEmail,
+          AppColors.magenta,
+        ),
         const SizedBox(width: 12),
         _buildContactCard(Icons.phone_outlined, l10n.callUs, AppColors.primary),
       ],
@@ -236,10 +245,7 @@ class SupportsPage extends ConsumerWidget {
         decoration: BoxDecoration(
           color: AppColors.surfaceDark,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: color.withValues(alpha: 0.1),
-            width: 1,
-          ),
+          border: Border.all(color: color.withValues(alpha: 0.1), width: 1),
         ),
         child: Column(
           children: [
@@ -266,8 +272,10 @@ class SupportsPage extends ConsumerWidget {
           return const SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.all(20),
-              child: Text('No active tickets',
-                  style: TextStyle(color: AppColors.grey)),
+              child: Text(
+                'No active tickets',
+                style: TextStyle(color: AppColors.grey),
+              ),
             ),
           );
         }
@@ -283,16 +291,19 @@ class SupportsPage extends ConsumerWidget {
       },
       loading: () => const SliverToBoxAdapter(
         child: Center(
-            child: Padding(
-          padding: EdgeInsets.all(20),
-          child: CircularProgressIndicator(color: AppColors.cyan),
-        )),
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: CircularProgressIndicator(color: AppColors.cyan),
+          ),
+        ),
       ),
       error: (err, stack) => SliverToBoxAdapter(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Text('Error: $err',
-              style: const TextStyle(color: AppColors.error)),
+          child: Text(
+            'Error: $err',
+            style: const TextStyle(color: AppColors.error),
+          ),
         ),
       ),
     );
@@ -325,8 +336,9 @@ class SupportsPage extends ConsumerWidget {
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   child: Text(
                     faq['answer']!,
-                    style:
-                        AppTextStyles.bodySmall.copyWith(color: AppColors.grey),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.grey,
+                    ),
                   ),
                 ),
               ],
@@ -343,8 +355,9 @@ class SupportsPage extends ConsumerWidget {
         onPressed: () {},
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: AppColors.cyan),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
         ),
         child: Text(

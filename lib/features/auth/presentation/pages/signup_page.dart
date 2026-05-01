@@ -95,8 +95,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       child: Container(
                         padding: const EdgeInsets.all(24.0),
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.surface.withValues(alpha: 0.9),
-                          border: Border.all(color: AppColors.magenta.withValues(alpha: 0.3)),
+                          color: theme.colorScheme.surface.withValues(
+                            alpha: 0.9,
+                          ),
+                          border: Border.all(
+                            color: AppColors.magenta.withValues(alpha: 0.3),
+                          ),
                         ),
                         child: Form(
                           key: _formKey,
@@ -110,7 +114,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 label: localizations.fullName,
                                 icon: const Icon(Icons.person_pin_rounded),
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) return localizations.enterName;
+                                  if (value == null || value.isEmpty)
+                                    return localizations.enterName;
                                   return null;
                                 },
                               ),
@@ -121,8 +126,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 icon: const Icon(Icons.alternate_email_rounded),
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) return localizations.enterEmail;
-                                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return localizations.validEmail;
+                                  if (value == null || value.isEmpty)
+                                    return localizations.enterEmail;
+                                  if (!RegExp(
+                                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                                  ).hasMatch(value))
+                                    return localizations.validEmail;
                                   return null;
                                 },
                               ),
@@ -133,8 +142,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 icon: const Icon(Icons.lock_open_rounded),
                                 isPassword: true,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) return localizations.enterPassword;
-                                  if (value.length < 6) return localizations.passwordLength;
+                                  if (value == null || value.isEmpty)
+                                    return localizations.enterPassword;
+                                  if (value.length < 6)
+                                    return localizations.passwordLength;
                                   return null;
                                 },
                               ),
@@ -146,13 +157,18 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 isPassword: true,
                                 textInputAction: TextInputAction.done,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) return localizations.confirmYourPassword;
-                                  if (value != _passwordController.text) return localizations.passwordsDoNotMatch;
+                                  if (value == null || value.isEmpty)
+                                    return localizations.confirmYourPassword;
+                                  if (value != _passwordController.text)
+                                    return localizations.passwordsDoNotMatch;
                                   return null;
                                 },
                               ),
                               const SizedBox(height: 32),
-                              _buildSubmitButton(authState.isLoading, localizations),
+                              _buildSubmitButton(
+                                authState.isLoading,
+                                localizations,
+                              ),
                               const SizedBox(height: 24),
                               _buildSocialAuth(localizations),
                               const SizedBox(height: 24),
@@ -171,7 +187,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
             top: 10,
             left: 10,
             child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.magenta),
+              icon: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: AppColors.magenta,
+              ),
               onPressed: () => context.pop(),
             ),
           ),
@@ -183,7 +202,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   Widget _buildTerminalHeader(AppLocalizations l10n) {
     return Column(
       children: [
-        const Icon(Icons.person_add_rounded, color: AppColors.magenta, size: 64),
+        const Icon(
+          Icons.person_add_rounded,
+          color: AppColors.magenta,
+          size: 64,
+        ),
         const SizedBox(height: 16),
         Text(
           "NEW_USER_REGISTRY",
@@ -253,7 +276,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               decoration: BoxDecoration(
                 color: AppColors.magenta,
                 boxShadow: [
-                  BoxShadow(color: AppColors.magenta.withValues(alpha: 0.3), blurRadius: 15),
+                  BoxShadow(
+                    color: AppColors.magenta.withValues(alpha: 0.3),
+                    blurRadius: 15,
+                  ),
                 ],
               ),
               child: Center(
@@ -261,7 +287,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     ? const SizedBox(
                         width: 20,
                         height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.black,
+                        ),
                       )
                     : Text(
                         l10n.signUp.toUpperCase(),
@@ -298,7 +327,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.g_mobiledata_rounded, color: AppColors.cyan, size: 28),
+            const Icon(
+              Icons.g_mobiledata_rounded,
+              color: AppColors.cyan,
+              size: 28,
+            ),
             const SizedBox(width: 12),
             Text(
               l10n.signInWithGoogle.toUpperCase(),
@@ -345,4 +378,3 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     );
   }
 }
-

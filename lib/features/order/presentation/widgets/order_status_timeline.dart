@@ -28,28 +28,38 @@ class OrderStatusTimeline extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-_buildPipelineStep(
-          label: 'INITIALIZED', 
-          isCompleted: true, 
-          icon: Icons.receipt_long), // تم استلام الطلب
+        _buildPipelineStep(
+          label: 'INITIALIZED',
+          isCompleted: true,
+          icon: Icons.receipt_long,
+        ), // تم استلام الطلب
         _buildPipelineDivider(true),
-        
+
         _buildPipelineStep(
-          label: 'PROCESSING', 
-          isCompleted: order.status != 'pending', 
-          icon: order.status != 'pending' ? Icons.handyman : Icons.hourglass_empty), // قيد التجهيز
+          label: 'PROCESSING',
+          isCompleted: order.status != 'pending',
+          icon: order.status != 'pending'
+              ? Icons.handyman
+              : Icons.hourglass_empty,
+        ), // قيد التجهيز
         _buildPipelineDivider(order.status != 'pending'),
-        
+
         _buildPipelineStep(
-          label: 'DISPATCHED', 
-          isCompleted: order.status == 'shipped' || order.status == 'delivered', 
-          icon: Icons.local_shipping_outlined), // الشحن
-        _buildPipelineDivider(order.status == 'shipped' || order.status == 'delivered'),
-        
+          label: 'DISPATCHED',
+          isCompleted: order.status == 'shipped' || order.status == 'delivered',
+          icon: Icons.local_shipping_outlined,
+        ), // الشحن
+        _buildPipelineDivider(
+          order.status == 'shipped' || order.status == 'delivered',
+        ),
+
         _buildPipelineStep(
-          label: 'COMPLETED', 
-          isCompleted: order.status == 'delivered', 
-          icon: order.status == 'delivered' ? Icons.check_circle : Icons.flag_circle), // التسجيل النهائي
+          label: 'COMPLETED',
+          isCompleted: order.status == 'delivered',
+          icon: order.status == 'delivered'
+              ? Icons.check_circle
+              : Icons.flag_circle,
+        ), // التسجيل النهائي
       ],
     );
   }
@@ -89,7 +99,11 @@ _buildPipelineStep(
           color: isCompleted ? AppColors.cyan : Colors.white24,
         ),
         const SizedBox(width: 12),
-        Icon(icon, size: 16, color: isCompleted ? AppColors.cyan : Colors.white24),
+        Icon(
+          icon,
+          size: 16,
+          color: isCompleted ? AppColors.cyan : Colors.white24,
+        ),
         const SizedBox(width: 12),
         Text(
           label,
@@ -109,7 +123,9 @@ _buildPipelineStep(
       margin: const EdgeInsets.only(left: 7, top: 4, bottom: 4),
       width: 2,
       height: 20,
-      color: isCompleted ? AppColors.cyan.withValues(alpha: 0.3) : Colors.white10,
+      color: isCompleted
+          ? AppColors.cyan.withValues(alpha: 0.3)
+          : Colors.white10,
     );
   }
 }

@@ -12,12 +12,12 @@ Widget buildWarrantySection(ProductModel product, bool isDark) {
     builder: (context) {
       final l10n = AppLocalizations.of(context)!;
       return ExpandableDescriptionCard(
-        icon: Icon( Icons.verified_user_outlined,),
+        icon: Icon(Icons.verified_user_outlined),
         title: l10n.warrantyInfo.toUpperCase(),
         child: Row(
           children: [
             const SizedBox(width: 6),
-            Icon( Icons.verified_user_outlined,size: 25,color: AppColors.cyan,),
+            Icon(Icons.verified_user_outlined, size: 25, color: AppColors.cyan),
             // const SizedBox(width: 12),
             Spacer(),
             Text(
@@ -30,7 +30,7 @@ Widget buildWarrantySection(ProductModel product, bool isDark) {
               ),
             ),
           ],
-        )
+        ),
       );
     },
   );

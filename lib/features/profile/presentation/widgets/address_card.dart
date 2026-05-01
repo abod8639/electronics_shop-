@@ -22,7 +22,9 @@ class AddressCard extends ConsumerWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: address.isDefault ? AppColors.cyan.withValues(alpha: 0.1) : Colors.transparent,
+            color: address.isDefault
+                ? AppColors.cyan.withValues(alpha: 0.1)
+                : Colors.transparent,
             blurRadius: 15,
             spreadRadius: -5,
           ),
@@ -34,7 +36,9 @@ class AddressCard extends ConsumerWidget {
           decoration: BoxDecoration(
             color: theme.colorScheme.surface.withValues(alpha: 0.9),
             border: Border.all(
-              color: address.isDefault ? AppColors.cyan : AppColors.cyan.withValues(alpha: 0.2),
+              color: address.isDefault
+                  ? AppColors.cyan
+                  : AppColors.cyan.withValues(alpha: 0.2),
               width: address.isDefault ? 1 : 0.5,
             ),
           ),
@@ -116,7 +120,11 @@ class AddressCard extends ConsumerWidget {
                 color: AppColors.cyan.withValues(alpha: 0.1),
                 child: const Text(
                   'TERRAIN_SCAN_ACTIVE',
-                  style: TextStyle(fontFamily: 'monospace', fontSize: 8, color: AppColors.cyan),
+                  style: TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 8,
+                    color: AppColors.cyan,
+                  ),
                 ),
               ),
               Row(
@@ -127,7 +135,11 @@ class AddressCard extends ConsumerWidget {
                     color: AppColors.cyan.withValues(alpha: 0.2),
                     child: const Text(
                       'GPS_LOCKED',
-                      style: TextStyle(fontFamily: 'monospace', fontSize: 8, color: AppColors.cyan),
+                      style: TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 8,
+                        color: AppColors.cyan,
+                      ),
                     ),
                   ),
                 ],
@@ -171,11 +183,19 @@ class AddressCard extends ConsumerWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.location_off_outlined, color: AppColors.cyan.withValues(alpha: 0.2), size: 32),
+          Icon(
+            Icons.location_off_outlined,
+            color: AppColors.cyan.withValues(alpha: 0.2),
+            size: 32,
+          ),
           const SizedBox(height: 8),
           const Text(
             'SIGNAL_LOST',
-            style: TextStyle(fontFamily: 'monospace', fontSize: 10, color: AppColors.grey),
+            style: TextStyle(
+              fontFamily: 'monospace',
+              fontSize: 10,
+              color: AppColors.grey,
+            ),
           ),
         ],
       ),
@@ -185,8 +205,10 @@ class AddressCard extends ConsumerWidget {
   Widget _buildCardTopRow(BuildContext context) {
     final intl10n = AppLocalizations.of(context)!;
     IconData labelIcon = Icons.location_on_rounded;
-    if (address.label?.toLowerCase() == intl10n.home.toLowerCase()) labelIcon = Icons.home_rounded;
-    if (address.label?.toLowerCase() == intl10n.work.toLowerCase()) labelIcon = Icons.work_rounded;
+    if (address.label?.toLowerCase() == intl10n.home.toLowerCase())
+      labelIcon = Icons.home_rounded;
+    if (address.label?.toLowerCase() == intl10n.work.toLowerCase())
+      labelIcon = Icons.work_rounded;
 
     return Row(
       children: [
@@ -204,11 +226,19 @@ class AddressCard extends ConsumerWidget {
           children: [
             Text(
               (address.label ?? 'OTHER').toUpperCase(),
-              style: const TextStyle(fontWeight: FontWeight.w900, fontFamily: 'monospace', fontSize: 14),
+              style: const TextStyle(
+                fontWeight: FontWeight.w900,
+                fontFamily: 'monospace',
+                fontSize: 14,
+              ),
             ),
             const Text(
               'TARGET_LINK_ESTABLISHED',
-              style: TextStyle(fontFamily: 'monospace', fontSize: 8, color: AppColors.cyan),
+              style: TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 8,
+                color: AppColors.cyan,
+              ),
             ),
           ],
         ),
@@ -247,7 +277,11 @@ class AddressCard extends ConsumerWidget {
         children: [
           Text(
             (address.fullName ?? '').toUpperCase(),
-            style: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'monospace', fontSize: 12),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'monospace',
+              fontSize: 12,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
@@ -275,7 +309,11 @@ class AddressCard extends ConsumerWidget {
               onPressed: () => controller.setDefaultAddress(address.id),
               child: Text(
                 intl10n.setDefault.toUpperCase(),
-                style: const TextStyle(fontFamily: 'monospace', fontSize: 10, color: AppColors.magenta),
+                style: const TextStyle(
+                  fontFamily: 'monospace',
+                  fontSize: 10,
+                  color: AppColors.magenta,
+                ),
               ),
             ),
           ),
@@ -294,7 +332,11 @@ class AddressCard extends ConsumerWidget {
     );
   }
 
-  Widget _buildSmallButton({required IconData icon, required VoidCallback onTap, Color color = AppColors.cyan}) {
+  Widget _buildSmallButton({
+    required IconData icon,
+    required VoidCallback onTap,
+    Color color = AppColors.cyan,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -321,11 +363,19 @@ class AddressCard extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 48),
+                const Icon(
+                  Icons.warning_amber_rounded,
+                  color: AppColors.error,
+                  size: 48,
+                ),
                 const SizedBox(height: 16),
                 const Text(
                   'CONFIRM_WIPE',
-                  style: TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold, color: AppColors.error),
+                  style: TextStyle(
+                    fontFamily: 'monospace',
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.error,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 const Text(
@@ -339,17 +389,31 @@ class AddressCard extends ConsumerWidget {
                     Expanded(
                       child: TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: const Text('CANCEL', style: TextStyle(fontFamily: 'monospace', color: AppColors.cyan)),
+                        child: const Text(
+                          'CANCEL',
+                          style: TextStyle(
+                            fontFamily: 'monospace',
+                            color: AppColors.cyan,
+                          ),
+                        ),
                       ),
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.error,
+                        ),
                         onPressed: () {
                           controller.deleteAddress(address.id);
                           Navigator.pop(context);
                         },
-                        child: const Text('DELETE', style: TextStyle(fontFamily: 'monospace', color: Colors.white)),
+                        child: const Text(
+                          'DELETE',
+                          style: TextStyle(
+                            fontFamily: 'monospace',
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -362,4 +426,3 @@ class AddressCard extends ConsumerWidget {
     );
   }
 }
-

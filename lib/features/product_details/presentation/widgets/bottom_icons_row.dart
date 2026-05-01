@@ -82,7 +82,13 @@ class BottomIconsRow extends ConsumerWidget {
           ),
           const SizedBox(width: 16),
 
-          _buildWishlistButton(theme, detailsState, detailsNotifier, isDark, product),
+          _buildWishlistButton(
+            theme,
+            detailsState,
+            detailsNotifier,
+            isDark,
+            product,
+          ),
         ],
       ),
     );
@@ -132,10 +138,10 @@ class BottomIconsRow extends ConsumerWidget {
       onTap: isPriceZero
           ? null
           : () => cartNotifier.addToCart(
-                product,
-                selectedColor: detailsState.selectedColor,
-                selectedSize: detailsState.selectedSizeObject?.size,
-              ),
+              product,
+              selectedColor: detailsState.selectedColor,
+              selectedSize: detailsState.selectedSizeObject?.size,
+            ),
       child: Container(
         height: 55,
         decoration: BoxDecoration(
@@ -162,7 +168,9 @@ class BottomIconsRow extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  isPriceZero ? Icons.mail_outline_rounded : Icons.shopping_cart_checkout_rounded,
+                  isPriceZero
+                      ? Icons.mail_outline_rounded
+                      : Icons.shopping_cart_checkout_rounded,
                   color: Colors.black,
                   size: 20,
                 ),
@@ -197,16 +205,15 @@ class BottomIconsRow extends ConsumerWidget {
       height: 55,
       decoration: BoxDecoration(
         boxShadow: [
-          BoxShadow(
-            color: cyan.withValues(alpha: 0.1),
-            blurRadius: 10,
-          ),
+          BoxShadow(color: cyan.withValues(alpha: 0.1), blurRadius: 10),
         ],
       ),
       child: ClipPath(
         clipper: CyberpunkBottomClipper(),
         child: Container(
-          color: isDark ? theme.colorScheme.surface : Colors.black.withValues(alpha: 0.05),
+          color: isDark
+              ? theme.colorScheme.surface
+              : Colors.black.withValues(alpha: 0.05),
           child: Stack(
             children: [
               BackGrid(accentColor: cyan),
@@ -218,15 +225,22 @@ class BottomIconsRow extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _buildControlButton(
-                      icon: item.quantity > 1 ? Icons.remove_rounded : Icons.delete_outline_rounded,
+                      icon: item.quantity > 1
+                          ? Icons.remove_rounded
+                          : Icons.delete_outline_rounded,
                       color: item.quantity > 1 ? cyan : AppColors.error,
                       onPressed: () => cartNotifier.decreaseQuantity(item),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         border: Border.symmetric(
-                          vertical: BorderSide(color: cyan.withValues(alpha: 0.2)),
+                          vertical: BorderSide(
+                            color: cyan.withValues(alpha: 0.2),
+                          ),
                         ),
                       ),
                       child: Text(
@@ -237,7 +251,11 @@ class BottomIconsRow extends ConsumerWidget {
                           fontWeight: FontWeight.w900,
                           color: isDark ? cyan : Colors.black87,
                           shadows: [
-                            if (isDark) Shadow(color: cyan.withValues(alpha: 0.5), blurRadius: 4),
+                            if (isDark)
+                              Shadow(
+                                color: cyan.withValues(alpha: 0.5),
+                                blurRadius: 4,
+                              ),
                           ],
                         ),
                       ),
@@ -278,16 +296,18 @@ class BottomIconsRow extends ConsumerWidget {
   ) {
     final isInWishlist = detailsState.isInWishlist;
 
+    return CyberpunkButton(
+      size: 55,
+      icon: Icon(
+        isInWishlist ? Icons.favorite_rounded : Icons.favorite_border,
+        color: AppColors.magenta,
+      ),
+      tooltip: "",
+      onTap: () => detailsNotifier.toggleWishlist(product),
+    );
 
-    return  CyberpunkButton(
-            size: 55,
-            icon: Icon(isInWishlist ? Icons.favorite_rounded : Icons.favorite_border, color: AppColors.magenta),
-            tooltip:"",
-            onTap: () => detailsNotifier.toggleWishlist(product),
-          );
-    
     //  InkWell(
-    //   onTap: 
+    //   onTap:
     //   child: Container(
     //     width: 55,
     //     height: 55,
@@ -326,4 +346,3 @@ class BottomIconsRow extends ConsumerWidget {
     // );
   }
 }
-

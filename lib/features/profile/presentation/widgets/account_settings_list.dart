@@ -55,7 +55,9 @@ class AccountSettingsList extends ConsumerWidget {
               _buildDivider(),
               _buildSettingItem(
                 context: context,
-                icon: isDarkMode ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
+                icon: isDarkMode
+                    ? Icons.dark_mode_outlined
+                    : Icons.light_mode_outlined,
                 title: localizations.theme,
                 subtitle: isDarkMode ? 'SHADOW_PROTOCOL' : 'LUX_EMISSION',
                 trailing: Switch(
@@ -83,10 +85,15 @@ class AccountSettingsList extends ConsumerWidget {
                 title: localizations.language,
                 subtitle: 'LINGUA_CORE_V2',
                 trailing: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.magenta.withValues(alpha: 0.1),
-                    border: Border.all(color: AppColors.magenta.withValues(alpha: 0.5)),
+                    border: Border.all(
+                      color: AppColors.magenta.withValues(alpha: 0.5),
+                    ),
                   ),
                   child: Text(
                     languageNotifier.currentLanguageName.toUpperCase(),
@@ -98,7 +105,12 @@ class AccountSettingsList extends ConsumerWidget {
                     ),
                   ),
                 ),
-                onTap: () => _showLanguageDialog(context, ref, currentLocale, localizations),
+                onTap: () => _showLanguageDialog(
+                  context,
+                  ref,
+                  currentLocale,
+                  localizations,
+                ),
               ),
               _buildDivider(),
               _buildSettingItem(
@@ -136,7 +148,11 @@ class AccountSettingsList extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.settings_applications, color: AppColors.cyan, size: 20),
+          const Icon(
+            Icons.settings_applications,
+            color: AppColors.cyan,
+            size: 20,
+          ),
           const SizedBox(width: 12),
           Text(
             title.toUpperCase(),
@@ -202,7 +218,10 @@ class AccountSettingsList extends ConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Container(height: 1, color: AppColors.cyan.withValues(alpha: 0.1)),
+                    Container(
+                      height: 1,
+                      color: AppColors.cyan.withValues(alpha: 0.1),
+                    ),
                     const SizedBox(height: 16),
                     _buildLanguageOption(
                       context: context,
@@ -210,7 +229,9 @@ class AccountSettingsList extends ConsumerWidget {
                       value: 'en',
                       groupValue: currentLocale.languageCode,
                       onChanged: () {
-                        ref.read(languageControllerProvider.notifier).changeLanguage(const Locale('en'));
+                        ref
+                            .read(languageControllerProvider.notifier)
+                            .changeLanguage(const Locale('en'));
                         Navigator.pop(context);
                       },
                     ),
@@ -221,7 +242,9 @@ class AccountSettingsList extends ConsumerWidget {
                       value: 'ar',
                       groupValue: currentLocale.languageCode,
                       onChanged: () {
-                        ref.read(languageControllerProvider.notifier).changeLanguage(const Locale('ar'));
+                        ref
+                            .read(languageControllerProvider.notifier)
+                            .changeLanguage(const Locale('ar'));
                         Navigator.pop(context);
                       },
                     ),
@@ -248,9 +271,13 @@ class AccountSettingsList extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.cyan.withValues(alpha: 0.1) : Colors.transparent,
+          color: isSelected
+              ? AppColors.cyan.withValues(alpha: 0.1)
+              : Colors.transparent,
           border: Border.all(
-            color: isSelected ? AppColors.cyan : AppColors.cyan.withValues(alpha: 0.1),
+            color: isSelected
+                ? AppColors.cyan
+                : AppColors.cyan.withValues(alpha: 0.1),
             width: 1,
           ),
         ),
@@ -267,13 +294,19 @@ class AccountSettingsList extends ConsumerWidget {
             ),
             const Spacer(),
             if (isSelected)
-              const Icon(Icons.check_circle_outline, color: AppColors.cyan, size: 18),
+              const Icon(
+                Icons.check_circle_outline,
+                color: AppColors.cyan,
+                size: 18,
+              ),
             if (!isSelected)
               Container(
                 width: 12,
                 height: 12,
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
+                  border: Border.all(
+                    color: AppColors.cyan.withValues(alpha: 0.3),
+                  ),
                 ),
               ),
           ],
@@ -311,7 +344,9 @@ class AccountSettingsList extends ConsumerWidget {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: AppColors.cyan.withValues(alpha: 0.05),
-                  border: Border.all(color: AppColors.cyan.withValues(alpha: 0.2)),
+                  border: Border.all(
+                    color: AppColors.cyan.withValues(alpha: 0.2),
+                  ),
                 ),
                 child: Icon(icon, color: AppColors.cyan, size: 18),
               ),
@@ -342,7 +377,12 @@ class AccountSettingsList extends ConsumerWidget {
                   ],
                 ),
               ),
-              trailing ?? const Icon(Icons.chevron_right, color: AppColors.cyan, size: 16),
+              trailing ??
+                  const Icon(
+                    Icons.chevron_right,
+                    color: AppColors.cyan,
+                    size: 16,
+                  ),
             ],
           ),
         ),
@@ -367,5 +407,3 @@ class AccountSettingsList extends ConsumerWidget {
     );
   }
 }
-
-

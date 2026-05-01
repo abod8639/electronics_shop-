@@ -89,10 +89,7 @@ Widget buildProductInfo(
       infoItems.add(
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4),
-          child: Opacity(
-            opacity: 0.1,
-            child: Divider(color: cyan, height: 1),
-          ),
+          child: Opacity(opacity: 0.1, child: Divider(color: cyan, height: 1)),
         ),
       );
     }
@@ -104,9 +101,7 @@ Widget buildProductInfo(
     title: l10n.productInfo.toUpperCase(),
     accentColor: cyan,
     icon: const Icon(Icons.info_outline_rounded),
-    child: Column(
-      children: infoItems,
-    ),
+    child: Column(children: infoItems),
   );
 }
 
@@ -161,4 +156,3 @@ Widget _buildInfoRow({
     ),
   );
 }
-

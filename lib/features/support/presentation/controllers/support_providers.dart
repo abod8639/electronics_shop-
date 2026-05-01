@@ -10,7 +10,9 @@ import 'support_controller.dart';
 import '../../domain/entities/support_entity.dart';
 
 // Data Sources
-final supportRemoteDataSourceProvider = Provider<SupportRemoteDatasource>((ref) {
+final supportRemoteDataSourceProvider = Provider<SupportRemoteDatasource>((
+  ref,
+) {
   return SupportRemoteDatasourceImpl();
 });
 
@@ -40,13 +42,16 @@ final createSupportUseCaseProvider = Provider<CreateSupportUsecase>((ref) {
 });
 
 // State Notifier Provider for the Controller
-final supportControllerProvider = StateNotifierProvider<SupportController, AsyncValue<List<SupportEntity>>>((ref) {
-  return SupportController(
-    getSupportsUsecase: ref.watch(getSupportsUseCaseProvider),
-    getSupportByIdUsecase: ref.watch(getSupportByIdUseCaseProvider),
-    createSupportUsecase: ref.watch(createSupportUseCaseProvider),
-  );
-});
+final supportControllerProvider =
+    StateNotifierProvider<SupportController, AsyncValue<List<SupportEntity>>>((
+      ref,
+    ) {
+      return SupportController(
+        getSupportsUsecase: ref.watch(getSupportsUseCaseProvider),
+        getSupportByIdUsecase: ref.watch(getSupportByIdUseCaseProvider),
+        createSupportUsecase: ref.watch(createSupportUseCaseProvider),
+      );
+    });
 
 // Search Query Provider
 final supportSearchQueryProvider = StateProvider<String>((ref) => '');
@@ -56,19 +61,20 @@ final supportFAQProvider = Provider<List<Map<String, String>>>((ref) {
   return [
     {
       'question': 'How can I track my order?',
-      'answer': 'You can track your order in the "Orders" section of your profile.'
+      'answer':
+          'You can track your order in the "Orders" section of your profile.',
     },
     {
       'question': 'What is your return policy?',
-      'answer': 'We offer a 30-day return policy for most electronics.'
+      'answer': 'We offer a 30-day return policy for most electronics.',
     },
     {
       'question': 'How do I reset my password?',
-      'answer': 'Go to the login screen and click on "Forgot Password".'
+      'answer': 'Go to the login screen and click on "Forgot Password".',
     },
     {
       'question': 'Do you offer international shipping?',
-      'answer': 'Yes, we ship to over 50 countries globally.'
+      'answer': 'Yes, we ship to over 50 countries globally.',
     },
   ];
 });

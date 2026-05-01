@@ -23,7 +23,7 @@ class MyBottomNavigationBar extends ConsumerWidget {
             color: const Color(0xFF00FBFF).withValues(alpha: .15),
             blurRadius: 20,
             spreadRadius: -5,
-            blurStyle: BlurStyle.outer
+            blurStyle: BlurStyle.outer,
           ),
         ],
       ),
@@ -34,10 +34,10 @@ class MyBottomNavigationBar extends ConsumerWidget {
             // borderRadius: BorderRadius.circular(5),
             boxShadow: [
               BoxShadow(
-                color: theme.colorScheme.surface.withValues(alpha:.9),
+                color: theme.colorScheme.surface.withValues(alpha: .9),
                 blurRadius: 20,
                 spreadRadius: -5,
-                blurStyle: BlurStyle.outer
+                blurStyle: BlurStyle.outer,
               ),
             ],
             border: const Border(
@@ -104,7 +104,8 @@ class MyBottomNavigationBar extends ConsumerWidget {
     final inactiveColor = Colors.grey.shade600;
 
     return InkWell(
-      onTap: () => ref.read(mainControllerProvider.notifier).changeTabIndex(index),
+      onTap: () =>
+          ref.read(mainControllerProvider.notifier).changeTabIndex(index),
       highlightColor: Colors.transparent,
       splashColor: activeColor.withValues(alpha: 0.1),
       child: AnimatedContainer(
@@ -139,10 +140,7 @@ class MyBottomNavigationBar extends ConsumerWidget {
                         color: Color(0xFFFF00F7),
                         shape: BoxShape.circle,
                         boxShadow: [
-                          BoxShadow(
-                            color: Color(0xFFFF00F7),
-                            blurRadius: 8,
-                          ),
+                          BoxShadow(color: Color(0xFFFF00F7), blurRadius: 8),
                         ],
                       ),
                       constraints: const BoxConstraints(
@@ -182,12 +180,7 @@ class MyBottomNavigationBar extends ConsumerWidget {
                 decoration: BoxDecoration(
                   color: activeColor,
                   borderRadius: BorderRadius.circular(1),
-                  boxShadow: [
-                    BoxShadow(
-                      color: activeColor,
-                      blurRadius: 4,
-                    ),
-                  ],
+                  boxShadow: [BoxShadow(color: activeColor, blurRadius: 4)],
                 ),
               ),
           ],

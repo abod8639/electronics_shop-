@@ -19,10 +19,12 @@ Widget buildPaymentOption({
     clipper: CyberpunkCardClipper(),
     child: Container(
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.cyan.withValues(alpha: .05) : Colors.black12,
+        color: isSelected
+            ? AppColors.cyan.withValues(alpha: .05)
+            : Colors.black12,
         border: Border.all(
-          color: isSelected 
-              ? AppColors.cyan 
+          color: isSelected
+              ? AppColors.cyan
               : AppColors.cyan.withValues(alpha: enabled ? 0.2 : 0.05),
           width: isSelected ? 1.5 : 0.5,
         ),
@@ -41,25 +43,27 @@ Widget buildPaymentOption({
             fontWeight: FontWeight.bold,
             fontFamily: 'monospace',
             letterSpacing: 1.2,
-            color: enabled 
+            color: enabled
                 ? (isSelected ? AppColors.cyan : null)
                 : Colors.grey.withValues(alpha: 0.5),
           ),
         ),
-        subtitle: subtitle != null 
+        subtitle: subtitle != null
             ? Text(
-                subtitle.toUpperCase(), 
+                subtitle.toUpperCase(),
                 style: TextStyle(
-                  fontFamily: 'monospace', 
+                  fontFamily: 'monospace',
                   fontSize: 10,
                   color: enabled ? null : Colors.grey.withValues(alpha: 0.3),
                 ),
-              ) 
+              )
             : null,
         secondary: Icon(
-          icon, 
-          color: enabled 
-              ? (isSelected ? AppColors.cyan : AppColors.cyan.withValues(alpha: 0.5)) 
+          icon,
+          color: enabled
+              ? (isSelected
+                    ? AppColors.cyan
+                    : AppColors.cyan.withValues(alpha: 0.5))
               : Colors.grey.withValues(alpha: 0.2),
         ),
         activeColor: AppColors.cyan,
@@ -67,4 +71,3 @@ Widget buildPaymentOption({
     ),
   );
 }
-

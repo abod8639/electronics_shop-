@@ -68,10 +68,12 @@ class AuthTextField extends StatelessWidget {
         ),
         filled: true,
         fillColor: Colors.black.withValues(alpha: .2),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
       ),
       validator: validator,
     );
   }
 }
-

@@ -49,7 +49,10 @@ class _AddressFormState extends ConsumerState<AddressForm> {
               const SizedBox(height: 24),
               _buildSectionTitle('IDENTITY_DATACAST'),
               const SizedBox(height: 12),
-              _buildField(controllerNotifier.fullNameController, intl10n.fullName.toUpperCase()),
+              _buildField(
+                controllerNotifier.fullNameController,
+                intl10n.fullName.toUpperCase(),
+              ),
               const SizedBox(height: 16),
               _buildField(
                 controllerNotifier.phoneController,
@@ -59,16 +62,25 @@ class _AddressFormState extends ConsumerState<AddressForm> {
               const SizedBox(height: 24),
               _buildSectionTitle('COORDS_SPEC'),
               const SizedBox(height: 12),
-              _buildField(controllerNotifier.streetController, intl10n.streetAddress.toUpperCase()),
+              _buildField(
+                controllerNotifier.streetController,
+                intl10n.streetAddress.toUpperCase(),
+              ),
               const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
-                    child: _buildField(controllerNotifier.cityController, intl10n.city.toUpperCase()),
+                    child: _buildField(
+                      controllerNotifier.cityController,
+                      intl10n.city.toUpperCase(),
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: _buildField(controllerNotifier.stateController, intl10n.state.toUpperCase()),
+                    child: _buildField(
+                      controllerNotifier.stateController,
+                      intl10n.state.toUpperCase(),
+                    ),
                   ),
                 ],
               ),
@@ -110,10 +122,15 @@ class _AddressFormState extends ConsumerState<AddressForm> {
       children: [
         Row(
           children: [
-            const Icon(Icons.gps_fixed_rounded, color: AppColors.cyan, size: 20),
+            const Icon(
+              Icons.gps_fixed_rounded,
+              color: AppColors.cyan,
+              size: 20,
+            ),
             const SizedBox(width: 12),
             Text(
-              (widget.address == null ? l10n.addNewAddress : l10n.editAddress).toUpperCase(),
+              (widget.address == null ? l10n.addNewAddress : l10n.editAddress)
+                  .toUpperCase(),
               style: const TextStyle(
                 fontFamily: 'monospace',
                 fontWeight: FontWeight.w900,
@@ -157,7 +174,11 @@ class _AddressFormState extends ConsumerState<AddressForm> {
     );
   }
 
-  Widget _buildLocationScanner(AddressController controller, AppLocalizations l10n, bool isLoading) {
+  Widget _buildLocationScanner(
+    AddressController controller,
+    AppLocalizations l10n,
+    bool isLoading,
+  ) {
     return GestureDetector(
       onTap: isLoading
           ? null
@@ -193,13 +214,17 @@ class _AddressFormState extends ConsumerState<AddressForm> {
               const SizedBox(
                 width: 16,
                 height: 16,
-                child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.cyan),
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: AppColors.cyan,
+                ),
               )
             else
               const Icon(Icons.radar_rounded, color: AppColors.cyan, size: 20),
             const SizedBox(width: 12),
             Text(
-              (isLoading ? 'SCANNING_GEO_DATA...' : l10n.useCurrentLocation).toUpperCase(),
+              (isLoading ? 'SCANNING_GEO_DATA...' : l10n.useCurrentLocation)
+                  .toUpperCase(),
               style: const TextStyle(
                 fontFamily: 'monospace',
                 fontSize: 12,
@@ -228,10 +253,16 @@ class _AddressFormState extends ConsumerState<AddressForm> {
           style: const TextStyle(fontFamily: 'monospace', fontSize: 13),
           decoration: InputDecoration(
             labelText: label,
-            labelStyle: const TextStyle(fontFamily: 'monospace', fontSize: 10, letterSpacing: 1),
+            labelStyle: const TextStyle(
+              fontFamily: 'monospace',
+              fontSize: 10,
+              letterSpacing: 1,
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.zero,
-              borderSide: BorderSide(color: AppColors.cyan.withValues(alpha: 0.2)),
+              borderSide: BorderSide(
+                color: AppColors.cyan.withValues(alpha: 0.2),
+              ),
             ),
             focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.zero,
@@ -272,9 +303,13 @@ class _AddressFormState extends ConsumerState<AddressForm> {
                   margin: const EdgeInsets.only(right: 8),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: BoxDecoration(
-                    color: selectedLabel == label ? AppColors.cyan : Colors.transparent,
+                    color: selectedLabel == label
+                        ? AppColors.cyan
+                        : Colors.transparent,
                     border: Border.all(
-                      color: selectedLabel == label ? AppColors.cyan : AppColors.cyan.withValues(alpha: 0.2),
+                      color: selectedLabel == label
+                          ? AppColors.cyan
+                          : AppColors.cyan.withValues(alpha: 0.2),
                     ),
                   ),
                   alignment: Alignment.center,
@@ -284,7 +319,9 @@ class _AddressFormState extends ConsumerState<AddressForm> {
                       fontFamily: 'monospace',
                       fontSize: 10,
                       fontWeight: FontWeight.w900,
-                      color: selectedLabel == label ? Colors.black : AppColors.cyan,
+                      color: selectedLabel == label
+                          ? Colors.black
+                          : AppColors.cyan,
                     ),
                   ),
                 ),
@@ -295,7 +332,11 @@ class _AddressFormState extends ConsumerState<AddressForm> {
     );
   }
 
-  Widget _buildSubmitButton(AddressController controller, bool isLoading, AppLocalizations l10n) {
+  Widget _buildSubmitButton(
+    AddressController controller,
+    bool isLoading,
+    AppLocalizations l10n,
+  ) {
     return GestureDetector(
       onTap: isLoading
           ? null
@@ -319,7 +360,10 @@ class _AddressFormState extends ConsumerState<AddressForm> {
               decoration: BoxDecoration(
                 color: AppColors.cyan,
                 boxShadow: [
-                  BoxShadow(color: AppColors.cyan.withValues(alpha: 0.3), blurRadius: 15),
+                  BoxShadow(
+                    color: AppColors.cyan.withValues(alpha: 0.3),
+                    blurRadius: 15,
+                  ),
                 ],
               ),
               child: Center(
@@ -327,10 +371,14 @@ class _AddressFormState extends ConsumerState<AddressForm> {
                     ? const SizedBox(
                         width: 20,
                         height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.black,
+                        ),
                       )
                     : Text(
-                        (widget.address == null ? l10n.save : l10n.update).toUpperCase(),
+                        (widget.address == null ? l10n.save : l10n.update)
+                            .toUpperCase(),
                         style: const TextStyle(
                           fontFamily: 'monospace',
                           fontWeight: FontWeight.w900,
@@ -352,4 +400,3 @@ class _AddressFormState extends ConsumerState<AddressForm> {
     );
   }
 }
-

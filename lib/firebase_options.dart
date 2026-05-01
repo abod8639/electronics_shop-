@@ -73,5 +73,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'electronics-shop-fcaaf.firebasestorage.app',
     measurementId: 'G-8DL6CJXSQ4',
   );
-
 }

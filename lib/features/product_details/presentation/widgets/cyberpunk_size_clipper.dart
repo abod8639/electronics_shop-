@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/core/constants/app_colors.dart';
 
-    // cyberpunk_size_clipper
+// cyberpunk_size_clipper
 class CyberpunkSizeClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -80,7 +80,12 @@ class _ProductSizeSelectorState extends State<ProductSizeSelector> {
                 margin: const EdgeInsets.only(right: 8),
                 decoration: BoxDecoration(
                   color: AppColors.cyan,
-                  boxShadow: [BoxShadow(color: AppColors.cyan.withValues(alpha: .5), blurRadius: 4)],
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.cyan.withValues(alpha: .5),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
               ),
               Text(
@@ -101,7 +106,9 @@ class _ProductSizeSelectorState extends State<ProductSizeSelector> {
           spacing: 12.0,
           runSpacing: 12.0,
           children: productSizes.isNotEmpty
-              ? productSizes.map((ps) => _buildSizeButton(ps.size, isDark)).toList()
+              ? productSizes
+                    .map((ps) => _buildSizeButton(ps.size, isDark))
+                    .toList()
               : legacySizes.map((s) => _buildSizeButton(s, isDark)).toList(),
         ),
       ],
@@ -112,40 +119,40 @@ class _ProductSizeSelectorState extends State<ProductSizeSelector> {
     final isSelected = _selectedSize == size;
 
     return AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        decoration: BoxDecoration(
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: AppColors.cyan.withValues(alpha: .2),
-                    blurRadius: 10,
-                    spreadRadius: 1,
-                  ),
-                ]
-              : [],
-        ),
-        child:GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedSize = size;
-        });
-        widget.onSizeSelected(size);
-      },
-      child:  ClipPath(
+      duration: const Duration(milliseconds: 200),
+      decoration: BoxDecoration(
+        boxShadow: isSelected
+            ? [
+                BoxShadow(
+                  color: AppColors.cyan.withValues(alpha: .2),
+                  blurRadius: 10,
+                  spreadRadius: 1,
+                ),
+              ]
+            : [],
+      ),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _selectedSize = size;
+          });
+          widget.onSizeSelected(size);
+        },
+        child: ClipPath(
           clipper: CyberpunkSizeClipper(),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
-
-              color: isSelected ? AppColors.cyan.withValues(alpha: .8) : (isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.greyDark),
+              color: isSelected
+                  ? AppColors.cyan.withValues(alpha: .8)
+                  : (isDark
+                        ? Colors.white.withValues(alpha: 0.05)
+                        : AppColors.greyDark),
               border: Border(
                 left: BorderSide(
-                  color:
-                   isSelected 
-                   ?
-                      AppColors.greyDark
-                     :
-                    AppColors.cyan.withValues(alpha: .5),
+                  color: isSelected
+                      ? AppColors.greyDark
+                      : AppColors.cyan.withValues(alpha: .5),
 
                   width: 3,
                 ),
@@ -154,7 +161,9 @@ class _ProductSizeSelectorState extends State<ProductSizeSelector> {
             child: Text(
               size.toUpperCase(),
               style: TextStyle(
-                color: isSelected ? Colors.black : (isDark ? Colors.white70 : Colors.black87),
+                color: isSelected
+                    ? Colors.black
+                    : (isDark ? Colors.white70 : Colors.black87),
                 fontWeight: isSelected ? FontWeight.w900 : FontWeight.normal,
                 shadows: [
                   BoxShadow(
@@ -174,4 +183,3 @@ class _ProductSizeSelectorState extends State<ProductSizeSelector> {
     );
   }
 }
-
