@@ -114,8 +114,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 label: localizations.fullName,
                                 icon: const Icon(Icons.person_pin_rounded),
                                 validator: (value) {
-                                  if (value == null || value.isEmpty)
+                                  if (value == null || value.isEmpty) {
                                     return localizations.enterName;
+                                  }
                                   return null;
                                 },
                               ),
@@ -126,12 +127,14 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 icon: const Icon(Icons.alternate_email_rounded),
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty)
+                                  if (value == null || value.isEmpty) {
                                     return localizations.enterEmail;
+                                  }
                                   if (!RegExp(
                                     r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                                  ).hasMatch(value))
+                                  ).hasMatch(value)) {
                                     return localizations.validEmail;
+                                  }
                                   return null;
                                 },
                               ),
@@ -142,10 +145,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 icon: const Icon(Icons.lock_open_rounded),
                                 isPassword: true,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty)
+                                  if (value == null || value.isEmpty) {
                                     return localizations.enterPassword;
-                                  if (value.length < 6)
+                                  }
+                                  if (value.length < 6) {
                                     return localizations.passwordLength;
+                                  }
                                   return null;
                                 },
                               ),
@@ -157,10 +162,12 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                 isPassword: true,
                                 textInputAction: TextInputAction.done,
                                 validator: (value) {
-                                  if (value == null || value.isEmpty)
-                                    return localizations.confirmYourPassword;
-                                  if (value != _passwordController.text)
+                                  if (value == null || value.isEmpty) {
+                                     localizations.confirmYourPassword;
+                                  }
+                                  if (value != _passwordController.text) {
                                     return localizations.passwordsDoNotMatch;
+                                  }
                                   return null;
                                 },
                               ),

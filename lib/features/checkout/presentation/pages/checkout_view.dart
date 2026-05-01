@@ -83,14 +83,14 @@ class CheckoutView extends ConsumerWidget {
                         child: Row(
                           children: [
                             if (checkoutState.currentStep > 0) ...[
-                              _buildActionButton(
+                              checkoutActionButton(
                                 label: _backButtonText,
                                 isPrimary: false,
                                 onTap: details.onStepCancel,
                               ),
                               const SizedBox(width: _controlsSpacing),
                             ],
-                            _buildActionButton(
+                            checkoutActionButton(
                               label: checkoutState.currentStep == 2
                                   ? _placeOrderButtonText
                                   : _nextButtonText,
@@ -113,7 +113,7 @@ class CheckoutView extends ConsumerWidget {
     );
   }
 
-  Widget _buildActionButton({
+  Widget checkoutActionButton({
     required String label,
     required bool isPrimary,
     VoidCallback? onTap,
@@ -165,4 +165,6 @@ class CheckoutView extends ConsumerWidget {
       ),
     );
   }
+
+  
 }
