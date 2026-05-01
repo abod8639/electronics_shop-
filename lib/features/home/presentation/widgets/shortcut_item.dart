@@ -73,8 +73,8 @@ class ShortcutItem extends ConsumerWidget {
                             boxShadow: [
                               BoxShadow(
                                 color: isSelected ? AppColors.cyan.withValues(alpha: .3) : Colors.black,
-                                blurRadius: 12,
-                                spreadRadius: 2,
+                                blurRadius: 8,
+                                spreadRadius: .5,
                               ),
                             ],
                           ),
@@ -92,12 +92,12 @@ class ShortcutItem extends ConsumerWidget {
                               : theme.colorScheme.surfaceContainerHighest.withValues(alpha: .5),
                             border: Border(
                               left: BorderSide(
-                                color: isSelected ? AppColors.cyan : Colors.transparent, 
-                                width: 3
+                                color: isSelected ? AppColors.cyan : AppColors.cyan.withValues(alpha: .3), 
+                                width: isSelected ? 3 : 1
                               ),
                               bottom: BorderSide(
-                                color: isSelected ? AppColors.cyan : Colors.transparent, 
-                                width: 1
+                                color: isSelected ? AppColors.cyan : AppColors.cyan.withValues(alpha: .3), 
+                                width: isSelected ? 1 : 1.5
                               ),
                             ),
                           ),

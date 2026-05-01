@@ -8,8 +8,8 @@ import 'package:electronics_shop/features/home/presentation/controllers/categori
 import 'package:electronics_shop/features/search/presentation/widgets/search_bar.dart';
 import 'package:electronics_shop/features/home/presentation/widgets/shortcuts_row.dart';
 import 'package:electronics_shop/features/promo/presentation/widgets/promo_banner.dart';
-import 'package:electronics_shop/features/search/presentation/widgets/section_title.dart';
-import 'package:electronics_shop/features/home/presentation/widgets/product_row_list.dart';
+// import 'package:electronics_shop/features/search/presentation/widgets/section_title.dart';
+// import 'package:electronics_shop/features/home/presentation/widgets/product_row_list.dart';
 import 'package:electronics_shop/features/home/presentation/widgets/category_section_row.dart';
 import 'package:electronics_shop/features/home/presentation/widgets/product_grid_list.dart';
 
@@ -47,23 +47,23 @@ class HomeView extends ConsumerWidget {
                     const SliverToBoxAdapter(child: PromoBanner()),
                     
                     // Recommended/Most Popular section from HomeController
-                    ref.watch(homeControllerProvider).when(
-                      data: (products) => SliverMainAxisGroup(
-                        slivers: [
-                          SliverToBoxAdapter(
-                            child: SectionTitle(
-                              title: "" // AppLocalizations.of(context)!.recommended,
-                            ),
-                          ),
-                          ProductRowList(
-                            products: products,
-                            heroTagPrefix: 'recommended_',
-                          ),
-                        ],
-                      ),
-                      loading: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
-                      error: (err, stack) => const SliverToBoxAdapter(child: SizedBox.shrink()),
-                    ),
+                    // ref.watch(homeControllerProvider).when(
+                    //   data: (products) => SliverMainAxisGroup(
+                    //     slivers: [
+                    //       SliverToBoxAdapter(
+                    //         child: SectionTitle(
+                    //           title: "" // AppLocalizations.of(context)!.recommended,
+                    //         ),
+                    //       ),
+                    //       ProductRowList(
+                    //         products: products,
+                    //         heroTagPrefix: 'recommended_',
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   loading: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
+                    //   error: (err, stack) => const SliverToBoxAdapter(child: SizedBox.shrink()),
+                    // ),
 
                     // Show various category sections
                     categoriesState.when(
