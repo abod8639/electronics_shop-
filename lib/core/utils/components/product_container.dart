@@ -1,29 +1,11 @@
 import 'package:electronics_shop/core/constants/app_colors.dart';
+import 'package:electronics_shop/core/utils/components/back_grid.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
-// import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/features/product/data/models/product_model.dart';
 import 'package:electronics_shop/features/home/presentation/widgets/image_section.dart';
 import 'package:electronics_shop/features/home/presentation/widgets/title_and_description.dart';
-// import 'package:electronics_shop/l10n/generated/app_localizations.dart';
 
-class CyberpunkCardClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    double cut = 16.0;
-    path.moveTo(cut, 0);
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height - cut);
-    path.lineTo(size.width - cut, size.height);
-    path.lineTo(0, size.height);
-    path.lineTo(0, cut);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
 
 class ProductContainer extends StatefulWidget {
   const ProductContainer({
@@ -76,7 +58,7 @@ class _ProductContainerState extends State<ProductContainer>
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: AppColors.cyan.withValues(alpha: 0.01),
+                color: AppColors.cyan.withValues(alpha: 0.1),
                 blurRadius: 10,
                 spreadRadius: -2,
                 blurStyle: BlurStyle.outer,
@@ -87,24 +69,15 @@ class _ProductContainerState extends State<ProductContainer>
             color: Colors.transparent,
             // color: theme.colorScheme.surface,
             border: Border(
-              left: BorderSide(color: AppColors.cyan.withAlpha(50), width: 3),
-              bottom: BorderSide(color: AppColors.cyan.withAlpha(50), width: 2),
+              left: BorderSide(color: AppColors.cyan.withAlpha(80), width: 3),
+              bottom: BorderSide(color: AppColors.cyan.withAlpha(80), width: 2),
             ),
           ),
           child: Stack(
             children: [
               // Digital grid background 
-              Positioned.fill(
-                child: Opacity(
-                  opacity: 0.04,
-                  child: GridPaper(
-                    color: AppColors.cyan,
-                    divisions: 1,
-                    subdivisions: 1,
-                    interval: 25,
-                  ),
-                ),
-              ),
+           BackGrid(accentColor: Colors.cyan.withValues(alpha: .5)),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -113,7 +86,9 @@ class _ProductContainerState extends State<ProductContainer>
                     flex:3, 
                     child: Stack(
                       children: [
+
                         ImageSection(widget: widget),
+
                         // Pseudo-tech detail on image
                         // Positioned(
                         //   top: 8,
