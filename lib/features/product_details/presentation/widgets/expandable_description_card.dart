@@ -1,6 +1,6 @@
 import 'package:electronics_shop/core/constants/app_colors.dart';
 import 'package:electronics_shop/core/utils/components/back_grid.dart';
-import 'package:electronics_shop/core/utils/components/product_container.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:electronics_shop/features/product/data/models/review_model.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/header_with_icon_and_title.dart';
 import 'package:electronics_shop/features/product_details/presentation/widgets/stars_record.dart';

@@ -1,27 +1,9 @@
 import 'package:electronics_shop/core/constants/app_colors.dart';
+import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:electronics_shop/features/home/presentation/controllers/categories_sections_controller.dart';
 import 'package:electronics_shop/l10n/generated/app_localizations.dart';
-
-class CyberpunkClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    double cut = 13.0;
-    path.moveTo(cut, 0);
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height - cut);
-    path.lineTo(size.width - cut, size.height);
-    path.lineTo(0, size.height);
-    path.lineTo(0, cut);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
 
 class ShortcutItem extends ConsumerWidget {
   final int index;
@@ -82,7 +64,7 @@ class ShortcutItem extends ConsumerWidget {
                         ),
                       // Clipped Container
                       ClipPath(
-                        clipper: CyberpunkClipper(),
+                        clipper: CyberpunkCardClipper(),
                         child: AnimatedContainer(
                           duration: _animationDuration,
                           width: _iconSize,
@@ -205,33 +187,3 @@ class ShortcutItem extends ConsumerWidget {
     }
   }
 }
-
-// Widget _buildImage(
-//   String? imageUrl,
-//   IconData icon,
-//   bool isSelected,
-//   BuildContext context,
-//   SelectionsModel item,
-// ) {
-//   final theme = Theme.of(context);
-//   return CachedNetworkImage(
-//     imageUrl: imageUrl!,
-//     fit: BoxFit.none,
-//     placeholder: (context, url) => Center(
-//       child: SizedBox(
-//         width: 20,
-//         height: 20,
-//         child: CircularProgressIndicator(
-//           strokeWidth: 2,
-//           color: theme.colorScheme.primary,
-//         ),
-//       ),
-//     ),
-//     errorWidget: (context, url, error) => Icon(
-//       item.icon,
-//       color: isSelected
-//           ? theme.colorScheme.primary
-//           : theme.colorScheme.onSurfaceVariant,
-//     ),
-//   );
-// }

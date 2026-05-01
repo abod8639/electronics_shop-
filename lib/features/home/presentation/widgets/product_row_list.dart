@@ -14,8 +14,9 @@ class ProductRowList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (products.isEmpty)
+    if (products.isEmpty) {
       return const SliverToBoxAdapter(child: SizedBox.shrink());
+    }
 
     return SliverToBoxAdapter(
       child: SizedBox(
@@ -37,7 +38,10 @@ class ProductRowList extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => context.push(
                   AppRoutes.productDetails,
-                  extra: {'product': product, 'heroTagPrefix': heroTagPrefix},
+                  extra: {
+                    'product': product,
+                    'heroTagPrefix': heroTagPrefix,
+                  },
                 ),
                 child: ProductContainer(
                   heroTagPrefix: heroTagPrefix,

@@ -108,9 +108,9 @@ class ProductGridList extends ConsumerWidget {
                   onPressed: () => ref
                       .read(homeControllerProvider.notifier)
                       .fetchProductsForSection(
-                        ref
-                            .read(homeControllerProvider.notifier)
-                            .selectedSectionIndex,
+                       ref
+                      .read(homeControllerProvider.notifier)
+                      .selectedSectionIndex,
                       ),
                   icon: const Icon(Icons.refresh, color: AppColors.cyan),
                   label: const Text('إعادة محاولة'),
