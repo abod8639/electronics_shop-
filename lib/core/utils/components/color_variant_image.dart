@@ -13,7 +13,7 @@ class ProductColorModel {
 final Map<String, ProductColorModel> electronicsColorsData = {
   "black": ProductColorModel(
     name: "Obsidian Black",
-    color: const Color(0xFF121212),
+    color: const Color.fromARGB(255, 0, 0, 0),
     // image: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&q=80&w=800",
   ),
   "white": ProductColorModel(
