@@ -49,7 +49,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
               password: _passwordController.text,
             );
         if (mounted && ref.read(authControllerProvider).hasValue) {
-          context.push(AppRoutes.profile);
+          context.push(AppRoutes.home);
         }
       }
     });

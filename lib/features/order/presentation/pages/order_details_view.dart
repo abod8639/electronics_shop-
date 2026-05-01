@@ -50,7 +50,7 @@ class OrderDetailsView extends StatelessWidget {
                     children: [
                       BackGrid(accentColor: AppColors.cyan),
                       Container(
-                        color: AppColors.greyDark.withValues(alpha: 0.1),
+                        color: AppColors.black.withValues(alpha: 0.5),
                         padding: const EdgeInsets.all(20),
                         child: OrderStatusTimeline(order: order),
                       ),
