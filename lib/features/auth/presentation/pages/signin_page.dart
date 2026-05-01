@@ -1,5 +1,6 @@
 import 'package:electronics_shop/core/utils/components/back_grid.dart';
 import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
+import 'package:electronics_shop/features/auth/presentation/widgets/build_diagnostic_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -49,7 +50,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
               password: _passwordController.text,
             );
         if (mounted && ref.read(authControllerProvider).hasValue) {
-          context.push(AppRoutes.main);
+          context.go(AppRoutes.main);
         }
       }
     });
@@ -105,7 +106,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                 padding: const EdgeInsets.all(24.0),
                 child: Column(
                   children: [
-                    _buildTerminalHeader(localizations),
+                    buildTerminalHeader(localizations),
                     const SizedBox(height: 32),
                     ClipPath(
                       clipper: CyberpunkCardClipper(),
@@ -124,7 +125,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              _buildDiagnosticModule(localizations),
+                              buildDiagnosticModule(localizations),
                               const SizedBox(height: 24),
                               AuthTextField(
                                 controller: _emailController,
@@ -189,16 +190,16 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                                 ),
                               ),
                               const SizedBox(height: 24),
-                              _buildSubmitButton(
+                              buildSubmitButton(
                                 authState.isLoading,
                                 localizations,
                               ),
                               const SizedBox(height: 24),
-                              _buildDivider(localizations),
+                              buildDivider(localizations),
                               const SizedBox(height: 24),
-                              _buildSocialAuth(localizations),
+                              buildSocialAuth(localizations),
                               const SizedBox(height: 24),
-                              _buildSignUpRow(localizations),
+                              buildSignUpRow(localizations),
                             ],
                           ),
                         ),
@@ -224,8 +225,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
       ),
     );
   }
-
-  Widget _buildTerminalHeader(AppLocalizations l10n) {
+}
+  Widget buildTerminalHeader(AppLocalizations l10n) {
     return Column(
       children: [
         const Icon(Icons.security_rounded, color: AppColors.cyan, size: 64),
@@ -254,38 +255,9 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     );
   }
 
-  Widget _buildDiagnosticModule(AppLocalizations l10n) {
-    return Row(
-      children: [
-        Container(width: 4, height: 20, color: AppColors.magenta),
-        const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "IDENTITY_VERIFICATION_REQUIRED",
-              style: TextStyle(
-                fontFamily: 'monospace',
-                fontSize: 10,
-                color: AppColors.magenta.withValues(alpha: 0.8),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              "STATUS: [PENDING_INPUT]",
-              style: TextStyle(
-                fontFamily: 'monospace',
-                fontSize: 8,
-                color: AppColors.magenta.withValues(alpha: 0.5),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
 
-  Widget _buildSubmitButton(bool isLoading, AppLocalizations l10n) {
+
+  Widget buildSubmitButton(bool isLoading, AppLocalizations l10n) {
     return GestureDetector(
       onTap: isLoading ? null : _onLoginPressed,
       child: Stack(
@@ -337,7 +309,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     );
   }
 
-  Widget _buildSocialAuth(AppLocalizations l10n) {
+  Widget buildSocialAuth(AppLocalizations l10n) {
     return GestureDetector(
       onTap: () => ref.read(authControllerProvider.notifier).signInWithGoogle(),
       child: Container(
@@ -371,7 +343,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     );
   }
 
-  Widget _buildDivider(AppLocalizations l10n) {
+  Widget buildDivider(AppLocalizations l10n) {
     return Row(
       children: [
         Expanded(
@@ -401,7 +373,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     );
   }
 
-  Widget _buildSignUpRow(AppLocalizations l10n) {
+  Widget buildSignUpRow(AppLocalizations l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -429,4 +401,4 @@ class _SignInPageState extends ConsumerState<SignInPage> {
       ],
     );
   }
-}
+
