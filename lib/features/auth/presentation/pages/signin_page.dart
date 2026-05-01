@@ -1,6 +1,8 @@
 import 'package:electronics_shop/core/utils/components/back_grid.dart';
 import 'package:electronics_shop/core/utils/components/cyberpunk_clippers.dart';
 import 'package:electronics_shop/features/auth/presentation/widgets/build_diagnostic_module.dart';
+import 'package:electronics_shop/features/auth/presentation/widgets/build_divider.dart';
+import 'package:electronics_shop/features/auth/presentation/widgets/build_terminal_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -225,37 +227,6 @@ class _SignInPageState extends ConsumerState<SignInPage> {
       ),
     );
   }
-}
-  Widget buildTerminalHeader(AppLocalizations l10n) {
-    return Column(
-      children: [
-        const Icon(Icons.security_rounded, color: AppColors.cyan, size: 64),
-        const SizedBox(height: 16),
-        Text(
-          "SECURE_AUTH_PROTOCOL",
-          style: TextStyle(
-            fontFamily: 'monospace',
-            color: AppColors.cyan.withValues(alpha: 0.5),
-            fontSize: 10,
-            letterSpacing: 4,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          l10n.welcomeBack.toUpperCase(),
-          style: const TextStyle(
-            fontFamily: 'monospace',
-            fontWeight: FontWeight.w900,
-            fontSize: 24,
-            color: AppColors.cyan,
-            letterSpacing: 2,
-          ),
-        ),
-      ],
-    );
-  }
-
-
 
   Widget buildSubmitButton(bool isLoading, AppLocalizations l10n) {
     return GestureDetector(
@@ -343,36 +314,6 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     );
   }
 
-  Widget buildDivider(AppLocalizations l10n) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            height: 1,
-            color: AppColors.cyan.withValues(alpha: 0.1),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(
-            l10n.or.toUpperCase(),
-            style: TextStyle(
-              fontFamily: 'monospace',
-              fontSize: 10,
-              color: AppColors.cyan.withValues(alpha: 0.3),
-            ),
-          ),
-        ),
-        Expanded(
-          child: Container(
-            height: 1,
-            color: AppColors.cyan.withValues(alpha: 0.1),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget buildSignUpRow(AppLocalizations l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -401,4 +342,4 @@ class _SignInPageState extends ConsumerState<SignInPage> {
       ],
     );
   }
-
+}
